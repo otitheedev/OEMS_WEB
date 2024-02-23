@@ -52,6 +52,7 @@
 
 
 <!-- Your DataTable HTML -->
+
 <table id="example" class="display" style="max-width:100%; text-align:center;">
    <thead>
        <tr>

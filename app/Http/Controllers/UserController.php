@@ -4,6 +4,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\reg_user;
+use App\Models\extra_benifits;
+use App\Models\otherBenifitsbyPercentage;
+use App\Models\department;
 use App\Models\academic;
 use App\Models\UsersProfessionalCertificate;
 use App\Models\JobExpriences;
@@ -35,6 +38,17 @@ class UserController extends Controller
     public function create()
     {
         return view('AdminLTE/frontend/Users/create_users');
+    }
+
+    public function admin_dashboard(){
+   
+    
+         $users_count= reg_user::count();
+         $department_count= department::count();
+        return view('AdminLTE/index',[
+            'users_count' => $users_count,
+            'department_count' => $department_count, 
+        ]);
     }
 
 
@@ -99,10 +113,11 @@ public function create_users(Request $request)
     $user->normal_salary = $request->input('normal_salary');
     $user->pay_frequency = $request->input('pay_frequency');
     $user->healthcare_insurance = $request->input('healthcare_insurance');
-    $user->mobile_bill = $request->input('mobile_bill');
-
+    $user->providend_fund = $request->input('providend_fund'); 
     $user->bonus_information = $request->input('bonus_information');
     $user->extra_benefits = $request->input('extra_benefits');
+    $user->mobile_bill = $request->input('mobile_bill');
+
     $user->nid_Information = $request->input('nid_Information');
     $user->language = $request->input('language');
     $user->gender = $request->input('gender');
@@ -228,6 +243,40 @@ if ($request->has('child_name') && !empty($request->input('child_name'))) {
   }
 }
 
+############## other_benifits_by_percentage start #################
+if ($request->has('other_benifits_by_percentage') && !empty($request->input('other_benifits_by_percentage'))) {
+    ## loop childInfo data and associate it with the Users
+    foreach ($request->input('other_benifits_by_percentage') as $key => $BenifitsbyPercentage) {
+        
+        # Check if 'benifits_name' is not empty 
+        if (!empty($BenifitsbyPercentage)) {
+            otherBenifitsbyPercentage::create([
+            'other_benifits_name' => $BenifitsbyPercentage,
+            'other_benifits_by_percentage' => $BenifitsbyPercentage,
+            #'benifits_amount' => $request->input('benifits_amount')[$key],
+            'user_id' => $lastInsertID,
+        ]);
+    }
+  }
+}
+############## other_benifits_by_percentage end #################
+
+
+if ($request->has('benifits_name') && !empty($request->input('benifits_name'))) {
+    ## loop childInfo data and associate it with the Users
+    foreach ($request->input('benifits_name') as $key => $professonalformationbenifits_name) {
+        
+        # Check if 'benifits_name' is not empty 
+        if (!empty($professonalformationbenifits_name)) {
+            extra_benifits::create([
+            'benifits_name' => $professonalformationbenifits_name,
+            'benifits_amount' => $request->input('benifits_amount')[$key],
+            'user_id' => $lastInsertID,
+        ]);
+    }
+  }
+}
+
     return redirect()->route('users_home')->with('success', 'User create successfully');
     #return response()->json(['message' => 'User created successfully'], 201);
 }
@@ -240,6 +289,8 @@ public function edit(Request $request, $id)
     $UsersProfessionalCertificate = UsersProfessionalCertificate::where('user_id', $id)->get();
     $JobExpriences = JobExpriences::where('user_id', $id)->get();
     $UsersChildInfo = UsersChildInfo::where('user_id', $id)->get();
+    $extra_benifits = extra_benifits::where('user_id', $id)->get();
+    $otherbyPercentage = otherBenifitsbyPercentage::where('user_id', $id)->get();
     
     return view('AdminLTE/frontend/Users/edit_user_profile', [
         'user_data' => $user_data,
@@ -247,6 +298,8 @@ public function edit(Request $request, $id)
         'UsersProfessionalCertificate' => $UsersProfessionalCertificate,
         'UsersChildInfo' => $UsersChildInfo,
         'JobExpriences' => $JobExpriences,
+        'extra_benifits' => $extra_benifits,
+        'otherbyPercentage' => $otherbyPercentage,
     
     ]);
 }
@@ -260,7 +313,6 @@ public function update_users(Request $request, $id)
     $validator = Validator::make($request->all(), [
         'profile_pic' => 'mimes:jpeg,png,jpg,gif,svg|max:1000',
         'name' => 'required|string|max:255',
-        'password' => ['required', 'string', 'min:4'],
         'designation' => 'required|string',
         'address' => 'required|string',
         'department_name' => 'required|string',
@@ -311,7 +363,9 @@ public function update_users(Request $request, $id)
     # Set user attributes from the request data
     $user->name = $request->input('name');
     $user->email = $request->input('email');
-    $user->password = Hash::make($request->input('password')); // Hash the password
+    if ($request->filled('password')) {
+    $user->password = Hash::make($request->input('password')); 
+    }
     $user->designation = $request->input('designation');
     $user->address = $request->input('address');
     $user->department_name = $request->input('department_name');
@@ -323,10 +377,11 @@ public function update_users(Request $request, $id)
     $user->normal_salary = $request->input('normal_salary');
     $user->pay_frequency = $request->input('pay_frequency');
     $user->healthcare_insurance = $request->input('healthcare_insurance');
-    $user->mobile_bill = $request->input('mobile_bill');
-
+    $user->providend_fund = $request->input('providend_fund'); 
     $user->bonus_information = $request->input('bonus_information');
     $user->extra_benefits = $request->input('extra_benefits');
+    $user->mobile_bill = $request->input('mobile_bill');
+
     $user->nid_Information = $request->input('nid_Information');
     $user->language = $request->input('language');
     $user->gender = $request->input('gender');
@@ -415,12 +470,6 @@ if ($request->hasfile('curriculum_vita_cv')) {
     }
 
     
-
-
-
-
-    
-    
      if ($request->has('cert_name') && !empty($request->input('cert_name'))) {
     // Delete old professional certificate records associated with the user
     UsersProfessionalCertificate::where('user_id', $lastInsertID)->delete();
@@ -481,7 +530,26 @@ if ($request->has('child_name') && !empty($request->input('child_name'))) {
     }
 }
 
-    
+
+
+if ($request->has('benifits_name') && !empty($request->input('benifits_name'))) {
+    // Delete old child information records associated with the user
+    extra_benifits::where('user_id', $lastInsertID)->delete();
+
+    // Loop through the new child information data and associate it with the user
+    foreach ($request->input('child_name') as $key => $professonalformationbenifits_name) {
+        // Check if 'child_name' is not empty before creating the record
+        if (!empty($professonalformationbenifits_name)) {
+            extra_benifits::create([
+                'benifits_name' => $professonalformationbenifits_name,
+                'benifits_amount' => $request->input('child_gender')[$key],
+                'user_id' => $lastInsertID,
+            ]);
+        }
+    }
+}
+
+
 
     // Redirect or respond accordingly
     return redirect()->route('users_home')->with('success', 'User Update successfully');

@@ -22,8 +22,10 @@ a {text-decoration: none;}
             <div class="row">
                 <div class="col-lg-10 offset-lg-1">
 
+
                   <h3 class="mb-2">Otithee Employee Login</h3>
                     <div class="bg-white shadow rounded">
+                    @if(auth()->check())<div class="col-12 alert-success p-1"> Welcome back {{ auth()->user()->name }}! </div>@endif
                         <div class="row">
                             <div class="col-md-6 pe-0">
                                 <div class="form-left h-100 py-5 px-5">

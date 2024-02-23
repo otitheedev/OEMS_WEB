@@ -34,7 +34,7 @@ class DepartmentController extends Controller
         'department_director' => 'required|string',
     ]);
 
-       $department = new DEPARTMENT();
+       $department = new department();
        $department->department_name = $request->input('department_name');
        $department->department_information = $request->input('department_information');
        $department->department_gm = $request->input('department_gm');

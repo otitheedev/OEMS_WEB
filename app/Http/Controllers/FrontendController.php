@@ -7,14 +7,24 @@ use Illuminate\Http\Request;
 
 class FrontendController extends Controller
 {
+    
+   #####################  AjaxDataTable
+    public function AjaxDataTable(){
+        $users = reg_user::get()->all();
+        return view('AdminLTE/frontend/Search/AjaxDataTable',['users' => $users]);
+    }
+
+
     public function profile(Request $request, $number)
     {
          
-         $user = reg_user::with('child_info','academicRecords', 'professional_certificate', 'job_expriences')->where('phone_number',$number)->first();
+         $user = reg_user::with('child_info','academicRecords', 'professional_certificate', 'job_expriences','otherBenifitsbyPercentage','extra_benifits')->where('phone_number',$number)->first();
          $child_info = $user->child_info;
          $academicRecords = $user->academicRecords;
          $professional_certificate = $user->professional_certificate;
          $job_expriences = $user->job_expriences;
+         $extra_benifits = $user->extra_benifits;
+         $otherBenifitsbyPercentage = $user->otherBenifitsbyPercentage;
 
          return view('AdminLTE/frontend/Search/employee_profile',[
             'user' => $user, 
@@ -22,6 +32,8 @@ class FrontendController extends Controller
             'academicRecords'=> $academicRecords,
             'professional_certificate' => $professional_certificate,
             'job_expriences' => $job_expriences,
+            'extra_benifits' => $extra_benifits,
+            'otherBenifitsbyPercentage' => $otherBenifitsbyPercentage,
         ]);
         
         # return $user->academicRecords[0]->id;

@@ -389,56 +389,12 @@
         <input type="Date" name="DOB" class="form-control" value="{{ now()->format('Y-m-d') }}" required>
       </div>
 
-
-      <div class="col-sm-6 form-group">
-        <label for="Date"><i class="fa-solid fa-money-bill"></i> Basic Salary <span class="text-danger">*</span></label>
-        <input type="number" name="normal_salary" class="form-control" id="text" placeholder="Basic Salary" value="100" required>
       </div>
-
-      <div class="col-sm-6 form-group">
-        <label for="Date"><i class="fa-regular fa-clock"></i> Pay Frequency</label>
-      
-        <select name="pay_frequency" class="form-control" > 
-          <option>Daily</option>
-          <option selected> Monthly</option>
-          <option> Yearly </option>
-        </select>
-      </div>
-
-
-      <div class="col-sm-6 form-group">
-        <label for="Date"><i class="fa-solid fa-heart-circle-plus"></i> Healthcare Insurance</label>
-        <input type="number" name="healthcare_insurance" class="form-control" id="text" placeholder="Healthcare Insurance" value="0">
-      </div>
-
-      <div class="col-sm-6 form-group">
-        <label for="Date"><i class="fa-solid fa-mobile"></i> Mobile Bill</label>
-        <input type="text" name="mobile_bill" class="form-control" placeholder="Mobile Bill" value="0">
-      </div>
-
-
-      <div class="col-sm-6 form-group">
-        <label for="Date"><i class="fa-solid fa-percent"></i> Bonus Information</label>
-        <input type="number" name="bonus_information" class="form-control" id="text" placeholder="Bonus Information" value="100">
-      </div>
-
-      <div class="col-sm-6 form-group">
-        <label for="Date"><i class="fa-solid fa-hand-holding-heart"></i> Extra Benefits</label>
-        <input type="text" name="extra_benefits" class="form-control" placeholder="Extra Benefits" value="100">
-      </div>
-
-
-
-      </div></div>
-
-
-
-
-
-     <!-- Start Other Information section-->      
-     <div class="container mt-2" style="background: #fffdfa;padding: 15px;border-radius: 15px;border: 1px solid lightgray;">
+    
+    
+    <!-- Start Other Information section-->      
      <div class="row col-12">
-     <div class="col-12"> <h4><i class="fa-solid fa-circle-info"></i> Other Information</h4><hr></div>
+
      
   
       <div class="col-sm-6 form-group">
@@ -447,10 +403,22 @@
       </div>
  
 
-      <div class="col-sm-6 form-group">
-        <label for="Date"><i class="fa-solid fa-language"></i> Language</label>
-        <input type="text" name="language" class="form-control" value="bangla" placeholder="Language" required>
+
+      <div class="col-sm-2 form-group">
+        <label for="height">Height (inch) </label>
+        <input type="text" name="height" class="form-control" value="8.9'" placeholder="Height">
       </div>
+      
+      <div class="col-sm-2 form-group">
+        <label for="Weight"> Weight (KG) </label>
+        <input type="text" name="weight" class="form-control" value="Weight (KG)" placeholder="Weight (KG)">
+      </div>
+
+      <div class="col-sm-2 form-group">
+        <label for="Date"><i class="fa-solid fa-language"></i> Spoken Language</label>
+        <input type="text" name="language" class="form-control" value="bangla" placeholder="Language">
+      </div>
+
       
       
       <div class="col-sm-2 form-group">
@@ -738,13 +706,222 @@ if (maritalStatus && maritalStatus.value === 'married') {newUserForm.style.displ
 
       <div class="col-sm-6 form-group">
         <label for="pass"><i class="fa-solid fa-key"></i> Password</label>
-        <input type="password" name="password" class="form-control" id="pass" placeholder="Enter your password." value="1234565" required>
+        <input type="password" name="password" class="form-control" id="pass" placeholder="Enter your password." value="123456" required>
       </div>
       <div class="col-sm-6 form-group">
         <label for="pass2"><i class="fa-solid fa-key"></i> Confirm Password</label>
         <input type="password" name="cnf-password" class="form-control" id="pass2" placeholder="Re-enter your password." value="123456" required>
       </div>
 <!-- End Other Information section-->
+</div></div>
+
+
+    
+   <div class="container mt-2" style="background: #fffdfa;padding: 15px;border-radius: 15px;border: 1px solid lightgray;">
+     <div class="row col-12 ">
+     <div class="col-12"> <h4><i class="fa-solid fa-book"></i> Salary Information </h4><hr></div>
+ 
+
+      <div class="col-sm-6 form-group">
+        <label for="Date"><i class="fa-solid fa-money-bill"></i> Basic Salary <span class="text-danger">*</span></label>
+        <input type="number" name="normal_salary" class="form-control" id="text" placeholder="Basic Salary" value="500" required>
+      </div>
+
+      <div class="col-sm-6 form-group">
+        <label for="Date"><i class="fa-regular fa-clock"></i> Pay Frequency</label>
+      
+        <select name="pay_frequency" class="form-control" > 
+          <option>Daily</option>
+          <option selected> Monthly</option>
+          <option> Yearly </option>
+        </select>
+      </div>
+
+
+      <!-- new added Shuvo bhai 18-2-2024 -->
+<div class="row col-12" style="background: rgb(255, 253, 250); border: 1px solid lightgray; border-radius: 15px; padding: 15px;">
+      <div class="col-12"> <h5> Other Benifits (Increment by %.) </h5><hr></div>
+     
+      <div class="col-sm-4 form-group">
+        <label for="Date"> Bonus Information <i class="fa-solid fa-percent"></i></label>
+        <input type="number" name="bonus_information" class="form-control" id="text" placeholder="Bonus Information" value="0">
+      </div>
+
+      <div class="col-sm-4 form-group">
+        <label for="Date"><i class="fa-solid fa-heart-circle-plus"></i> Healthcare Insurance <i class="fa-solid fa-percent"></i></label>
+        <input type="number" name="healthcare_insurance" class="form-control" id="text" placeholder="Healthcare Insurance" value="0">
+      </div>
+
+      <div class="col-sm-4 form-group">
+        <label for="Date"> Provident Fund <i class="fa-solid fa-percent"></i></label>
+        <input type="number" name="providend_fund" class="form-control" id="text" placeholder="Healthcare Insurance" value="0">
+      </div>
+
+</div>   
+
+<div class="col-sm-12 form-group"><div id="dynamic-form-fields_percentage"></div> 
+  <div class="text-center"> <button type="button" style="width:100%" class="btn-sm btn-primary mt-2" onclick="addBonusFormFields()">Add More Benifits</button></div>
+  </div>
+
+<!-- script for array -->
+<script>
+    var bfpercentage = 1;
+  var bf_amapercentage = 1;
+
+  function addBonusFormFields() {
+    var container = document.getElementById('dynamic-form-fields_percentage');
+    var newRowpercentage = document.createElement('div');
+    newRowpercentage.className = 'row mt-2';
+    newRowpercentage.style.background = '#fffdfa';
+    newRowpercentage.style.border = '1px solid lightgray';
+    newRowpercentage.style.borderRadius = '15px';
+    newRowpercentage.style.padding = '15px';
+    newRowpercentage.classList.add('percentage-input');
+
+    newRowpercentage.innerHTML = '<div class="col-sm-6 form-group">' +
+      '<label for="Date"><i class="fa-solid fa-home"></i> Other Benifits Name ' + bfpercentage++ +' </label>' +
+      '<input type="text" name="other_benifits_name[]" class="form-control" id="text" placeholder="Benifits Name">' +
+      '</div>' +
+
+    '<div class="col-sm-6 form-group">' +
+      '<label for="Date"><i class="fa-solid fa-heart-circle-plus"></i> Other Benifits <i class="fa-solid fa-percent"></i></label>' +
+      '<input type="number" name="other_benifits_by_percentage[]" class="form-control" id="text" placeholder="Benifits %" onchange="calculateTotalAmount()">' +
+      '</div>' +
+
+      '<div class="col-sm-4 form-group">' +
+      '<button type="button" class="btn-sm btn-danger" onclick="removeFormFieldsBF(this)">Remove</button>' +
+      '</div>';
+
+    container.appendChild(newRowpercentage);
+  }
+</script>
+
+
+<div class="row col-12 mt-3" style="background: rgb(255, 253, 250); border: 1px solid lightgray; border-radius: 15px; padding: 15px;">
+    <div class="col-12"> <h5> Extra Benifits (For example: Mobile bill, Incentive..)</h5><hr></div>
+
+
+      <div class="col-sm-6 form-group">
+        <label for="Date"><i class="fa-solid fa-hand-holding-heart"></i> Extra Other Benefits</label>
+        <input type="number" name="extra_benefits" class="form-control" placeholder="Extra Benefits" value="0">
+      </div>
+
+      <div class="col-sm-6 form-group">
+        <label for="Date"><i class="fa-solid fa-mobile"></i> Mobile Bill</label>
+        <input type="number" name="mobile_bill" class="form-control" placeholder="Mobile Bill" value="0">
+      </div>
+  </div>
+
+
+
+<div class="col-sm-12 form-group"><div id="dynamic-form-fields_benifits"></div> 
+  <div class="text-center"> <button type="button" style="width:100%" class="btn-sm btn-primary mt-2" onclick="addbenifitsFormFields()">Add More Extra Benifits</button></div>
+  </div>
+
+
+  <div class="col-12 form-group">
+    <label for="totalAmount"> Total Salary <i class="fa-solid fa-bangladeshi-taka-sign"></i></label> 
+    <input type="text" id="totalAmount" class="form-control" readonly>
+</div>
+
+
+<script>
+  var bf = 1;
+  var bf_ama = 1;
+
+  function addbenifitsFormFields() {
+    var container = document.getElementById('dynamic-form-fields_benifits');
+    var newRow = document.createElement('div');
+    newRow.className = 'row mt-2';
+    newRow.style.background = '#fffdfa';
+    newRow.style.border = '1px solid lightgray';
+    newRow.style.borderRadius = '15px';
+    newRow.style.padding = '15px';
+
+
+    newRow.innerHTML = '<div class="col-6 form-group">' +
+      '<label for="Date">Extra Benifits Name ' + bf++ + '</label>' +
+      '<input type="text" name="benifits_name[]" class="form-control" placeholder="Extra Benifits Name">' +
+      '</div>' +
+
+      '<div class="col-6 form-group">' +
+      '<label for="pass">Amount ' + bf_ama++ + '</label>' +
+      '<input type="number" name="benifits_amount[]" class="form-control">' +
+      '</div>' +
+
+      '<div class="col-12 mb-2">' +
+      '<button type="button" class="btn-sm btn-danger" onclick="removeFormFieldsBF(this)">Remove</button>' +
+      '</div>';
+
+    container.appendChild(newRow);
+    calculateTotalAmount();
+  }
+
+  function removeFormFieldsBF(button) {
+    var rowToRemove = button.parentNode.parentNode;
+    rowToRemove.parentNode.removeChild(rowToRemove);
+    calculateTotalAmount();
+  }
+
+
+
+  function calculateTotalAmount() {
+    var basicSalary = parseFloat(document.getElementsByName('normal_salary')[0].value) || 0;
+
+    function getPercentageValue(fieldName) {
+        return parseFloat(document.getElementsByName(fieldName)[0].value) || 0;
+    }
+
+    // Multiple Array  // needyamin
+    function getMultiPercentageValue(fieldName) {
+    var elements = document.getElementsByName(fieldName); 
+    var total = 0; for (var i = 0; i < elements.length; i++) {total += parseFloat(elements[i].value) || 0;} 
+    return total;
+    }  
+
+    function calculatePercentageAmount(percentage) {
+        return (basicSalary * percentage) / 100;
+    }
+
+    // Get percentage values from input fields
+    var healthcareInsurancePercentage = getPercentageValue("healthcare_insurance");
+    var providendFundPercentage = getPercentageValue("providend_fund");
+    var bonusInformationPercentage = getPercentageValue("bonus_information");
+    var percentageInputsPercentage = getMultiPercentageValue("other_benifits_by_percentage[]");  // needyamin
+
+    // Calculate amounts based on percentages
+    var healthcareInsurance = calculatePercentageAmount(healthcareInsurancePercentage);
+    var providendFund = calculatePercentageAmount(providendFundPercentage);
+    var bonusInformation = calculatePercentageAmount(bonusInformationPercentage);
+    var percentageInputInformation = calculatePercentageAmount(percentageInputsPercentage); // needyamin
+
+    var mobileBill = parseFloat(document.getElementsByName('mobile_bill')[0].value) || 0;
+    var extraBenefits = parseFloat(document.getElementsByName('extra_benefits')[0].value) || 0;
+
+    // BeifitsAmount
+    var benifitsAmountFields = document.getElementsByName('benifits_amount[]');
+    var totalBenifitsAmount = 0;
+    for (var i = 0; i < benifitsAmountFields.length; i++) {
+        totalBenifitsAmount += parseFloat(benifitsAmountFields[i].value) || 0;
+    }
+    
+    // Get PerCentage Loop
+    var totalAmount = basicSalary + healthcareInsurance + percentageInputInformation + providendFund + bonusInformation + extraBenefits + mobileBill + totalBenifitsAmount;
+
+    document.getElementById('totalAmount').value = totalAmount.toFixed(2) + ' BDT';
+}
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var numberInputFields = document.querySelectorAll('input[type="number"]');
+        numberInputFields.forEach(function (input) {
+            input.addEventListener('input', calculateTotalAmount);
+        });
+    });
+</script>
+
+
+
 </div></div>
 
 
@@ -843,12 +1020,6 @@ if (maritalStatus && maritalStatus.value === 'married') {newUserForm.style.displ
 </script>
 
       
- 
-
-
-
-
-
     <div class="container mt-2" style="background: #fffdfa;padding: 15px;border-radius: 15px;border: 1px solid lightgray;">
       <h4><i class="fa-solid fa-people-group"></i> Family Information </h4> <hr>
       <div class="row col-12" style="border: 1px solid lightgray; border-radius:7px; padding:5px;">

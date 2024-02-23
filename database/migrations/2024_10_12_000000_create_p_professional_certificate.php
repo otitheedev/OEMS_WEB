@@ -12,7 +12,7 @@ return new class extends Migration
     
     public function up(): void
     {
-        Schema::create('p_professional_certificate', function (Blueprint $table) {
+        Schema::create('child_professional_certificate', function (Blueprint $table) {
             $table->id();
             $table->string('certificate_name')->nullable();
             $table->string('organization_name')->nullable();
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('p_professional_certificate');
+        Schema::dropIfExists('child_professional_certificate');
     }
 };

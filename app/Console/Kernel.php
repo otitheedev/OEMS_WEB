@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Artisan;
 
 class Kernel extends ConsoleKernel
 {
@@ -12,14 +13,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // Schedule the send:sms command to run once with a delay of 5 seconds
-        $schedule->command('send:sms')->runInBackground()->after(function () {
-            // Introduce a delay of 5 seconds using sleep
-            sleep(5);
-
-            // This closure runs after the command
-            // Put any additional logic here if needed
-        });
+       #$schedule->command('send:sms')->dailyAt('15:00');
+       // Execute the send:sms command instantly
+       $schedule->call(function () {\Artisan::call('send:sms');
+    });
+     
     }
 
     /**

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class UsersProfessionalCertificate extends Model
 {
         #use HasFactory;
-        protected $table='p_professional_certificate';
+        protected $table='child_professional_certificate';
         protected $fillable=[
             'certificate_name',
             'organization_name',

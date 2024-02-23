@@ -9,6 +9,7 @@ class reg_user extends Model
 {
     #use HasFactory;
     protected $table='users';
+    
     protected $fillable=[
         'profile_pic',
         'name',
@@ -26,6 +27,9 @@ class reg_user extends Model
         'normal_salary',
         'pay_frequency',
         'healthcare_insurance',
+        'providend_fund',
+        'bonus_information',
+        'extra_benefits',
         'mobile_bill',
         'nid_Information',
         'language',
@@ -60,6 +64,7 @@ class reg_user extends Model
         'hobbies_and_interest',
         'work_authorization',
         'curriculum_vita_cv',
+        'birthday_sms_sent',
     ];
 
     ####################################################################
@@ -82,6 +87,16 @@ class reg_user extends Model
         return $this->hasMany(UsersChildInfo::class, 'user_id', 'id');
     }
 
+
+    public function otherBenifitsbyPercentage()
+    {
+        return $this->hasMany(otherBenifitsbyPercentage::class, 'user_id', 'id');
+    }
+
+    public function extra_benifits()
+    {
+        return $this->hasMany(extra_benifits::class, 'user_id', 'id');
+    }
     ######################################################################
 
 }

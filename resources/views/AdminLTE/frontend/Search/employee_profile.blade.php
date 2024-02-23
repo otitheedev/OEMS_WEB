@@ -126,8 +126,9 @@ ul.timeline > li.active:before {
                                 
                                     <div class="mt-3"> 
                                  
-                                    
-                        <a href="{{ url('/admin/users/edit/'). '/' . $user->id }}"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> </a>
+    @if(auth()->check())          
+     <a href="{{ url('/admin/users/edit/'). '/' . $user->id }}"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>   
+     @endif
 
 
                                         <h4> {{ $user->name }} </h4>
@@ -138,8 +139,32 @@ ul.timeline > li.active:before {
                                         </p>
                                         <p class="text-secondary mb-2">Account Created {{ \Carbon\Carbon::parse($user->created_at)->diffForHumans() }} </p>
                                         <p class="text-muted font-size-sm">
+
                                             <span class="badge-lg badge-success p-2" style="border-radius:5px;">Salary: {{ $user->normal_salary }} tk ({{ $user->pay_frequency }})</span>
                                         </p>
+
+
+@if($otherBenifitsbyPercentage->isNotEmpty())
+    @php
+        $totalPercentage = $otherBenifitsbyPercentage->sum('other_benifits_by_percentage');
+        $adjustedTotalSalary = $user->normal_salary + $user->normal_salary * ($totalPercentage / 100);
+    @endphp
+    <p class="text-muted font-size-sm"> Adjusted Total Salary: {{ $adjustedTotalSalary }}</p> 
+
+
+
+    <table class="table table-bordered" style="width:100%; text-align:left;"> 
+     <tr><td>Benefits Name </td> <td> Benefits Percentage</td> </tr>
+     @foreach($otherBenifitsbyPercentage as $item)
+     <tr><td>{{ $item['other_benifits_name'] }} </td> <td> {{ $item['other_benifits_by_percentage'] }}</td> </tr>
+     @endforeach
+
+     </table>
+
+
+    
+@endif
+
 
 
                            <!-- Add font awesome icons -->

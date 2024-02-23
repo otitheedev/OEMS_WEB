@@ -32,12 +32,16 @@ return new class extends Migration
              $table->string('normal_salary')->nullable();
              $table->string('pay_frequency')->nullable();
              $table->string('healthcare_insurance')->nullable();
-             $table->string('mobile_bill')->nullable();
+             $table->string('providend_fund')->nullable();
              $table->string('bonus_information')->nullable();
              $table->string('extra_benefits')->nullable();
+             $table->string('mobile_bill')->nullable();
              
              #Other Inforamtion
+             $table->string('height')->nullable();
+             $table->string('weight')->nullable();
              $table->string('nid_Information')->nullable();
+
              $table->string('language')->nullable();
              $table->string('gender')->nullable();
              $table->string('marital_status')->nullable();

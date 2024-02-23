@@ -9,6 +9,7 @@ use Xenon\LaravelBDSms\Sender;
 
 # call the model
 use App\Models\reg_user;
+use Carbon\Carbon;
 
 class SendSmsCommand extends Command implements ShouldQueue
 {
