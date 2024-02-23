@@ -1,9 +1,0 @@
-.idea
-.vscode
-*.log
-*.iml
-*.zip
-src/Test.php
-src/Test
-vendor/
-.phpintel
