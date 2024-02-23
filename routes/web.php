@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Artisan;
 
 
-### php artisan serve --host 192.168.68.231 --port 8080
-### php artisan migrate:refresh --path=/database/migrations/subcategory_newtable_for_description_and_keywords.php
+#### php artisan serve --host 192.168.68.231 --port 8080
+#### php artisan migrate:refresh --path=/database/migrations/subcategory_newtable_for_description_and_keywords.php
 
 /* 
 php artisan db:seed
