@@ -23,7 +23,8 @@ class apiAuthKey
 
     private function isValidCredentials($username, $key)
     {
-        // Replace this with your own logic to validate the username and key
-        return ($username === 'needyamin@gmail.com' && $key === 'needyamin@gmail.com');
+        $envUsername = env('YOUR_USERNAME', 'default_username');
+        $envKey = env('YOUR_KEY', 'default_key');
+        return ($username === $envUsername && $key === $envKey);
     }
 }
