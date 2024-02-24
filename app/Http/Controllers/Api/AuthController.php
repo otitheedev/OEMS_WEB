@@ -34,8 +34,15 @@ class AuthController extends Controller
     
         // Apply search filter
         if ($searchValue) {
-            $query->where('name', 'like', '%' . $searchValue . '%');
-            // Add more columns as needed for search
+            $query->where(function($query) use ($searchValue) {
+                $query->where('name', 'like', '%' . $searchValue . '%')
+                      ->orWhere('email', 'like', '%' . $searchValue . '%')
+                      ->orWhere('department_name', 'like', '%' . $searchValue . '%')
+                      ->orWhere('phone_number', 'like', '%' . $searchValue . '%')
+                      ->orWhere('designation', 'like', '%' . $searchValue . '%')
+                      ->orWhere('gender', 'like', '%' . $searchValue . '%');
+                // Add more columns as needed for search
+            });
         }
     
         // Apply date range filter

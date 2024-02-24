@@ -45,7 +45,7 @@
          
 <!-- form code  start-->
 <div class="container">
-  <form action="{{ url('/admin/users/update/' . $user_data->id) }}" id="create_users_form" method="POST" enctype="multipart/form-data">
+  <form action="{{ url('/admin/users/update/' . $user_data->id) }}" id="update_users_form" method="POST" enctype="multipart/form-data">
   @csrf
   
 <div class="row jumbotron box" style="padding:8px !important; border-radius:5px;border: 1px solid #fb2c2cd1">
@@ -421,22 +421,20 @@
      
       <div class="col-sm-4 form-group">
         <label for="Date"> Bonus Information <i class="fa-solid fa-percent"></i></label>
-        <input type="number" name="bonus_information" class="form-control" id="text" placeholder="Bonus Information" value="0">
+        <input type="number" name="bonus_information" class="form-control" id="text" placeholder="Bonus Information" value="{{ $user_data->bonus_information }}">
       </div>
 
       <div class="col-sm-4 form-group">
         <label for="Date"><i class="fa-solid fa-heart-circle-plus"></i> Healthcare Insurance <i class="fa-solid fa-percent"></i></label>
-        <input type="number" name="healthcare_insurance" class="form-control" id="text" placeholder="Healthcare Insurance" value="0">
+        <input type="number" name="healthcare_insurance" class="form-control" id="text" placeholder="Healthcare Insurance" value="{{ $user_data->healthcare_insurance }}">
       </div>
 
       <div class="col-sm-4 form-group">
         <label for="Date"> Provident Fund <i class="fa-solid fa-percent"></i></label>
-        <input type="number" name="providend_fund" class="form-control" id="text" placeholder="Healthcare Insurance" value="0">
+        <input type="number" name="providend_fund" class="form-control" id="text" placeholder="Healthcare Insurance" value="{{ $user_data->providend_fund }}">
       </div>
 
 </div>   
-
-
 
 
 
@@ -500,18 +498,35 @@
 
       <div class="col-sm-6 form-group">
         <label for="Date"><i class="fa-solid fa-hand-holding-heart"></i> Extra Other Benefits</label>
-        <input type="number" name="extra_benefits" class="form-control" placeholder="Extra Benefits" value="0">
+        <input type="text" name="extra_benefits" class="form-control" placeholder="Extra Benefits" value="{{ $user_data->extra_benefits }}">
       </div>
 
       <div class="col-sm-6 form-group">
         <label for="Date"><i class="fa-solid fa-mobile"></i> Mobile Bill</label>
-        <input type="number" name="mobile_bill" class="form-control" placeholder="Mobile Bill" value="0">
+        <input type="number" name="mobile_bill" class="form-control" placeholder="Mobile Bill" value="{{ $user_data->mobile_bill }}">
       </div>
   </div>
 
 
 
 <div class="col-sm-12 form-group"><div id="dynamic-form-fields_benifits"></div> 
+
+<!-- extra_benifits -->
+@foreach ($extra_benifits as $extra_ben) 
+<div class="row col-12 mt-3" style="background: rgb(255, 253, 250); border: 1px solid lightgray; border-radius: 15px; padding: 15px;">
+    <div class="col-6 form-group">
+      <label for="Date">Benifits Name</label>
+      <input type="text" name="benifits_name[]" class="form-control" value="{{ $extra_ben->benifits_name }}" placeholder="Extra Benifits Name">
+      </div>
+
+      <div class="col-6 form-group">
+      <label for="pass">Benifits Amount</label>
+      <input type="number" name="benifits_amount[]" value="{{ $extra_ben->benifits_amount }}" class="form-control">
+      </div>
+      </div> 
+@endforeach
+
+
   <div class="text-center"> <button type="button" style="width:100%" class="btn-sm btn-primary mt-2" onclick="addbenifitsFormFields()">Add More Extra Benifits</button></div>
   </div>
 
@@ -1545,11 +1560,8 @@ if (maritalStatus && maritalStatus.value === 'married') {newUserForm.style.displ
 
      
 </div>
+
 </section>
-
-
-
-
 
 
 <!-- include the script -->

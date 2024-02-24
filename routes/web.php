@@ -40,6 +40,7 @@ Route::get('/runqueueworker', function () {
 Route::get('/AjaxDataTable', [App\Http\Controllers\FrontendController::class, 'AjaxDataTable'])->name('employee_profile');
 
 ######### OEMS START ###################
+//AuthController.php getAjaxDataTable All_Users_Index
 Route::get('/employee/ID/{phone}', [App\Http\Controllers\FrontendController::class, 'profile'])->name('employee_profile');
 Route::get('/search/employee', [App\Http\Controllers\FrontendController::class, 'employee'])->name('employee_information');
 

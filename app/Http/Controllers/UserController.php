@@ -279,20 +279,21 @@ if ($request->has('benifits_name') && !empty($request->input('benifits_name'))) 
   }
 }
 
-    return redirect()->route('users_home')->with('success', 'User create successfully');
+    return redirect()->route('users_home')->with('success', '`' . $user->name . '` Successfully Added' . '<a href="/employee/ID/'. $user->phone_number .'">Check Profile</a>');
     #return response()->json(['message' => 'User created successfully'], 201);
 }
 
 
 public function edit(Request $request, $id)
 {
-    $user_data= reg_user::find($id);
+    $user_data= reg_user::find($id); 
     $academic = Academic::where('user_id', $id)->get();
-    $UsersProfessionalCertificate = UsersProfessionalCertificate::where('user_id', $id)->get();
-    $JobExpriences = JobExpriences::where('user_id', $id)->get();
-    $UsersChildInfo = UsersChildInfo::where('user_id', $id)->get();
-    $extra_benifits = extra_benifits::where('user_id', $id)->get();
-    $otherbyPercentage = otherBenifitsbyPercentage::where('user_id', $id)->get();
+    $UsersProfessionalCertificate = UsersProfessionalCertificate::where('user_id', $id)->get(); 
+    $JobExpriences = JobExpriences::where('user_id', $id)->get(); 
+    $UsersChildInfo = UsersChildInfo::where('user_id', $id)->get(); 
+    $extra_benifits = extra_benifits::where('user_id', $id)->get(); 
+    $otherbyPercentage = otherBenifitsbyPercentage::where('user_id', $id)->get(); 
+    
     
     return view('AdminLTE/frontend/Users/edit_user_profile', [
         'user_data' => $user_data,
@@ -324,18 +325,17 @@ public function update_users(Request $request, $id)
         'DOB' => 'required|date',
         'pay_frequency' => 'required|string',
         'bonus_information' => 'required|string',
-        'extra_benefits' => 'required|string',
+   
 
          // Add other validation rules for user fields ##FOREACH START NEEDYAMIN
          //======> degree
-   /*      'degree_information.*' => 'required|string',
-        'degree.*' => 'required|string',
+        'degree_information.*' => 'sometimes|string',
+        'degree.*' => 'sometimes|string',
         'joining_year.*' => 'sometimes|date',
-        'passing_year.*' => 'required|date', */
+        'passing_year.*' => 'sometimes|date',
 
 
         // Add other validation rules for academic fields ##FOREACH END NEEDYAMIN
-
         'nid_Information' => 'required|string',
         'gender' => 'required|string',
         'phoneCountry' => 'required|string',
@@ -360,7 +360,7 @@ public function update_users(Request $request, $id)
         return response()->json(['error' => $validator->errors()], 400);
     }
 
-    # Create a new User instance
+    # Find User instance
     $user = reg_user::find($id);
     # Set user attributes from the request data
     $user->name = $request->input('name');
@@ -443,15 +443,12 @@ if ($request->hasfile('curriculum_vita_cv')) {
     $CV->move('assets/users/UserCV/', $UserCV);
     $user->curriculum_vita_cv = $UserCV;
 }
-
-
     # save the user to the database
     $user->save();
     $lastInsertID=$id;
 
 
 
-    
     if ($request->has('degree_information') && !empty($request->input('degree_information'))) {
         // Delete old academic records associated with the user
         Academic::where('user_id', $lastInsertID)->delete();
@@ -515,7 +512,6 @@ if ($request->has('job_designation_name') && !empty($request->input('job_designa
     
     
 if ($request->has('child_name') && !empty($request->input('child_name'))) {
-    // Delete old child information records associated with the user
     UsersChildInfo::where('user_id', $lastInsertID)->delete();
 
     // Loop through the new child information data and associate it with the user
@@ -533,18 +529,34 @@ if ($request->has('child_name') && !empty($request->input('child_name'))) {
 }
 
 
-
 if ($request->has('benifits_name') && !empty($request->input('benifits_name'))) {
     // Delete old child information records associated with the user
     extra_benifits::where('user_id', $lastInsertID)->delete();
 
     // Loop through the new child information data and associate it with the user
-    foreach ($request->input('child_name') as $key => $professonalformationbenifits_name) {
-        // Check if 'child_name' is not empty before creating the record
+    foreach ($request->input('benifits_name') as $key => $professonalformationbenifits_name) {
         if (!empty($professonalformationbenifits_name)) {
             extra_benifits::create([
                 'benifits_name' => $professonalformationbenifits_name,
-                'benifits_amount' => $request->input('child_gender')[$key],
+                'benifits_amount' => $request->input('benifits_amount')[$key],
+                'user_id' => $lastInsertID,
+            ]);
+        }
+    }
+}
+
+
+### otherBenifitsbyPercentage
+if ($request->has('other_benifits_name') && !empty($request->input('other_benifits_name'))) {
+    // Delete old child information records associated with the user
+    otherBenifitsbyPercentage::where('user_id', $lastInsertID)->delete();
+
+    // Loop through the new child information data and associate it with the user
+    foreach ($request->input('other_benifits_name') as $key => $professonalformationbenifits_name) {
+        if (!empty($professonalformationbenifits_name)) {
+            otherBenifitsbyPercentage::create([
+                'other_benifits_name' => $professonalformationbenifits_name,
+                'other_benifits_by_percentage' => $request->input('other_benifits_by_percentage')[$key],
                 'user_id' => $lastInsertID,
             ]);
         }
@@ -554,7 +566,7 @@ if ($request->has('benifits_name') && !empty($request->input('benifits_name'))) 
 
 
     // Redirect or respond accordingly
-    return redirect()->route('users_home')->with('success', 'User Update successfully');
+    return redirect()->route('users_home')->with('success', '`' . $user->name = $request->input('name') .'` Information Successfully Updated');
 }
 
 
@@ -579,7 +591,7 @@ public function destroy($id)
     }
     
     $item->delete();
-    return redirect()->route('users_home')->with('success', 'Item deleted successfully!');
+    return redirect()->route('users_home')->with('success', '`'. $item->name . '` has been deleted!');
 
 }
 
