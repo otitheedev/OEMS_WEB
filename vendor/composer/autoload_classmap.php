@@ -12,6 +12,7 @@ return array(
     'App\\Http\\Controllers\\Admin\\AdminController' => $baseDir . '/app/Http/Controllers/Admin/AdminController.php',
     'App\\Http\\Controllers\\Api\\AuthController' => $baseDir . '/app/Http/Controllers/Api/AuthController.php',
     'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
+    'App\\Http\\Controllers\\Auth\\CustomLoginController' => $baseDir . '/app/Http/Controllers/Auth/CustomLoginController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',
     'App\\Http\\Controllers\\Auth\\RegisterController' => $baseDir . '/app/Http/Controllers/Auth/RegisterController.php',

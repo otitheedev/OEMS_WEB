@@ -74,7 +74,7 @@ Route::post('/admin/department/update', [App\Http\Controllers\DepartmentControll
 Route::get('/admin/department/destroy/{id}', [App\Http\Controllers\DepartmentController::class, 'destroy'])->name('destroy');
 
 # Users
-Route::get('/admin/users', [App\Http\Controllers\UserController::class, 'index'])->name('users_home');
+Route::get('/admin/users', [App\Http\Controllers\UserController::class, 'all_users_index'])->name('users_home');
 Route::get('/admin/users/create', [App\Http\Controllers\UserController::class, 'create'])->name('users_create');
 Route::post('/admin/users/store', [App\Http\Controllers\UserController::class, 'create_users']);
 Route::post('/admin/users/update/{id}', [App\Http\Controllers\UserController::class, 'update_users']); ########

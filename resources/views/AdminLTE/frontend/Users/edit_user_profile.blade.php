@@ -1082,7 +1082,6 @@ if (maritalStatus && maritalStatus.value === 'married') {newUserForm.style.displ
         <option value="journalist">Journalist</option>
         <option value="lawyer">Lawyer</option>
         <option value="mechanic">Mechanic</option>
-        <option value="nurse">Nurse</option>
         <option value="pharmacist">Pharmacist</option>
         <option value="pilot">Pilot</option>
         <option value="police_officer">Police Officer</option>
@@ -1143,9 +1142,6 @@ if (maritalStatus && maritalStatus.value === 'married') {newUserForm.style.displ
       </div>
       </div>
 
-
-
-    
       <!-- 1-->
       <div class="container mt-2" style="background: #fffdfa;padding: 15px;border-radius: 15px;border: 1px solid lightgray;">
       <h4 class="mt-0"><i class="fa-solid fa-truck-medical"></i> Emergency Contact </h4> <hr>
@@ -1160,13 +1156,11 @@ if (maritalStatus && maritalStatus.value === 'married') {newUserForm.style.displ
         <input type="number" name="emergency_contact_number_1" value="{{ $user_data->emergency_contact_number_1 }}"  class="form-control" placeholder="Emergency Contact Number" required>
       </div>
 
-
       <div class="col-sm-4 form-group">
         <label for="pass">Emergency Contact Relation 1</label>
         <input type="text" name="emergency_contact_relationship_1" class="form-control" value="{{ $user_data->emergency_contact_relationship_1 }}" placeholder="Emergency Contact Name" required>
       </div>
       </div>
-
 
       <!-- 2-->
       <div class="row col-12 mt-1">
@@ -1179,7 +1173,6 @@ if (maritalStatus && maritalStatus.value === 'married') {newUserForm.style.displ
         <label for="pass2">Emergency Contact Number 2</label>
         <input type="number" name="emergency_contact_number_2" value="{{ $user_data->emergency_contact_number_2 }}" class="form-control" placeholder="Emergency Contact Number" required>
       </div>
-
 
       <div class="col-sm-4 form-group">
         <label for="pass">Emergency Contact Relation 2</label>

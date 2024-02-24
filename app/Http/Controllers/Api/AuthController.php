@@ -20,7 +20,7 @@ use App\Models\Permission;
 // Define AuthController class which extends Controller
 class AuthController extends Controller
 {
-    ######################## API getAjaxDataTable##########################
+    ######################## API getAjaxDataTable All_Users_Index ##########################
     public function getAjaxDataTable(Request $request)
     {
         $start = $request->input('start', 0);
@@ -42,7 +42,6 @@ class AuthController extends Controller
         if (!empty($dateRange)) {
             $startDate = $dateRange[0];
             $endDate = $dateRange[1];
-            
             $query->whereBetween('created_at', [$startDate, $endDate]);
         }
     

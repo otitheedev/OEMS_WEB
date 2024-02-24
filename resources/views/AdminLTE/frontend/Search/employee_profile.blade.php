@@ -258,8 +258,7 @@ ul.timeline > li.active:before {
                      <div class="card-body p-0 table-responsive">
                                 <h4 class="p-3 mb-0"><i class="fa fa-child" aria-hidden="true"></i> Family Information</h4>
 
-                                
-                         <table class="table mb-0" style="text-align:center;">
+                         <table class="table mb-0" style="text-align:left;">
                                 <thead>
                               <tr>
                                 <th scope="col">Parents Name</th>
@@ -270,15 +269,16 @@ ul.timeline > li.active:before {
                                 <tbody class="table-group-divider">
                                 <tr>
                                 <td>{{ $user->father_name }}</td>
-        <td>
-        {{ \Carbon\Carbon::parse($user->father_birthday)->format('d F, Y') }}
-        <span class="text-secondary">(@php
-        $birthDate = \Carbon\Carbon::parse($user->father_birthday);
-        $currentDate = \Carbon\Carbon::now();
-        $age = $currentDate->diffInYears($birthDate);
-        echo $age . ' years';
-        @endphp)</span>
-       </td>
+                                
+                                <td>
+                                   {{ \Carbon\Carbon::parse($user->father_birthday)->format('d F, Y') }}
+                                    <span class="text-secondary">(@php
+                                     $birthDate = \Carbon\Carbon::parse($user->father_birthday);
+                                     $currentDate = \Carbon\Carbon::now();
+                                     $age = $currentDate->diffInYears($birthDate);
+                                     echo $age . ' years';
+                                    @endphp)</span>
+                                  </td>
 
                                 <td>{{ $user->father_occupation }}</td>
                                 </tr>
@@ -297,14 +297,12 @@ ul.timeline > li.active:before {
                                 <td>{{ $user->mother_occupation }}</td>
                                 </tr>
                             </tbody>
-                                
                         </table>
-
                                 </div>
                                 
 
                                 <div class="table-responsive">
-                                <table class="table mb-0" style="text-align:center;">
+                                <table class="table mb-0" style="text-align:left;">
                                     <thead>
                                         <tr>
                                             <th scope="col">Children's Name</th>
@@ -318,7 +316,7 @@ ul.timeline > li.active:before {
                                         <tr>
                                             <td>{{ $child->child_name }} </td>
                                             <td>{{ $child->child_gender }} </td>
-        <td>
+      <td>
         {{ \Carbon\Carbon::parse($user->child_birthday)->format('d F, Y') }}
         <span class="text-secondary">(@php
         $birthDate = \Carbon\Carbon::parse($user->child_birthday);

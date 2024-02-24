@@ -553,6 +553,7 @@ class ComposerStaticInit9c491b8531eec05ba41a11d9276a5749
         'App\\Http\\Controllers\\Admin\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AdminController.php',
         'App\\Http\\Controllers\\Api\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/AuthController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
+        'App\\Http\\Controllers\\Auth\\CustomLoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/CustomLoginController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',

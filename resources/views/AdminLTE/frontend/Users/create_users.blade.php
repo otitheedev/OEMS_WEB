@@ -1053,7 +1053,6 @@ if (maritalStatus && maritalStatus.value === 'married') {newUserForm.style.displ
         <option value="journalist">Journalist</option>
         <option value="lawyer">Lawyer</option>
         <option value="mechanic">Mechanic</option>
-        <option value="nurse">Nurse</option>
         <option value="pharmacist">Pharmacist</option>
         <option value="pilot">Pilot</option>
         <option value="police_officer">Police Officer</option>

@@ -19,6 +19,7 @@ class FrontendController extends Controller
     {
          
          $user = reg_user::with('child_info','academicRecords', 'professional_certificate', 'job_expriences','otherBenifitsbyPercentage','extra_benifits')->where('phone_number',$number)->first();
+         if (!$user){abort(404);}
          $child_info = $user->child_info;
          $academicRecords = $user->academicRecords;
          $professional_certificate = $user->professional_certificate;
@@ -52,7 +53,7 @@ class FrontendController extends Controller
     {
         $users = reg_user::get()->all();
         # return $user=reg_user::get()->all();
-        return view('AdminLTE/frontend/Search/search_employee',['users' => $users]);
+        return view('AdminLTE/frontend/Search/AjaxDataTable',['users' => $users]);
     }
 
 }

@@ -27,10 +27,12 @@ use Illuminate\Validation\Rule;
 class UserController extends Controller
 {
 
- public function index()
+ public function all_users_index()
     {
         $user=reg_user::all();
-        return view('AdminLTE/frontend/Users/users',['user' => $user]);
+        #return view('AdminLTE/frontend/Users/users',['user' => $user]);
+        return view('AdminLTE/frontend/Users/AjaxDataTable',['user' => $user]);
+       
     }
 
 
@@ -244,15 +246,15 @@ if ($request->has('child_name') && !empty($request->input('child_name'))) {
 }
 
 ############## other_benifits_by_percentage start #################
-if ($request->has('other_benifits_by_percentage') && !empty($request->input('other_benifits_by_percentage'))) {
+if ($request->has('other_benifits_name') && !empty($request->input('other_benifits_name'))) {
     ## loop childInfo data and associate it with the Users
-    foreach ($request->input('other_benifits_by_percentage') as $key => $BenifitsbyPercentage) {
+    foreach ($request->input('other_benifits_name') as $key => $BenifitsbyPercentage) {
         
         # Check if 'benifits_name' is not empty 
         if (!empty($BenifitsbyPercentage)) {
             otherBenifitsbyPercentage::create([
             'other_benifits_name' => $BenifitsbyPercentage,
-            'other_benifits_by_percentage' => $BenifitsbyPercentage,
+            'other_benifits_by_percentage' => $request->input('other_benifits_by_percentage')[$key],
             #'benifits_amount' => $request->input('benifits_amount')[$key],
             'user_id' => $lastInsertID,
         ]);
