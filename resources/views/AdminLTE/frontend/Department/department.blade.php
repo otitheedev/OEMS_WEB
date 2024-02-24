@@ -45,8 +45,8 @@
 
 <div class="container-fluid card p-2">
 
-<div class="text-left p-2"> <a href="{{ url('/admin/department/create') }}" class="btn btn-primary p-2"> Create New Department </a></div>
-
+<div class="text-left p-2"> <a href="{{ url('/admin/department/create') }}" class="btn-sm btn-primary p-2"> Create New Department </a></div>
+<hr>
 
 <!-- Your DataTable HTML -->
 <table id="example" class="display" style="max-width:100%">

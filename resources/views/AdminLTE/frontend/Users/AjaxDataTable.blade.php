@@ -51,15 +51,17 @@
 
 <div class="container-fluid card p-2">
 
-<div class="text-left p-2">  <a href="{{ url('/admin/users/create') }}" class="btn btn-primary p-2"> Create New Users</a></div>
+<div class="row mt-2">
+<div class="col-6">  <a href="{{ url('/admin/users/create') }}" class="btn-sm btn-primary p-2"> Create New Users</a></div>
 
-   <div class="text-right">
+   <div class="col-6">
         <label for="dateRange">Filter by Date Range:</label>
         <input type="date" id="startDate" name="startDate">
         <input type="date" id="endDate" name="endDate">
         <button id="applyFilter">Apply Filter</button>
     </div>
-
+</div>
+<hr>
     <table id="ajaxDataTable" class="table">
         <thead>
             <tr>
