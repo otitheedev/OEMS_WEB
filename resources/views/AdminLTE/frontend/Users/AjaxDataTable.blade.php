@@ -3,19 +3,12 @@
 @section('content')
 @include('AdminLTE/re_usable_admin/dataTable_jQuery')
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
-
 
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
 
-
-    
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
