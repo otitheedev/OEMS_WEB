@@ -88,6 +88,11 @@
                     "url": "http://127.0.0.1:8000/api/AjaxDataTable",
                     "type": "GET",
                     "dataSrc": "data",
+                    "beforeSend": function(xhr) {
+                // Include your custom headers here
+                xhr.setRequestHeader('X-Username', 'needyamin@gmail.com');
+                xhr.setRequestHeader('X-Key', 'needyamin@gmail.com');
+            },
                 },
                 "columns": [
                     {"data": "id", "className":"text-center"},

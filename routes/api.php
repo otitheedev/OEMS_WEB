@@ -7,9 +7,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+Route::group(['middleware' => 'api'], function () {
 #ajaxDataTable
 Route::get('/AjaxDataTable', [App\Http\Controllers\Api\AuthController::class, 'getAjaxDataTable'])->name('employee_profile');
+});
+
 
 //ALL PRODUCTS
 use app\Http\Controllers\API\regUsercontroller;
