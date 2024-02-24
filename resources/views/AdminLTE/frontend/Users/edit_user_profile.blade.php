@@ -498,7 +498,7 @@
 
       <div class="col-sm-6 form-group">
         <label for="Date"><i class="fa-solid fa-hand-holding-heart"></i> Extra Other Benefits</label>
-        <input type="text" name="extra_benefits" class="form-control" placeholder="Extra Benefits" value="{{ $user_data->extra_benefits }}">
+        <input type="number" name="extra_benefits" class="form-control" placeholder="Extra Benefits" value="{{ $user_data->extra_benefits }}">
       </div>
 
       <div class="col-sm-6 form-group">
