@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('activity_logs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('user_name')->nullable();
             $table->string('description');
             $table->ipAddress('ip_address')->nullable();
             $table->string('url');

@@ -50,6 +50,9 @@ Route::get('/', function () {$message = Session::get('authRedirectMessage');retu
 ######################## middleware start ########################
 Route::group(['middleware' => ['auth', 'role:admin,HR,GM']], function () {
 
+#Activity log:
+Route::get('/admin/activitylogs', [App\Http\Controllers\FrontendController::class, 'activitylogs'])->name('activitylogs');
+
 ## SMS RELATED TEST ###
 Route::get('/admin/sms/createSMS', [App\Http\Controllers\Admin\AdminController::class, 'createSMS'])->name('createSMS');
 Route::get('/admin/sms/', [App\Http\Controllers\Admin\AdminController::class, 'SMS'])->name('SMS');

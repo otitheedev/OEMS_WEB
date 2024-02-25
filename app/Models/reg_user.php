@@ -97,6 +97,11 @@ class reg_user extends Model
     {
         return $this->hasMany(extra_benifits::class, 'user_id', 'id');
     }
+
+    public function UserNameActivity()
+    {
+        return $this->hasMany('App\Models\APIModel\activitylogs', 'user_id', 'id');
+    }
     ######################################################################
 
 }

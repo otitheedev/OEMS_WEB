@@ -34,6 +34,11 @@ public function sms(Request $request){
     $mobile = $request->input('phone_number');
     $message = $request->input('message');
     
+    // Accessing values using env function
+    $apiKey = env('API_KEY');
+    $type = env('TYPE');
+    $senderId = env('SENDER_ID');
+
     # SMS
     $sender = Sender::getInstance();
     $sender->setProvider(BulkSmsBD::class);
@@ -42,9 +47,9 @@ public function sms(Request $request){
     $sender->setQueue(true); 
     $sender->setConfig(
    [
-       'api_key' => 'qfI5bCOCc04w4812MUv4',
-       'type' => 'text',
-       'senderid' => '8809617615488',
+     'api_key' => $apiKey,
+     'type' => $type,
+     'senderid' => $senderId,
    ]
    );
     $status = $sender->send(); 

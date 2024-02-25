@@ -19,7 +19,7 @@ class LogActivity
         $user = Auth::user();
 
         $logData = [
-            'user_id' => $user ? $user->id : null,
+            'user_name' => $user ? $user->name : null,
             'description' => 'Visited: ' . $request->fullUrl(),
             'ip_address' => $request->ip(),
             'url' => $request->fullUrl(),
