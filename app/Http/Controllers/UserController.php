@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
+use App\Helpers\LogActivityHelper;
+
 
 
 ##SMS
@@ -563,15 +565,15 @@ if ($request->has('other_benifits_name') && !empty($request->input('other_benifi
     }
 }
 
-
-
+    
+    LogActivityHelper::addToLog('Account Edited', $request);
     // Redirect or respond accordingly
     return redirect()->route('users_home')->with('success', '`' . $user->name = $request->input('name') .'` Information Successfully Updated');
 }
 
 
 
-public function destroy($id)
+public function destroy(Request $request, $id)
 {
     $item = reg_user::find($id);
     
@@ -590,6 +592,7 @@ public function destroy($id)
         File::delete($UpLoadCV);
     }
     
+    LogActivityHelper::addToLog('Account Has Been Deleted', $request);
     $item->delete();
     return redirect()->route('users_home')->with('success', '`'. $item->name . '` has been deleted!');
 

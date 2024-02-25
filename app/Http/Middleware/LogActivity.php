@@ -3,11 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
-use App\Models\ActivityLog;
+use App\Helpers\LogActivityHelper;
 use Illuminate\Support\Facades\Auth;
-
 
 class LogActivity
 {
@@ -15,18 +12,12 @@ class LogActivity
     {
         $response = $next($request);
 
-        // Log activity
+   /*      // Log activity
         $user = Auth::user();
 
-        $logData = [
-            'user_name' => $user ? $user->name : null,
-            'description' => 'Visited: ' . $request->fullUrl(),
-            'ip_address' => $request->ip(),
-            'url' => $request->fullUrl(),
-            'browser_agent' => $request->header('User-Agent'),
-        ];
+        $logSubject = 'Visited: ' . $request->fullUrl();
 
-        ActivityLog::create($logData);
+        LogActivityHelper::addToLog($logSubject, $request); */
 
         return $response;
     }
