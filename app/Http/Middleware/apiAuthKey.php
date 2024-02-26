@@ -23,8 +23,8 @@ class apiAuthKey
 
     private function isValidCredentials($username, $key)
     {
-        $envUsername = env('YOUR_USERNAME', 'default_username');
-        $envKey = env('YOUR_KEY', 'default_key');
+        $envUsername = env('JSONAPI_USERNAME', 'default_username');
+        $envKey = env('JSONAPI_KEY', 'default_key');
         return ($username === $envUsername && $key === $envKey);
     }
 }

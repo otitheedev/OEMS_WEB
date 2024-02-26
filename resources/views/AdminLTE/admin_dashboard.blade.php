@@ -38,7 +38,7 @@
               <div class="icon">
                 <i class="ion ion-person"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{ url('admin/users') }}" class="small-box-footer">View All <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
 
@@ -53,7 +53,7 @@
               <div class="icon">
                 <i class="ion ion-home"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{ url('admin/department') }}" class="small-box-footer">View All <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
 
@@ -91,9 +91,19 @@
         </div>
     </section>
 
-
-
-
+ @if($users_DOB->isNotEmpty())
+   <section class="content">
+      <div class="container">
+        <div class="card p-2">
+       <ol type="1">
+            @foreach ($users_DOB as $user)
+            <li> Today is <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $user->name }}'s</a> Birthday! 🎉🎂</li>
+              @endforeach
+            </ol> 
+        </div> 
+      </div> 
+    </section>
+    @endif
 
     <!-- Main content -->
     <section class="content">

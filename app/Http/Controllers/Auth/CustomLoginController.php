@@ -18,15 +18,19 @@ class CustomLoginController extends Controller
     // Handle the login request
     public function login(Request $request)
     {
+       
         // Your custom login logic here
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('email', 'phone_number', 'password');
 
         if (Auth::attempt($credentials)) {
             // Authentication passed...
-            return redirect()->intended('/dashboard');
+            return redirect()->route('admin_dashboard');
         }
 
-        return redirect()->back()->withErrors(['email' => 'Invalid credentials']);
+        return redirect()->back()->withErrors([
+            'email' => 'Invalid email address',
+            'phone_number' => 'Invalid phone number',
+        ]);
     }
 
     // Logout the user

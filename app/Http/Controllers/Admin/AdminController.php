@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\adminRole\adminRole;
 use App\Models\adminRole\adminUserRole;
+use App\Models\department;
 use App\Models\reg_user;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 ##SMS
 use Xenon\LaravelBDSms\Provider\BulkSmsBD;
@@ -17,6 +19,21 @@ use Xenon\LaravelBDSms\Sender;
 
 class AdminController extends Controller
 {
+
+public function admin_dashboard(){
+ // Get today's date
+ $today = Carbon::now();
+ 
+ $users_DOB= reg_user::whereDay('DOB', $today->day)->whereMonth('DOB', $today->month)->get();
+ $users_count= reg_user::count();
+ $department_count= department::count();
+       return view('AdminLTE/admin_dashboard',[
+           'users_count' => $users_count,
+           'department_count' => $department_count, 
+           'users_DOB' => $users_DOB,
+       ]);
+   }
+
 
 
 ########## SND SMS START ################    
@@ -35,9 +52,9 @@ public function sms(Request $request){
     $message = $request->input('message');
     
     // Accessing values using env function
-    $apiKey = env('API_KEY');
-    $type = env('TYPE');
-    $senderId = env('SENDER_ID');
+    $apiKey = env('SMS_API_KEY');
+    $type = env('SMS_TYPE');
+    $senderId = env('SMS_SENDER_ID');
 
     # SMS
     $sender = Sender::getInstance();

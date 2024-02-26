@@ -36,6 +36,10 @@ Route::get('/runqueueworker', function () {
 });
 
 
+Route::post('/login', [App\Http\Controllers\Auth\CustomLoginController::class, 'login'])->name('login');
+Route::get('/login', [App\Http\Controllers\Auth\CustomLoginController::class, 'login'])->name('login');
+Route::post('/logout', [App\Http\Controllers\Auth\CustomLoginController::class, 'logout'])->name('logout');
+
 # AjaxDataTable
 Route::get('/AjaxDataTable', [App\Http\Controllers\FrontendController::class, 'AjaxDataTable'])->name('employee_profile');
 
@@ -58,7 +62,7 @@ Route::get('/admin/sms/createSMS', [App\Http\Controllers\Admin\AdminController::
 Route::get('/admin/sms/', [App\Http\Controllers\Admin\AdminController::class, 'SMS'])->name('SMS');
 
 #Route::get('/admin', function () { return view('AdminLTE/index'); });
-Route::get('/admin', [App\Http\Controllers\UserController::class, 'admin_dashboard'])->name('admin_dashboard');
+Route::get('/admin', [App\Http\Controllers\Admin\AdminController::class, 'admin_dashboard'])->name('admin_dashboard');
 
 ## AddRole Admins
 Route::get('/admin/addRole/', [App\Http\Controllers\Admin\AdminController::class, 'home'])->name('addRole_admin_home');
@@ -121,5 +125,5 @@ Route::group(['middleware' => ['auth', 'permission:delete_post']], function () {
 ### Dustbin ###
 #............. DD TEST CODE .............#
 Route::get('/admin/hitGET', function () {if (request()->isMethod('get')) {dd(request()->all());}});
-Auth::routes();
+#Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

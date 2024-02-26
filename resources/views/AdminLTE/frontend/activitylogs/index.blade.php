@@ -64,6 +64,7 @@
             <th>Description</th>
             <th>Ip Address</th>
             <th>URL</th>
+            <th>Time</th>
             <th>Browser_Agent</th>
         </tr>
     </thead>
@@ -73,9 +74,10 @@
         <tr>
             <td>{{ $log->id }}</td>
             <td>{{ $log->user_name }}</td>
-            <td>{{ $log->description }}</td>
+            <td>{!! $log->description !!}</td>
             <td>{{ $log->ip_address }}</td>
             <td>{{ $log->url }}</td>
+            <td>{{ $log->created_at->format('F j, Y h:i A') }}</td>
             <td>{{ $log->browser_agent }}</td>
         </tr>
      @endforeach

@@ -15,7 +15,7 @@
           <img src="{{ asset('assets/users/'. auth()->user()->profile_pic) }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-         <a href="#" class="d-block">{{ auth()->user()->name }}</a>
+         <a href="{{ url('employee/ID/'. auth()->user()->phone_number) }}" class="d-block" target="_blank">{{ auth()->user()->name }}</a>
         </div>
         @endif
       </div>

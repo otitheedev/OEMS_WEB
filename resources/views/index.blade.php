@@ -36,7 +36,7 @@ a {text-decoration: none;}
                                                 <label>Username<span class="text-danger">*</span></label>
                                                 <div class="input-group">
                                                     <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
-                                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Enter Username" required autocomplete="email" autofocus>@error('email')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+                                                    <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Enter Username" required autocomplete="email" autofocus>@error('email')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
                                                 </div>
 
                                             </div>
@@ -79,11 +79,18 @@ a {text-decoration: none;}
                             </div>
                         </div>
                     </div>
-                    <p class="text-end text-secondary mt-2">Otithee Staff Login</p>
-                    <a href="{{ url('/admin') }}" class="btn-sm btn-primary"> Admin login </a>
+
+                <div class="row">
+                   <div class="col-6 mt-2">
+                <a href="{{ url('/admin') }}" class="btn-sm btn-primary"> Admin login </a>
                     <a href="#" class="btn">  </a>
                     <a href="{{ url('/search/employee')}}" class="btn-sm btn-success"> Search Employee </a> 
-                </div>
+                </div>   
+               
+                <div class="col-6 mt-2 text-right">
+                         <div class="text-right"> <p class="text-secondary">Otithee Staff Login</p> </div>  
+                 </div>
+            </div>
             </div>
         </div>
     </div>

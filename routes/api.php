@@ -12,11 +12,6 @@ Route::group(['middleware' => 'api'], function () {
 Route::get('/AjaxDataTable', [App\Http\Controllers\Api\AuthController::class, 'getAjaxDataTable'])->name('employee_profile');
 });
 
-
-//ALL PRODUCTS
-use app\Http\Controllers\API\regUsercontroller;
-Route::apiResource('users', regUsercontroller::class);
-
 //AUTH
 use App\Http\Controllers\Api\AuthController;
 

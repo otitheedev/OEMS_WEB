@@ -44,18 +44,6 @@ class UserController extends Controller
         return view('AdminLTE/frontend/Users/create_users');
     }
 
-    public function admin_dashboard(){
-   
-    
-         $users_count= reg_user::count();
-         $department_count= department::count();
-        return view('AdminLTE/index',[
-            'users_count' => $users_count,
-            'department_count' => $department_count, 
-        ]);
-    }
-
-
 
 public function create_users(Request $request)
 {
@@ -566,7 +554,8 @@ if ($request->has('other_benifits_name') && !empty($request->input('other_benifi
 }
 
     
-    LogActivityHelper::addToLog('Account Edited', $request);
+LogActivityHelper::addToLog('<a href="' . url("employee/ID/{$user->phone_number}") . '" target="_blank">' . $user->name . "'s</a> Account Has Been Edited", $request);
+
     // Redirect or respond accordingly
     return redirect()->route('users_home')->with('success', '`' . $user->name = $request->input('name') .'` Information Successfully Updated');
 }
