@@ -33,7 +33,7 @@ a {text-decoration: none;}
                                     <form method="POST" action="{{ route('login') }}" class="row g-4">
                                     @csrf
                                             <div class="col-12">
-                                                <label>Username<span class="text-danger">*</span></label>
+                                                <label>Username or Phone <span class="text-danger">*</span></label>
                                                 <div class="input-group">
                                                     <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
                                                     <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Enter Username" required autocomplete="email" autofocus>@error('email')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror

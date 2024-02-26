@@ -37,7 +37,7 @@ class User extends Authenticatable
         'nid_Information',
         'gender',
         'phoneCountry',
-        'phone',
+        'phone_number',
 
     ];
 
