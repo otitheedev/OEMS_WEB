@@ -25,12 +25,18 @@ public function admin_dashboard(){
  $today = Carbon::now();
  
  $users_DOB= reg_user::whereDay('DOB', $today->day)->whereMonth('DOB', $today->month)->get();
+ $user_child = reg_user::with(['child_info' => function ($query) use ($today) {$query->whereDate('child_birthday', $today);}])->get();
+ $users_anniversary= reg_user::whereDay('spouse_anniversary', $today->day)->whereMonth('spouse_anniversary', $today->month)->get();
+
+
  $users_count= reg_user::count();
  $department_count= department::count();
        return view('AdminLTE/admin_dashboard',[
            'users_count' => $users_count,
            'department_count' => $department_count, 
            'users_DOB' => $users_DOB,
+           'user_child' =>  $user_child,
+           'users_anniversary' =>  $users_anniversary,
        ]);
    }
 

@@ -91,19 +91,35 @@
         </div>
     </section>
 
- @if($users_DOB->isNotEmpty())
+
    <section class="content">
       <div class="container">
         <div class="card p-2">
        <ol type="1">
             @foreach ($users_DOB as $user)
             <li> Today is <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $user->name }}'s</a> Birthday! 🎉🎂</li>
-              @endforeach
+            
+            @foreach ($users_anniversary as $anniversary)
+            <li>Happy Anniversary <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $anniversary->name }}'s</a>! 🎉🎂</li>
+            @endforeach
+
+
+        @foreach ($user_child as $user)
+         <ol type="i">
+            @foreach ($user->child_info as $child)
+            <li> Our Employer <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $user->name }}'s</a>, @if($child->child_gender == 'female') daughter @else son @endif {{ $child->child_name }}'s Birthday is today! 🎉🎂</li>
+            @endforeach
+         </ol>
+         @endforeach
+
+
+            
+         @endforeach
             </ol> 
         </div> 
       </div> 
     </section>
-    @endif
+
 
     <!-- Main content -->
     <section class="content">
