@@ -103,7 +103,6 @@
             <li>Happy Anniversary <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $anniversary->name }}'s</a>! 🎉🎂</li>
             @endforeach
 
-
         @foreach ($user_child as $user)
          <ol type="i">
             @foreach ($user->child_info as $child)
@@ -116,8 +115,24 @@
             
          @endforeach
             </ol> 
+
+
+  <!-- upcoming birthday next 7 days --> 
+  <ol type="1">
+  <h3> Upcoming Birthday </h3>
+  @foreach ($upcomingBirthdays as $upcomingBirthday)
+    <li>{{ $upcomingBirthday->name }} birthday {{ $upcomingBirthday->DOB }}</li>
+        
+      @foreach ($upcomingBirthday->child_info as $child)
+            <li>Child: {{ $child->child_name }} birthday {{ $child->child_birthday }}</li>
+        @endforeach
+    @endforeach
+  </ol>
+
+
         </div> 
       </div> 
+  
     </section>
 
 

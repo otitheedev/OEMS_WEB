@@ -75,20 +75,20 @@ a {text-decoration: none;}
                                 </div>
                             </div>
                             <div class="col-md-5 ps-0 d-none d-md-block">
-                         <img class="form-right h-100 w-100 text-center img-fluid" src="{{ url('assets/OG.png') }}">
+                         <img class="form-right h-95 w-100 mt-1 text-center img-fluid" src="{{ url('assets/OG.png') }}">
                             </div>
                         </div>
                     </div>
 
                 <div class="row">
                    <div class="col-6 mt-2">
-                <a href="{{ url('/admin') }}" class="btn-sm btn-primary"> Admin login </a>
-                    <a href="#" class="btn">  </a>
+                   @if(auth()->check())  <a href="{{ url('/admin') }}" class="btn-sm btn-primary"> Admin Dasboard </a>
+                    <a href="#" class="btn"></a>@endif
                     <a href="{{ url('/search/employee')}}" class="btn-sm btn-success"> Search Employee </a> 
                 </div>   
                
                 <div class="col-6 mt-2 text-right">
-                         <div class="text-right"> <p class="text-secondary">Otithee Staff Login</p> </div>  
+                         <div class="text-right"> <p class="text-secondary" style="text-align:right;">Otithee Staff Login</p> </div>  
                  </div>
             </div>
             </div>

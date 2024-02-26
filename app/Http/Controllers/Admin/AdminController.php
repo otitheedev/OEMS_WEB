@@ -21,14 +21,22 @@ class AdminController extends Controller
 {
 
 public function admin_dashboard(){
- // Get today's date
- $today = Carbon::now();
- 
+  # Get today's date
+  $today = Carbon::now();
+
+  # Calculate the date 7 days from today
+  $sevenDaysLater = $today->copy()->addDays(7);
+
+  # Fetch users with upcoming birthdays in the next 7 days
+  $upcomingBirthdays = reg_user::with(['child_info' => function ($query) use ($today, $sevenDaysLater) {
+  $query->whereBetween('child_birthday', [$today, $sevenDaysLater]);}])->get();
+  
+
  $users_DOB= reg_user::whereDay('DOB', $today->day)->whereMonth('DOB', $today->month)->get();
  $user_child = reg_user::with(['child_info' => function ($query) use ($today) {$query->whereDate('child_birthday', $today);}])->get();
  $users_anniversary= reg_user::whereDay('spouse_anniversary', $today->day)->whereMonth('spouse_anniversary', $today->month)->get();
 
-
+ 
  $users_count= reg_user::count();
  $department_count= department::count();
        return view('AdminLTE/admin_dashboard',[
@@ -37,6 +45,7 @@ public function admin_dashboard(){
            'users_DOB' => $users_DOB,
            'user_child' =>  $user_child,
            'users_anniversary' =>  $users_anniversary,
+           'upcomingBirthdays' => $upcomingBirthdays,
        ]);
    }
 
