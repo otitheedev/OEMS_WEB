@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\adminRole\adminRole;
 use App\Models\adminRole\adminUserRole;
 use App\Models\department;
+use App\Models\UsersChildInfo;
 use App\Models\reg_user;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
@@ -30,6 +31,8 @@ public function admin_dashboard(){
   # Fetch users with upcoming birthdays in the next 7 days
   $upcomingBirthdays = reg_user::with(['child_info' => function ($query) use ($today, $sevenDaysLater) {
   $query->whereBetween('child_birthday', [$today, $sevenDaysLater]);}])->get();
+
+  $user_child_birthday = UsersChildInfo::whereDay('child_birthday', $today->day)->whereMonth('child_birthday', $today->month)->get();
   
 
  $users_DOB= reg_user::whereDay('DOB', $today->day)->whereMonth('DOB', $today->month)->get();
@@ -43,6 +46,7 @@ public function admin_dashboard(){
            'users_count' => $users_count,
            'department_count' => $department_count, 
            'users_DOB' => $users_DOB,
+           'user_child_birthday' => $user_child_birthday,
            'user_child' =>  $user_child,
            'users_anniversary' =>  $users_anniversary,
            'upcomingBirthdays' => $upcomingBirthdays,

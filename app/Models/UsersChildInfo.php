@@ -18,6 +18,6 @@ class UsersChildInfo extends Model
    
        public function reg_user()
        {
-           return $this->belongsTo(reg_user::class);
+           return $this->belongsTo(reg_user::class, 'user_id', 'id');
        }
 }

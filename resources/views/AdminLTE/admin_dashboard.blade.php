@@ -92,40 +92,42 @@
     </section>
 
 
+  
    <section class="content">
       <div class="container">
         <div class="card p-2">
+  <h4 class="card header p-1"> Today Birthday! </h4>
        <ol type="1">
             @foreach ($users_DOB as $user)
-            <li> Today is <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $user->name }}'s</a> Birthday! 🎉🎂</li>
+            <li> Today is <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $user->name }}'s</a> Birthday! 🎉🎂 @if($user->birthday_sms_sent == '1') ✔ @else ✗ @endif </li>
             
             @foreach ($users_anniversary as $anniversary)
-            <li>Happy Anniversary <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $anniversary->name }}'s</a>! 🎉🎂</li>
+            <li>Happy Anniversary <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $anniversary->name }}'s</a>! 🎉🎂 </li>
             @endforeach
 
         @foreach ($user_child as $user)
-         <ol type="i">
+     
             @foreach ($user->child_info as $child)
             <li> Our Employer <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $user->name }}'s</a>, @if($child->child_gender == 'female') daughter @else son @endif {{ $child->child_name }}'s Birthday is today! 🎉🎂</li>
             @endforeach
-         </ol>
+    
          @endforeach
 
-
-            
          @endforeach
             </ol> 
 
 
   <!-- upcoming birthday next 7 days --> 
+ 
+  <h4 class="card header p-1"> Upcoming Birthday in 7 Days! </h4>
   <ol type="1">
-  <h3> Upcoming Birthday </h3>
-  @foreach ($upcomingBirthdays as $upcomingBirthday)
-    <li>{{ $upcomingBirthday->name }} birthday {{ $upcomingBirthday->DOB }}</li>
+   @foreach ($upcomingBirthdays as $upcomingBirthday)
+    <li><a href="{{ url('employee/ID/'. $upcomingBirthday->phone_number) }}" target="_blank">{{ $upcomingBirthday->name }}</a> birthday {{ $upcomingBirthday->DOB }}</li>
         
-      @foreach ($upcomingBirthday->child_info as $child)
-            <li>Child: {{ $child->child_name }} birthday {{ $child->child_birthday }}</li>
+       @foreach ($upcomingBirthday->child_info as $child)
+            <li> <a href="{{ url('employee/ID/'. $child->reg_user->phone_number) }}" target="_blank">{{ $child->reg_user->name }}'s</a> @if($child->child_gender == 'female') daughter @else son @endif {{ $child->child_name }}'s birthday {{ $child->child_birthday }}</li>
         @endforeach
+
     @endforeach
   </ol>
 
@@ -332,27 +334,28 @@ document.addEventListener('DOMContentLoaded', function () {
         format: 'L',
         inline: true
     });
-
-    // Highlight specific random dates
+    // Add other static dates and messages here if needed
+    //{ date: new Date('2024-03-05'), message: 'Happy Birthday on March 5th!' },
+    // Highlight specific random dates with different messages
     var highlightedDates = [
-        new Date('2024-02-23'),
-        new Date('2024-03-05'),
-        new Date('2024-03-12'),
-        // Add your other random dates here
-    ];
+    @foreach ($users_DOB as $user)
+        { date: new Date('{{ $user->DOB }}'), 
+        message: "Today is {{ $user->count() }} empoyeer Birthday! " },
+    @endforeach
+];
 
-    highlightedDates.forEach(function (date) {
-        var formattedDate = moment(date).format('L');
+
+    highlightedDates.forEach(function (highlight) {
+        var formattedDate = moment(highlight.date).format('L');
         var targetDay = document.querySelector('.datepicker-days td[data-day="' + formattedDate + '"]');
         
         if (targetDay) {
             targetDay.classList.add('date-highlighted');
 
+            targetDay.addEventListener('mouseenter', function () {
+                targetDay.classList.add('hovered-highlighted-date');
 
-    targetDay.addEventListener('mouseenter', function () {
-    targetDay.classList.add('hovered-highlighted-date');
-     
-    //alert('You clicked on a highlighted date: ' + formattedDate);
+               //alert('You clicked on a highlighted date: ' + formattedDate);
     var Welcome = new bootstrap.Modal(document.getElementById('exampleModal'));
     Welcome.show();
     targetDay.addEventListener('mouseleave', function removeHoveredClass() {
@@ -360,8 +363,9 @@ document.addEventListener('DOMContentLoaded', function () {
         targetDay.removeEventListener('mouseleave', removeHoveredClass);
         Welcome.hide(); // Hide the modal when the mouse leaves the date
     });
-});
 
+
+            });
         }
     });
 });
@@ -370,23 +374,42 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Today Is Birthday!</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Happy Birthday To You Yamin!
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> Today is {{ isset($user) ? $user->count() : 0 }} employer Birthday! And {{ $users_anniversary->count() }} employer anniversary and our employer's {{ $user_child_birthday->count() }} child birthday!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            <ol type="1">
+            @foreach ($users_DOB as $user)
+            <li> Today is <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $user->name }}'s</a> Birthday! 🎉🎂 @if($user->birthday_sms_sent == '1') ✔ @else ✗ @endif </li>
+            
+            @foreach ($users_anniversary as $anniversary)
+            <li>Happy Anniversary <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $anniversary->name }}'s</a>! 🎉🎂 </li>
+            @endforeach
+
+        @foreach ($user_child as $user)
+     
+            @foreach ($user->child_info as $child)
+            <li> Our Employer <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $user->name }}'s</a>, @if($child->child_gender == 'female') daughter @else son @endif {{ $child->child_name }}'s Birthday is today! 🎉🎂</li>
+            @endforeach
+    
+         @endforeach
+         @endforeach
+            </ol> 
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
+
 
 
 
