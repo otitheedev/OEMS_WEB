@@ -15,7 +15,7 @@ class CustomLoginController extends Controller
         return view('auth.login');
     }
 
-    // Handle the login request
+    // Handle the login requests
     public function login(Request $request)
 {
     // Your custom login logic here
