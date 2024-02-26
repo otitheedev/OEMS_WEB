@@ -27,14 +27,14 @@ public function admin_dashboard(){
 
   # Calculate the date 7 days from today
   $sevenDaysLater = $today->copy()->addDays(7);
+  
+  
 
   # Fetch users with upcoming birthdays in the next 7 days
   $upcomingBirthdays = reg_user::with(['child_info' => function ($query) use ($today, $sevenDaysLater) {
-  $query->whereBetween('child_birthday', [$today, $sevenDaysLater]);}])->get();
+  $query->whereBetween('child_birthday', [$today, $sevenDaysLater]);}])->whereBetween('DOB', [$today, $sevenDaysLater])->get();
 
-  $user_child_birthday = UsersChildInfo::whereDay('child_birthday', $today->day)->whereMonth('child_birthday', $today->month)->get();
-  
-
+$user_child_birthday = UsersChildInfo::whereDay('child_birthday', $today->day)->whereMonth('child_birthday', $today->month)->get();
  $users_DOB= reg_user::whereDay('DOB', $today->day)->whereMonth('DOB', $today->month)->get();
  $user_child = reg_user::with(['child_info' => function ($query) use ($today) {$query->whereDate('child_birthday', $today);}])->get();
  $users_anniversary= reg_user::whereDay('spouse_anniversary', $today->day)->whereMonth('spouse_anniversary', $today->month)->get();

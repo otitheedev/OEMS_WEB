@@ -119,7 +119,7 @@
 
   <!-- upcoming birthday next 7 days --> 
  
-  <h4 class="card header p-1"> Upcoming Birthday in 7 Days! </h4>
+  <h4 class="card header p-1"> Upcoming Birthday.. </h4>
   <ol type="1">
    @foreach ($upcomingBirthdays as $upcomingBirthday)
     <li><a href="{{ url('employee/ID/'. $upcomingBirthday->phone_number) }}" target="_blank">{{ $upcomingBirthday->name }}</a> birthday {{ $upcomingBirthday->DOB }}</li>
