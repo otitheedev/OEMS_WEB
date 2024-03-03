@@ -849,7 +849,7 @@ if (maritalStatus && maritalStatus.value === 'married') {newUserForm.style.displ
 
       '<div class="col-6 form-group">' +
       '<label for="pass">Amount ' + bf_ama++ + '</label>' +
-      '<input type="number" name="benifits_amount[]" class="form-control">' +
+      '<input type="number" name="benifits_amount[]" class="form-control" onchange="calculateTotalAmount()">' +
       '</div>' +
 
       '<div class="col-12 mb-2">' +

@@ -21,6 +21,8 @@ return new class extends Migration
             
             # Define unique combination of permission_id and role_id
             $table->unique(['permission_id', 'role_id']);
+             // Add indexes
+             $table->index(['permission_id', 'role_id']);
         });
     }
 
