@@ -117,7 +117,7 @@
                  {"data": "gender", "className":"text-center"},
                  {"data": "designation"},
                  {"data": "email"},
-                 {"data": "normal_salary", "className":"text-center"},
+                 {"data": "totalAmount", "className":"text-center"},
                  
                  {
                

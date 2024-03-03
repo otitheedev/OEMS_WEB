@@ -121,6 +121,7 @@ public function create_users(Request $request)
     $user->blood_group = $request->input('blood_group');
     $user->nationality_country = $request->input('nationality_country');
     $user->dob = $request->input('DOB');
+    $user->totalAmount = $request->input('totalAmount');
     $user->normal_salary = $request->input('normal_salary');
     $user->pay_frequency = $request->input('pay_frequency');
     $user->healthcare_insurance = $request->input('healthcare_insurance');

@@ -29,6 +29,7 @@ return new class extends Migration
             $table->boolean('birthday_sms_sent')->default(false);
 
              # Compensation and Benefits
+             $table->string('totalAmount')->nullable();
              $table->string('normal_salary')->nullable();
              $table->string('pay_frequency')->nullable();
              $table->string('healthcare_insurance')->nullable();

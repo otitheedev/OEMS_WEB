@@ -50,7 +50,7 @@ public function create_users(Request $request)
     //return $request;
     // Validate the incoming request data
     $validator = Validator::make($request->all(), [
-        'profile_pic' => 'mimes:jpeg,png,jpg,gif,svg|max:1000',
+        'profile_pic' => 'mimes:jpeg,png,jpg,gif,svg|max:10000',
         'name' => 'required|string|max:255',
         'email' => 'required|email|unique:users,email',
         'password' => ['required', 'string', 'min:4'],
@@ -101,7 +101,7 @@ public function create_users(Request $request)
     $user->blood_group = $request->input('blood_group');
     $user->nationality_country = $request->input('nationality_country');
     $user->dob = $request->input('DOB');
-    
+    $user->totalAmount = $request->input('totalAmount');
     $user->normal_salary = $request->input('normal_salary');
     $user->pay_frequency = $request->input('pay_frequency');
     $user->healthcare_insurance = $request->input('healthcare_insurance');
@@ -319,24 +319,24 @@ public function update_users(Request $request, $id)
 
          // Add other validation rules for user fields ##FOREACH START NEEDYAMIN
          //======> degree
-        'degree_information.*' => 'sometimes|string',
+/*         'degree_information.*' => 'sometimes|string',
         'degree.*' => 'sometimes|string',
         'joining_year.*' => 'sometimes|date',
         'passing_year.*' => 'sometimes|date',
-
+ */
 
         // Add other validation rules for academic fields ##FOREACH END NEEDYAMIN
         'nid_Information' => 'required|string',
         'gender' => 'required|string',
         'phoneCountry' => 'required|string',
 
-        'profile_pic' => 'mimes:jpeg,png,jpg,gif,svg|max:1000',
+        'profile_pic' => 'mimes:jpeg,png,jpg,gif,svg|max:5120',
         'email' => [
             'required',
             'email',
             Rule::unique('users', 'email')->ignore($id),
         ],
-        'curriculum_vita_cv' => 'sometimes|mimetypes:application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document|max:50240',
+       /*  'curriculum_vita_cv' => 'sometimes|mimetypes:application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document|max:5120', */
         
         'phoneCountry' => 'required|string',
         'phone_number' => [
@@ -366,6 +366,7 @@ public function update_users(Request $request, $id)
     $user->nationality_country = $request->input('nationality_country');
     $user->dob = $request->input('DOB');
     
+    $user->totalAmount = $request->input('totalAmount');
     $user->normal_salary = $request->input('normal_salary');
     $user->pay_frequency = $request->input('pay_frequency');
     $user->healthcare_insurance = $request->input('healthcare_insurance');

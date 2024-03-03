@@ -139,20 +139,14 @@ ul.timeline > li.active:before {
                                         </p>
                                         <p class="text-secondary mb-2">Account Created {{ \Carbon\Carbon::parse($user->created_at)->diffForHumans() }} </p>
                                         <p class="text-muted font-size-sm">
+                                            <span class="badge-lg badge-success p-2" style="border-radius:5px;">Basic Salary: {{ $user->normal_salary }} tk ({{ $user->pay_frequency }})</span></p>
 
-                                            <span class="badge-lg badge-success p-2" style="border-radius:5px;">Basic Salary: {{ $user->normal_salary }} tk ({{ $user->pay_frequency }})</span>
-                                        </p>
-
-
-@if($otherBenifitsbyPercentage->isNotEmpty())
-    @php
-        $totalPercentage = $otherBenifitsbyPercentage->sum('other_benifits_by_percentage');
-        $adjustedTotalSalary = $user->normal_salary + $user->normal_salary * ($totalPercentage / 100);
-    @endphp
-    <p class="text-muted font-size-sm"> Adjusted Total Salary: {{ $adjustedTotalSalary }}</p> 
+                                            <p class="text-muted font-size-sm">
+                                            <span class="badge-lg badge-info p-2" style="border-radius:5px;">Total Pay: {{ $user->totalAmount }} tk ({{ $user->pay_frequency }})</span> 
+                                         </p>
 
 
-
+   @if($otherBenifitsbyPercentage->isNotEmpty())
     <table class="table table-bordered" style="width:100%; text-align:left;"> 
      <tr><td>Benefits Name </td> <td> Benefits Percentage</td> </tr>
      @foreach($otherBenifitsbyPercentage as $item)

@@ -824,7 +824,10 @@ if (maritalStatus && maritalStatus.value === 'married') {newUserForm.style.displ
 
   <div class="col-12 form-group">
     <label for="totalAmount"> Total Salary <i class="fa-solid fa-bangladeshi-taka-sign"></i></label> 
-    <input type="text" id="totalAmount" class="form-control" readonly>
+    <input type="text" name="totalAmount" id="totalAmount" class="form-control" readonly>
+    
+    <!-- Hidden input to store the value -->
+     <input type="hidden" name="totalAmount" id="totalAmountstore" class="form-control">
 </div>
 
 
@@ -912,6 +915,7 @@ if (maritalStatus && maritalStatus.value === 'married') {newUserForm.style.displ
     var totalAmount = basicSalary + healthcareInsurance + percentageInputInformation + providendFund + bonusInformation + extraBenefits + mobileBill + totalBenifitsAmount;
 
     document.getElementById('totalAmount').value = totalAmount.toFixed(2) + ' BDT';
+    document.getElementById('totalAmountstore').value = totalAmount.toFixed(2);
 }
 
 
