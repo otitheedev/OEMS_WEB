@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             'profile_pic' => 'https://needyamin.github.io/core/img/YAMiN_HOSSAIN.png',
             'email' => 'needyamin@gmail.com',
             'phone_number' => '01878578504',
-            'password' => Hash::make('needyamin@gmail.com'),
+            'password' => Hash::make('01878578504'),
             'name' => 'Md. Yamin Hossain', 
             'designation' => $faker->jobTitle,
             'address' => $faker->address,

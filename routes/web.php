@@ -8,6 +8,17 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Artisan;
 
 
+
+Route::get('/clear-cache', function () {
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('optimize:clear');
+    Artisan::call('optimize');
+    return 'Caches cleared and configuration files regenerated.';
+});
+
+
+
 #### php artisan serve --host 192.168.68.231 --port 8080
 #### php artisan migrate:refresh --path=/database/migrations/subcategory_newtable_for_description_and_keywords.php
 
@@ -37,15 +48,15 @@ Route::get('/runqueueworker', function () {
 
 
 Route::post('/login', [App\Http\Controllers\Auth\CustomLoginController::class, 'login'])->name('login');
-Route::get('/login', [App\Http\Controllers\Auth\CustomLoginController::class, 'login'])->name('login');
+Route::get('/login', [App\Http\Controllers\Auth\CustomLoginController::class, 'login'])->name('loginweb');
 Route::post('/logout', [App\Http\Controllers\Auth\CustomLoginController::class, 'logout'])->name('logout');
 
 # AjaxDataTable
-Route::get('/AjaxDataTable', [App\Http\Controllers\FrontendController::class, 'AjaxDataTable'])->name('employee_profile');
+Route::get('/AjaxDataTable', [App\Http\Controllers\FrontendController::class, 'AjaxDataTable'])->name('AjaxDataTable');
 
 ######### OEMS START ###################
 //AuthController.php getAjaxDataTable All_Users_Index
-Route::get('/employee/ID/{phone}', [App\Http\Controllers\FrontendController::class, 'profile'])->name('employee_profile');
+Route::get('/employee/ID/{phone}', [App\Http\Controllers\FrontendController::class, 'profile'])->name('employee_profilex');
 Route::get('/search/employee', [App\Http\Controllers\FrontendController::class, 'employee'])->name('employee_information');
 
 ## redirect users to login Page
@@ -69,7 +80,7 @@ Route::get('/admin/addRole/', [App\Http\Controllers\Admin\AdminController::class
 Route::get('/admin/addRole/addRole/{id}', [App\Http\Controllers\Admin\AdminController::class, 'addRole'])->name('edit');
 Route::get('/admin/allRoles/', [App\Http\Controllers\Admin\AdminController::class, 'allRoles'])->name('allRoles_admin');
 Route::post('/admin/addRole/addRole/update', [App\Http\Controllers\Admin\AdminController::class, 'addRoleUpdate'])->name('rolename_update');
-Route::get('/admin/addRole/create', [App\Http\Controllers\Admin\AdminController::class, 'create'])->name('edit');
+Route::get('/admin/addRole/create', [App\Http\Controllers\Admin\AdminController::class, 'create'])->name('edits');
 Route::post('/admin/addRole/update', [App\Http\Controllers\Admin\AdminController::class, 'update'])->name('update');
 Route::get('/admin/addRole/destroy/{id}', [App\Http\Controllers\Admin\AdminController::class, 'destroy'])->name('addRole_admin_destroy');
 
@@ -77,8 +88,8 @@ Route::get('/admin/addRole/destroy/{id}', [App\Http\Controllers\Admin\AdminContr
 Route::get('/admin/department', [App\Http\Controllers\DepartmentController::class, 'index'])->name('department_home');
 Route::get('/admin/department/create', [App\Http\Controllers\DepartmentController::class, 'create'])->name('create');
 Route::post('/admin/department/store', [App\Http\Controllers\DepartmentController::class, 'store'])->name('store');
-Route::get('/admin/department/edit/{id}', [App\Http\Controllers\DepartmentController::class, 'edit'])->name('edit');
-Route::post('/admin/department/update', [App\Http\Controllers\DepartmentController::class, 'update'])->name('update');
+Route::get('/admin/department/edit/{id}', [App\Http\Controllers\DepartmentController::class, 'edit'])->name('edit1');
+Route::post('/admin/department/update', [App\Http\Controllers\DepartmentController::class, 'update'])->name('update1');
 Route::get('/admin/department/destroy/{id}', [App\Http\Controllers\DepartmentController::class, 'destroy'])->name('destroy');
 
 # Users

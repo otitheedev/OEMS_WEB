@@ -94,7 +94,7 @@
 
   
    <section class="content">
-      <div class="container">
+      <div class="container-fluid">
         <div class="card p-2">
   <h4 class="card header p-1"> Today Birthday! </h4>
        <ol type="1">
@@ -110,9 +110,8 @@
             @foreach ($user->child_info as $child)
             <li> Our Employer <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $user->name }}'s</a>, @if($child->child_gender == 'female') daughter @else son @endif {{ $child->child_name }}'s Birthday is today! 🎉🎂</li>
             @endforeach
-    
-         @endforeach
 
+         @endforeach
          @endforeach
             </ol> 
 

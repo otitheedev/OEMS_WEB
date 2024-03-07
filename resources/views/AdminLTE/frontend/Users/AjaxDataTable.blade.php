@@ -85,7 +85,7 @@
                 "processing": true,
                 "serverSide": true,
                 "ajax": {
-                    "url": "http://127.0.0.1:8000/api/AjaxDataTable",
+                    "url": "/api/AjaxDataTable",
                     "type": "GET",
                     "dataSrc": "data",
                     "beforeSend": function(xhr) {
@@ -140,7 +140,7 @@
               // Check if both startDate and endDate are not empty before making the Ajax call
               if (startDate !== '' && endDate !== '') {
               // Your Ajax call
-                   dataTable.ajax.url("http://127.0.0.1:8000/api/AjaxDataTable?dateRange[]=" + startDate + "&dateRange[]=" + endDate).load();
+                   dataTable.ajax.url("/api/AjaxDataTable?dateRange[]=" + startDate + "&dateRange[]=" + endDate).load();
             } else {
         alert('Please select both start date and end date.');
         }
