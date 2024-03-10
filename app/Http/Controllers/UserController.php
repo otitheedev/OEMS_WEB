@@ -166,7 +166,7 @@ public function create_users(Request $request)
     $user->save();
     $lastInsertID=$user->id;
 
- if ($request->has('degree_information') && !empty($request->input('degree_information'))) {
+/*  if ($request->has('degree_information') && !empty($request->input('degree_information'))) {
     
     # loop academic data and associate it with the user 
      foreach ($request->input('degree_information') as $key => $degreeInformation) {
@@ -182,10 +182,36 @@ public function create_users(Request $request)
         ]);
     }
     }
-  } 
+  }  */
 
 
-  if ($request->has('cert_name') && !empty($request->input('cert_name'))) {
+##################### degree_information #####################
+  $academicData = $request->input('degree_information');
+  if (!empty($academicData)) {
+      $academicRecords = [];
+  
+      foreach ($academicData as $key => $degreeInformation) {
+          if (!empty($degreeInformation)) {
+              $academicRecords[] = [
+                  'degree_information' => $degreeInformation,
+                  'degree' => $request->input('degree')[$key],
+                  'join_year' => $request->input('joining_year')[$key],
+                  'pass_year' => $request->input('passing_year')[$key],
+                  'user_id' => $lastInsertID,
+              ];
+          }
+      }
+  
+      if (!empty($academicRecords)) {
+          Academic::insert($academicRecords);
+      }
+  }
+##########################################
+  
+
+
+
+ /*  if ($request->has('cert_name') && !empty($request->input('cert_name'))) {
     foreach ($request->input('cert_name') as $key => $professionalInformation) {
 
          #Check if 'certificate_name' is not empty before creating the record
@@ -199,75 +225,116 @@ public function create_users(Request $request)
             ]);
         }
     }
+} */
+
+
+
+
+
+##################### OPTIMIZE cert_name CODE ######################
+$certificatesData = [];
+
+foreach ($request->input('cert_name') as $key => $professionalInformation) {
+    if (!empty($professionalInformation)) {
+        $certificatesData[] = [
+            'certificate_name' => $professionalInformation,
+            'organization_name' => $request->input('cert_org_name')[$key],
+            'start_date' => $request->input('cert_start_date')[$key],
+            'end_date' => $request->input('cert_end_date')[$key],
+            'user_id' => $lastInsertID,
+        ];
+    }
 }
 
+if (!empty($certificatesData)) {
+    UsersProfessionalCertificate::insert($certificatesData);
+}
+##########################################
 
+
+######################jobExperienceData####################
+$jobExperienceData = [];
 if ($request->has('job_designation_name') && !empty($request->input('job_designation_name'))) {
-    ## loop job_designation_namedata and associate it with the Users
-    foreach ($request->input('job_designation_name') as $key => $JobExpriencesformation) {
-        # Check if 'certificate_name' is not empty 
-        if (!empty($JobExpriencesformation)) {
-        JobExpriences::create([
-            'job_designation_name' => $JobExpriencesformation,
-            'job_org_name' => $request->input('job_org_name')[$key],
-            'job_start_date' => $request->input('job_start_date')[$key],
-            'job_end_date' => $request->input('job_end_date')[$key],
-            'user_id' => $lastInsertID,
-        ]);
+    foreach ($request->input('job_designation_name') as $key => $jobDesignation) {
+        if (!empty($jobDesignation)) {
+            $jobExperienceData[] = [
+                'job_designation_name' => $jobDesignation,
+                'job_org_name' => $request->input('job_org_name')[$key],
+                'job_start_date' => $request->input('job_start_date')[$key],
+                'job_end_date' => $request->input('job_end_date')[$key],
+                'user_id' => $lastInsertID,
+            ];
+        }
     }
-  }
 }
+if (!empty($jobExperienceData)) {
+    JobExpriences::insert($jobExperienceData);
+}
+##########################################
 
 
+
+##################### childInfoData #####################
+$childInfoData = [];
 if ($request->has('child_name') && !empty($request->input('child_name'))) {
-    ## loop childInfo data and associate it with the Users
-    foreach ($request->input('child_name') as $key => $professonalformation) {
-        
-        # Check if 'child_name' is not empty 
-        if (!empty($professonalformation)) {
-        UsersChildInfo::create([
-            'child_name' => $professonalformation,
-            'child_gender' => $request->input('child_gender')[$key],
-            'child_birthday' => $request->input('child_birthday')[$key],
-            'user_id' => $lastInsertID,
-        ]);
+    foreach ($request->input('child_name') as $key => $childName) {
+        if (!empty($childName)) {
+            $childInfoData[] = [
+                'child_name' => $childName,
+                'child_gender' => $request->input('child_gender')[$key],
+                'child_birthday' => $request->input('child_birthday')[$key],
+                'user_id' => $lastInsertID,
+            ];
+        }
     }
-  }
 }
 
-############## other_benifits_by_percentage start #################
+if (!empty($childInfoData)) {
+    UsersChildInfo::insert($childInfoData);
+}
+##########################################
+
+
+
+############## other_benifits_name #################
+$otherBenifitsData = [];
+
 if ($request->has('other_benifits_name') && !empty($request->input('other_benifits_name'))) {
-    ## loop childInfo data and associate it with the Users
     foreach ($request->input('other_benifits_name') as $key => $BenifitsbyPercentage) {
-        
-        # Check if 'benifits_name' is not empty 
         if (!empty($BenifitsbyPercentage)) {
-            otherBenifitsbyPercentage::create([
-            'other_benifits_name' => $BenifitsbyPercentage,
-            'other_benifits_by_percentage' => $request->input('other_benifits_by_percentage')[$key],
-            #'benifits_amount' => $request->input('benifits_amount')[$key],
-            'user_id' => $lastInsertID,
-        ]);
+            $otherBenifitsData[] = [
+                'other_benifits_name' => $BenifitsbyPercentage,
+                'other_benifits_by_percentage' => $request->input('other_benifits_by_percentage')[$key],
+                'user_id' => $lastInsertID,
+            ];
+        }
     }
-  }
 }
-############## other_benifits_by_percentage end #################
+
+if (!empty($otherBenifitsData)) {
+    OtherBenifitsbyPercentage::insert($otherBenifitsData);
+}
+##########################################
 
 
+###################### benifitsData ####################
+$benifitsData = [];
 if ($request->has('benifits_name') && !empty($request->input('benifits_name'))) {
-    ## loop childInfo data and associate it with the Users
     foreach ($request->input('benifits_name') as $key => $professonalformationbenifits_name) {
-        
-        # Check if 'benifits_name' is not empty 
         if (!empty($professonalformationbenifits_name)) {
-            extra_benifits::create([
-            'benifits_name' => $professonalformationbenifits_name,
-            'benifits_amount' => $request->input('benifits_amount')[$key],
-            'user_id' => $lastInsertID,
-        ]);
+            $benifitsData[] = [
+                'benifits_name' => $professonalformationbenifits_name,
+                'benifits_amount' => $request->input('benifits_amount')[$key],
+                'user_id' => $lastInsertID,
+            ];
+        }
     }
-  }
 }
+if (!empty($benifitsData)) {
+    ExtraBenifits::insert($benifitsData);
+}
+##########################################
+
 
     return redirect()->route('users_home')->with('success', '`' . $user->name . '` Successfully Added' . '<a href="/employee/ID/'. $user->phone_number .'">Check Profile</a>');
     #return response()->json(['message' => 'User created successfully'], 201);
