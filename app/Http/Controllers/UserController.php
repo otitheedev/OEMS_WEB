@@ -403,6 +403,7 @@ public function update_users(Request $request, $id)
             'email',
             Rule::unique('users', 'email')->ignore($id),
         ],
+
        /*  'curriculum_vita_cv' => 'sometimes|mimetypes:application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document|max:5120', */
         
         'phoneCountry' => 'required|string',
@@ -507,121 +508,175 @@ if ($request->hasfile('curriculum_vita_cv')) {
 
 
 
-    if ($request->has('degree_information') && !empty($request->input('degree_information'))) {
-        // Delete old academic records associated with the user
-        Academic::where('user_id', $lastInsertID)->delete();
-    
-        // Loop through the new academic data and associate it with the user
-        foreach ($request->input('degree_information') as $key => $degreeInformation) {
-            // Check if 'degree_information' is not empty
-            if (!empty($degreeInformation)) {
-                Academic::create([
-                    'degree_information' => $degreeInformation,
-                    'degree' => $request->input('degree')[$key],
-                    'join_year' => $request->input('joining_year')[$key],
-                    'pass_year' => $request->input('passing_year')[$key],
-                    'user_id' => $lastInsertID,
-                ]);
-            }
+#################### degree_information #####################
+if ($request->has('degree_information') && !empty($request->input('degree_information'))) {
+    // Delete old academic records associated with the user
+    Academic::where('user_id', $lastInsertID)->delete();
+    // Loop through the new academic data and associate it with the user
+    $academicData = [];
+    foreach ($request->input('degree_information') as $key => $degreeInformation) {
+        // Check if 'degree_information' is not empty
+        if (!empty($degreeInformation)) {
+            $academicData[] = [
+                'degree_information' => $degreeInformation,
+                'degree' => $request->input('degree')[$key],
+                'join_year' => $request->input('joining_year')[$key],
+                'pass_year' => $request->input('passing_year')[$key],
+                'user_id' => $lastInsertID,
+            ];
         }
     }
+    // Insert the new academic records
+    if (!empty($academicData)) {
+        Academic::insert($academicData);
+    }
+}
+#########################################
+
+
 
     
-     if ($request->has('cert_name') && !empty($request->input('cert_name'))) {
+#################### cert_name #####################
+if ($request->has('cert_name') && !empty($request->input('cert_name'))) {
     // Delete old professional certificate records associated with the user
     UsersProfessionalCertificate::where('user_id', $lastInsertID)->delete();
 
     // Loop through the new professional certificate data and associate it with the user
+    $certificatesData = [];
+
     foreach ($request->input('cert_name') as $key => $professionalInformation) {
         // Check if 'cert_name' is not empty before creating the record
         if (!empty($professionalInformation)) {
-            UsersProfessionalCertificate::create([
+            $certificatesData[] = [
                 'certificate_name' => $professionalInformation,
                 'organization_name' => $request->input('cert_org_name')[$key],
                 'start_date' => $request->input('cert_start_date')[$key],
                 'end_date' => $request->input('cert_end_date')[$key],
                 'user_id' => $lastInsertID,
-            ]);
+            ];
         }
     }
-}
 
-    
-    
+    // Insert the new professional certificate records
+    if (!empty($certificatesData)) {
+        UsersProfessionalCertificate::insert($certificatesData);
+    }
+}
+#########################################
+
+
+
+
+########################## job_designation_name ###############
 if ($request->has('job_designation_name') && !empty($request->input('job_designation_name'))) {
     // Delete old job experiences records associated with the user
     JobExpriences::where('user_id', $lastInsertID)->delete();
 
     // Loop through the new job experiences data and associate it with the user
-    foreach ($request->input('job_designation_name') as $key => $JobExpriencesformation) {
+    $jobExperiencesData = [];
+
+    foreach ($request->input('job_designation_name') as $key => $jobDesignation) {
         // Check if 'job_designation_name' is not empty before creating the record
-        if (!empty($JobExpriencesformation)) {
-            JobExpriences::create([
-                'job_designation_name' => $JobExpriencesformation,
+        if (!empty($jobDesignation)) {
+            $jobExperiencesData[] = [
+                'job_designation_name' => $jobDesignation,
                 'job_org_name' => $request->input('job_org_name')[$key],
                 'job_start_date' => $request->input('job_start_date')[$key],
                 'job_end_date' => $request->input('job_end_date')[$key],
                 'user_id' => $lastInsertID,
-            ]);
+            ];
         }
     }
+
+    // Insert the new job experiences records
+    if (!empty($jobExperiencesData)) {
+        JobExpriences::insert($jobExperiencesData);
+    }
 }
+#########################################
+
 
     
-    
+########################## child_name ###############
 if ($request->has('child_name') && !empty($request->input('child_name'))) {
+    // Delete old child information records associated with the user
     UsersChildInfo::where('user_id', $lastInsertID)->delete();
 
     // Loop through the new child information data and associate it with the user
-    foreach ($request->input('child_name') as $key => $professonalformation) {
+    $childInfoData = [];
+
+    foreach ($request->input('child_name') as $key => $childName) {
         // Check if 'child_name' is not empty before creating the record
-        if (!empty($professonalformation)) {
-            UsersChildInfo::create([
-                'child_name' => $professonalformation,
+        if (!empty($childName)) {
+            $childInfoData[] = [
+                'child_name' => $childName,
                 'child_gender' => $request->input('child_gender')[$key],
                 'child_birthday' => $request->input('child_birthday')[$key],
                 'user_id' => $lastInsertID,
-            ]);
+            ];
         }
     }
+
+    // Insert the new child information records
+    if (!empty($childInfoData)) {
+        UsersChildInfo::insert($childInfoData);
+    }
 }
+#########################################
 
 
+
+########################## benifits_name ###############
 if ($request->has('benifits_name') && !empty($request->input('benifits_name'))) {
-    // Delete old child information records associated with the user
-    extra_benifits::where('user_id', $lastInsertID)->delete();
+    // Delete old 'benifits_name' records associated with the user
+    ExtraBenifits::where('user_id', $lastInsertID)->delete();
 
-    // Loop through the new child information data and associate it with the user
+    // Loop through the new 'benifits_name' data and associate it with the user
+    $benifitsData = [];
+
     foreach ($request->input('benifits_name') as $key => $professonalformationbenifits_name) {
         if (!empty($professonalformationbenifits_name)) {
-            extra_benifits::create([
+            $benifitsData[] = [
                 'benifits_name' => $professonalformationbenifits_name,
                 'benifits_amount' => $request->input('benifits_amount')[$key],
                 'user_id' => $lastInsertID,
-            ]);
+            ];
         }
     }
+
+    // Insert the new 'benifits_name' records
+    if (!empty($benifitsData)) {
+        ExtraBenifits::insert($benifitsData);
+    }
 }
+#########################################
 
 
-### otherBenifitsbyPercentage
+############################ other_benifits_name #############
 if ($request->has('other_benifits_name') && !empty($request->input('other_benifits_name'))) {
-    // Delete old child information records associated with the user
-    otherBenifitsbyPercentage::where('user_id', $lastInsertID)->delete();
+    // Delete old 'other_benifits_name' records associated with the user
+    OtherBenifitsbyPercentage::where('user_id', $lastInsertID)->delete();
 
-    // Loop through the new child information data and associate it with the user
+    // Loop through the new 'other_benifits_name' data and associate it with the user
+    $otherBenifitsData = [];
+
     foreach ($request->input('other_benifits_name') as $key => $professonalformationbenifits_name) {
         if (!empty($professonalformationbenifits_name)) {
-            otherBenifitsbyPercentage::create([
+            $otherBenifitsData[] = [
                 'other_benifits_name' => $professonalformationbenifits_name,
                 'other_benifits_by_percentage' => $request->input('other_benifits_by_percentage')[$key],
                 'user_id' => $lastInsertID,
-            ]);
+            ];
         }
     }
-}
 
-    
+    // Insert the new 'other_benifits_name' records
+    if (!empty($otherBenifitsData)) {
+        OtherBenifitsbyPercentage::insert($otherBenifitsData);
+    }
+}
+#########################################
+
 LogActivityHelper::addToLog('<a href="' . url("employee/ID/{$user->phone_number}") . '" target="_blank">' . $user->name . "'s</a> Account Has Been Edited", $request);
 
     // Redirect or respond accordingly
