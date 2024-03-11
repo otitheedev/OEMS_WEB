@@ -18,6 +18,10 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
 use App\Helpers\LogActivityHelper;
+use App\Helpers\NotificationSender;
+
+
+
 
 
 
@@ -677,7 +681,9 @@ if ($request->has('other_benifits_name') && !empty($request->input('other_benifi
 }
 #########################################
 
-LogActivityHelper::addToLog('<a href="' . url("employee/ID/{$user->phone_number}") . '" target="_blank">' . $user->name . "'s</a> Account Has Been Edited", $request);
+LogActivityHelper::addToLog('<a href="' . url("employee/ID/{$user->phone_number}") . '" target="_blank">' . $user->name . "'s</a> Account Has Been Edited by " . auth()->user()->name, $request);
+
+NotificationSender::NotificationSend($user->name . '\'s Account Has Been Edited by ' . auth()->user()->name, $request);
 
     // Redirect or respond accordingly
     return redirect()->route('users_home')->with('success', '`' . $user->name = $request->input('name') .'` Information Successfully Updated');

@@ -254,8 +254,9 @@ return response()->json(['user' => $user], 200);
 public function login(Request $request)
 {
 
+
 $validator = Validator::make($request->all(), [
-'email' => 'required|string|email', 
+'email' => '', 
 'password' => 'required|string|min:6', 
 ]);
 
@@ -264,7 +265,7 @@ if ($validator->fails()) {
   return response()->json(['error' => $validator->errors()], 400);
 }
 
-if (!Auth::attempt($request->only('email', 'password'))) {
+if (!Auth::attempt($request->only('phone_number', 'password'))) {
 return response()->json(['message' => 'Invalid login credientials'], 401);
 }
 

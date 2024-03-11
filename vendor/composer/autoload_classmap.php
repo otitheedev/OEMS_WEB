@@ -28,7 +28,6 @@ return array(
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'App\\Http\\Middleware\\CheckPermission' => $baseDir . '/app/Http/Middleware/CheckPermission.php',
     'App\\Http\\Middleware\\EncryptCookies' => $baseDir . '/app/Http/Middleware/EncryptCookies.php',
-    'App\\Http\\Middleware\\LogActivity' => $baseDir . '/app/Http/Middleware/LogActivity.php',
     'App\\Http\\Middleware\\MarkNotificationAsRead' => $baseDir . '/app/Http/Middleware/MarkNotificationAsRead.php',
     'App\\Http\\Middleware\\PreventRequestsDuringMaintenance' => $baseDir . '/app/Http/Middleware/PreventRequestsDuringMaintenance.php',
     'App\\Http\\Middleware\\RedirectIfAuthenticated' => $baseDir . '/app/Http/Middleware/RedirectIfAuthenticated.php',

@@ -11,10 +11,10 @@ class MarkNotificationAsRead
     {
         $response = $next($request);
 
-        // Mark notifications as read for the authenticated user
+/*         // Mark notifications as read for the authenticated user
         if (Auth::check()) {
             Notification::where('user_id', Auth::id())->where('read', false)->update(['read' => true]);
-        }
+        } */
 
         return $response;
     }

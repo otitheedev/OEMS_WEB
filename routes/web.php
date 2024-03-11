@@ -31,6 +31,7 @@ php artisan schedule:run >> /dev/null 2>&1
 ..............................
 */
 
+
 ### BirthDAY SMS COMMAND
 Route::get('/birthdaySMSCommand', function () {
     Artisan::call('send:sms');
@@ -128,6 +129,9 @@ Route::group(['middleware' => ['auth', 'permission:edit_post']], function () {
 Route::group(['middleware' => ['auth', 'permission:delete_post']], function () {
     // Routes accessible only by users with the 'delete_post' permission
 });
+
+# Read Notifications #
+Route::get('/mark-as-read/{notification}', [App\Http\Controllers\Notifications\NotificationController::class, 'markAsRead'])->name('mark-as-read');
 
 ######### OEMS End ###################
 

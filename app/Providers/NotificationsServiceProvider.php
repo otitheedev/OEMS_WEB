@@ -6,22 +6,28 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Models\Notification;
+use Illuminate\Support\Facades\Route; // Add this line
 
 class NotificationsServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        View::composer('*', function ($view) {
-            if (Auth::check()) {
-                $notifications = Notification::where('user_id', Auth::id())
-                    ->where('read', false)
-                    ->orderBy('created_at', 'desc')
-                    ->get();
+  // View composer remains the same
+  View::composer('*', function ($view) {
+    if (Auth::check()) {
+        $notifications = Notification::where('user_id', Auth::id())
+            ->where('read', false)
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
 
-                $view->with('notifications', $notifications);
-            }
-        });
+        // You can add additional conditions if needed
+        $view->with('notifications', $notifications);
     }
+});
+
+    
+}
+    
 
     public function register()
     {
