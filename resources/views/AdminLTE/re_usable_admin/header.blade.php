@@ -47,7 +47,6 @@
 
 
 
-
    @if(count($notifications) > 0)
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
@@ -57,6 +56,8 @@
         </a>
 
      <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+     <span class="dropdown-item dropdown-header">{{ count($notifications) }} Unread Notifications</span>
+     <div class="dropdown-divider"></div>
 
         @foreach($notifications as $notification)
         <a href="{{ route('mark-as-read', $notification->id) }}">
@@ -65,49 +66,42 @@
            @php
            $user = \App\Models\reg_user::find($notification->user_id);
            @endphp
-      
-
-          <img src="{{ url('assets/users/' . ($user->profile_pic ? $user->profile_pic : '')) }}" class="img-size-50 img-circle"> </div>
-          <div class="col-9"> <span class="text-primary">{{ $notification->message }}</span> <br> <span class="text-muted"> {{ $notification->created_at->diffForHumans() }} </span></div>
+     
+      <img src="{{ url('assets/users/' . ($user->profile_pic ? $user->profile_pic : '')) }}" style="height:63px; width:63px;" class="img-circle"></div>
+      <div class="col-9"> <span class="text-primary">{{ $notification->message }}</span> <br> <span class="text-muted"> {{ $notification->created_at->diffForHumans() }} </span></div>
           </div>
-         </a>
+         </a> <hr>
           @endforeach
   
          
      <div class="dropdown-divider"></div>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+          <a href="#" class="dropdown-item dropdown-footer">See All Unread Notifications</a>
         </div>
       </li>
       @endif
 
 
-     
 
+      @if(count($all_notifications) > 0)
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-comments"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
+          <span class="badge badge-warning navbar-badge">{{ count($all_notifications) }}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">15 Notifications</span>
+          <span class="dropdown-item dropdown-header">{{ count($all_notifications) }} Read Notifications</span>
+         
+          @foreach($all_notifications as $pnotification)
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
+          <a href="#" class="dropdown-item" style="white-space: normal;">
+            <i class="fas fa-envelope mr-2"></i> {{ $pnotification->message }}
+            <span class="float-right text-muted text-sm">{{ $pnotification->created_at->diffForHumans() }}</span>
           </a>
+          @endforeach
+
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+          <a href="#" class="dropdown-item dropdown-footer">See All Read Notifications</a>
         </div>
       </li>
       <li class="nav-item">
@@ -120,6 +114,7 @@
           <i class="fas fa-th-large"></i>
         </a>
       </li>
+      @endif
 
 
 

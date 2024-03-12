@@ -17,9 +17,10 @@ use App\Models\UsersChildInfo;
 use App\Models\Role;
 use App\Models\Permission;
 
-// Define AuthController class which extends Controller
+# Define AuthController class which extends Controller
 class AuthController extends Controller
 {
+    
     ######################## API getAjaxDataTable All_Users_Index ##########################
     public function getAjaxDataTable(Request $request)
     {
@@ -71,12 +72,11 @@ class AuthController extends Controller
             'recordsFiltered' => $totalRecords,
         ]);
     }
-    
  ######################################################
 
 
 
-// Function to handle user registration
+# Function to handle user registration
 public function create_users(Request $request)
 {
     $validator = Validator::make($request->all(), [
@@ -110,7 +110,6 @@ public function create_users(Request $request)
     }
 
     $user = new reg_user();
-
     $user->name = $request->input('name');
     $user->email = $request->input('email');
     $user->password = Hash::make($request->input('password'));
@@ -230,7 +229,6 @@ public function create_users(Request $request)
             }
         }
     }
-
     return response()->json(['message' => 'User created successfully', 'user_id' => $lastInsertID], 201);
 }
 
@@ -249,17 +247,12 @@ return response()->json(['user' => $user], 200);
 
 
 
-
 // Function to handle user login
-public function login(Request $request)
-{
-
-
+public function login(Request $request){
 $validator = Validator::make($request->all(), [
 'email' => '', 
 'password' => 'required|string|min:6', 
 ]);
-
 
 if ($validator->fails()) {
   return response()->json(['error' => $validator->errors()], 400);
@@ -269,18 +262,15 @@ if (!Auth::attempt($request->only('phone_number', 'password'))) {
 return response()->json(['message' => 'Invalid login credientials'], 401);
 }
 
-// If credentials are valid, get the authenticated user
-$user = $request->user();
-// Create a new token for this user
-$token = $user->createToken('authToken')->plainTextToken;
-
+$user = $request->user(); # If credentials are valid, get the authenticated user
+$token = $user->createToken('authToken')->plainTextToken; # Create a new token for this user
 $roles = Role::all();
 $role_user = Role::select('user_id',$user->id);
 $main_role = Role::find($user->id);
 
 if ($main_role) {$main_role_name = $main_role->name;} else {$main_role_name = null; }
 
-// Return user data and token as JSON
+# Return user data and token as JSON
 return response()->json([
     'user' => $user, 
     'token' => $token,
@@ -289,14 +279,11 @@ return response()->json([
 ]);
 }
 
-// Function to handle user logout
-public function logout(Request $request)
-{
-  
-  // Delete all tokens for the authenticated user
+ # Function to handle user logout
+public function logout(Request $request){
+  # Delete all tokens for the authenticated user
   $request->user()->tokens()->delete();
-
-   // Return success message as JSON
+   # Return success message as JSON
    return response()->json(['message' => 'Logged out']);
 }
 }

@@ -10,6 +10,13 @@ class apiAuthKey
 {
     public function handle($request, Closure $next)
     {
+
+           // Check if the current route should be excluded from the middleware
+         if ($request->is('api/AjaxDataTable')) {
+            return $next($request);
+        }
+
+
         $username = $request->header('X-Username');
         $key = $request->header('X-Key');
 

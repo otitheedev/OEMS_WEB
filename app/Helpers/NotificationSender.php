@@ -17,8 +17,7 @@ class NotificationSender
             'message' => $message,
             'read' => false,
         ];
-
-        Notification::create($logData);
+      Notification::create($logData);
     }
 
     public static function NotificationLists()

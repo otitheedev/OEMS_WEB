@@ -1,11 +1,9 @@
 <?php
 
 namespace App\Http\Middleware;
-use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Auth;
 use Closure;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class RoleMiddleware
 {
@@ -15,7 +13,7 @@ class RoleMiddleware
             return $next($request);
         }
 
-       
-        return redirect('/404')->with('error', 'Unauthorized.');
+        // If Auth::check() is false, or user does not have the required roles
+        abort(403, 'Unauthorized.'); // You can customize the error message and HTTP status code accordingly
     }
 }

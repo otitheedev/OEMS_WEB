@@ -122,7 +122,7 @@ ul.timeline > li.active:before {
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center">
                                     <img src="{{ $user->profile_pic ? url('assets/users/' . $user->profile_pic) : url('assets/OG.png') }}"
-                                        class="rounded-circle p-1" style="max-width:220px; height:220px; border:2px solid lightgrey;">
+                                        class="rounded-circle p-1" style="width:250px; max-width:300px; height:250px; border:2px solid lightgrey;">
                                 
                                     <div class="mt-3"> 
                                  

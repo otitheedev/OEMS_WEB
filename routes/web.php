@@ -60,6 +60,9 @@ Route::get('/AjaxDataTable', [App\Http\Controllers\FrontendController::class, 'A
 Route::get('/employee/ID/{phone}', [App\Http\Controllers\FrontendController::class, 'profile'])->name('employee_profilex');
 Route::get('/search/employee', [App\Http\Controllers\FrontendController::class, 'employee'])->name('employee_information');
 
+# Admin Dashboard
+Route::get('/admin', [App\Http\Controllers\Admin\AdminController::class, 'admin_dashboard'])->name('admin_dashboard')->middleware('auth'); ;
+
 ## redirect users to login Page
 Route::get('/', function () {$message = Session::get('authRedirectMessage');return view('index', compact('message'));})->name('root_index');
 
@@ -74,7 +77,6 @@ Route::get('/admin/sms/createSMS', [App\Http\Controllers\Admin\AdminController::
 Route::get('/admin/sms/', [App\Http\Controllers\Admin\AdminController::class, 'SMS'])->name('SMS');
 
 #Route::get('/admin', function () { return view('AdminLTE/index'); });
-Route::get('/admin', [App\Http\Controllers\Admin\AdminController::class, 'admin_dashboard'])->name('admin_dashboard');
 
 ## AddRole Admins
 Route::get('/admin/addRole/', [App\Http\Controllers\Admin\AdminController::class, 'home'])->name('addRole_admin_home');

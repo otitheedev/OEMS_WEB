@@ -12,10 +12,10 @@
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       @if(auth()->check())
         <div class="image">
-          <img src="{{ asset('assets/users/'. auth()->user()->profile_pic) }}" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ asset('assets/users/'. auth()->user()->profile_pic) }}" style="height:55px; width:55px;" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-         <a href="{{ url('employee/ID/'. auth()->user()->phone_number) }}" class="d-block" target="_blank">{{ auth()->user()->name }}</a>
+         <a href="{{ url('employee/ID/'. auth()->user()->phone_number) }}" class="d-block mt-2" target="_blank">{{ auth()->user()->name }}</a>
         </div>
         @endif
       </div>
@@ -72,7 +72,6 @@
               <i class="nav-icon fas fa-mobile"></i>
               <p>
                Send SMS
-                <span class="right badge badge-danger">New</span>
               </p>
             </a>
           </li>

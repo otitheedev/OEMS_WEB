@@ -74,81 +74,71 @@
                 <th>Email</th>
                 <th>Basic Salary</th>
                 <th> </th>
-                <!-- Add other columns as neededs -->
+                <!-- Add other columns as neededss -->
             </tr>
         </thead>
     </table>
 
     <script>
-        $(document).ready(function() {
-            var dataTable = $('#ajaxDataTable').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "ajax": {
-                    "url": "/api/AjaxDataTable",
-                    "type": "GET",
-                    "dataSrc": "data",
-                    "beforeSend": function(xhr) {
-                // Include your custom headers here
-                xhr.setRequestHeader('X-Username', 'OT@ossl655');
-                xhr.setRequestHeader('X-Key', 'oks03o3++f2DP5bJOIL3U8pqjNGbTmX');
+   $(document).ready(function() {
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+    var dataTable = $('#ajaxDataTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "/api/AjaxDataTable",
+            "type": "GET", // POST, PUT ...
+            "dataType": "json",
+            "data": {
+                "_token": csrfToken,
+                "start": 0,
+                "length": 10,
             },
-                },
-                "columns": [
-                    {"data": "id", "className":"text-center"},
-                    {
-               "data": name,
-               "render": function(data, type, row) {
-                // Assuming $users is accessible in this context
-                return '<a href="{{ url("/employee/ID/") }}/' + row.phone_number + '" target="_blank">' + row.name + '</a>';
-                 },"orderData": [0] 
-                },
-
-                {"data": "profile_pic",
+        },
+        "columns": [
+            {"data": "id", "className":"text-center"},
+            {"data": "name",
                 "render": function(data, type, row) {
-                    // Assuming 'profile_pic' is the field in your response containing the profile picture filename
-                    var imageUrl = data ? "{{ url('assets/users/') }}/" + data : "{{ url('assets/OG.png') }}";
+                    var escapedName = $('<div/>').text(row.name).html();
+                    return '<a href="{{ url("/employee/ID/") }}/' + row.phone_number + '" target="_blank">' + escapedName + '</a>';
+                },"orderData": [0] 
+            },
+            {"data": "profile_pic",
+                "render": function(data, type, row) {
+                    var imageUrl = data ? "{{ url('assets/users/') }}/" + encodeURIComponent(data) : "{{ url('assets/OG.png') }}";
                     return '<img src="' + imageUrl + '" width="60px">';
-                 },
-                     "orderData": [0] 
                 },
-                 
-                 {"data": "department_name"},
-                 {"data": "gender", "className":"text-center"},
-                 {"data": "designation"},
-                 {"data": "email"},
-                 {"data": "totalAmount", "className":"text-center"},
-                 
-                 {
-               
-                    "data": null,
-                    "render": function(data, type, row) {
-                     console.log('Delete Link - Row ID:', row.id);
+                "orderData": [0] 
+            },
+            {"data": "department_name"},
+            {"data": "gender", "className":"text-center"},
+            {"data": "designation"},
+            {"data": "email"},
+            {"data": "totalAmount", "className":"text-center"},
+            {
+                "data": null,
+                "render": function(data, type, row) {
                     return '<a href="{{ url("/admin/users/destroy/") }}/' + row.id + '" class="btn-sm btn-danger">Delete</a> ' +
-                    '<a href="{{ url("/admin/users/edit/") }}/' + row.id + '" class="btn-sm btn-primary">Edit</a>';
-                     },
-                     "orderData": [0] 
-                    }
- 
-              ]
-            });
+                        '<a href="{{ url("/admin/users/edit/") }}/' + row.id + '" class="btn-sm btn-primary">Edit</a>';
+                },
+                "orderData": [0] 
+            }
+        ]
+    });
 
-            $('#applyFilter').on('click', function() {
-             var startDate = $('#startDate').val();
-            var endDate = $('#endDate').val();
+    $('#applyFilter').on('click', function() {
+        var startDate = $('#startDate').val();
+        var endDate = $('#endDate').val();
 
-              // Check if both startDate and endDate are not empty before making the Ajax call
-              if (startDate !== '' && endDate !== '') {
-              // Your Ajax call
-                   dataTable.ajax.url("/api/AjaxDataTable?dateRange[]=" + startDate + "&dateRange[]=" + endDate).load();
-            } else {
-        alert('Please select both start date and end date.');
+        if (startDate !== '' && endDate !== '') {
+            dataTable.ajax.url(`/api/AjaxDataTable?_token=${encodeURIComponent(csrfToken)}&dateRange[]=${encodeURIComponent(startDate)}&dateRange[]=${encodeURIComponent(endDate)}`).load();
+        } else {
+            alert('Please select both start date and end date.');
         }
-        });
+    });
+});
 
-
-        });
-    </script>
+</script>
 
 
 

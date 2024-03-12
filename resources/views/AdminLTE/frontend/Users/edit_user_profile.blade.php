@@ -116,7 +116,7 @@
       <div class="col-sm-3 form-group">
         <label for="blood_group"><i class="fa-solid fa-droplet"></i> Blood Group</label>
        
-        <select class="form-control" name="blood_group" id="blood_group"> 
+  <select class="form-control" name="blood_group" id="blood_group"> 
           <option selected>{{ $user_data->blood_group }}</option>
           <option>A+</option>
           <option>A-</option>
@@ -126,10 +126,7 @@
           <option>AB-</option>
           <option>O+</option>
           <option>O-</option>
-  
-
-
-        </select>
+  </select>
       </div>
    </div>
 
@@ -396,7 +393,7 @@
 
      <div class="container mt-2" style="background: #fffdfa;padding: 15px;border-radius: 15px;border: 1px solid lightgray;">
      <div class="row col-12 ">
-     <div class="col-12"> <h4><i class="fa-solid fa-book"></i> Salary Information </h4><hr></div>
+     <div class="col-12"><h4><i class="fa-solid fa-book"></i> Salary Information</h4><hr></div>
  
 
       <div class="col-sm-6 form-group">
@@ -533,9 +530,9 @@
 
   <div class="col-12 form-group">
     <label for="totalAmount"> Total Salary <i class="fa-solid fa-bangladeshi-taka-sign"></i></label> 
-    <input type="text" id="totalAmount" class="form-control" readonly>
+    <input type="text" id="totalAmount" value="{{ $user_data->totalAmount }}" class="form-control" readonly>
        <!-- Hidden input to store the value -->
-    <input type="hidden" name="totalAmount" id="totalAmountstore" class="form-control">
+    <input type="hidden" name="totalAmount" value="{{ $user_data->totalAmount }}" id="totalAmountstore" class="form-control">
 </div>
 
 
