@@ -1,3 +1,31 @@
+<style>
+  /* Hide the default scrollbar */
+.dropdown-menu::-webkit-scrollbar {
+    display: none;
+}
+
+/* Define custom scrollbar styles */
+.dropdown-menu {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer/Edge */
+}
+
+/* Custom scrollbar styles for WebKit-based browsers */
+.dropdown-menu::-webkit-scrollbar {
+    width: 10px; /* Adjust as needed */
+}
+
+.dropdown-menu::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Track color */
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb {
+    background: #888; /* Thumb color */
+    border-radius: 5px; /* Thumb border radius */
+}
+
+</style>
+
 <div class="wrapper">
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
@@ -76,11 +104,6 @@
 
 
 
-
-
-
-
-
             @if(count($notifications) > 0)
             <!-- Messages Dropdown Menu -->
             <li class="nav-item dropdown">
@@ -134,8 +157,8 @@
           <i class="far fa-comments"></i>
           <span class="badge badge-warning navbar-badge">{{ count($all_notifications) }}</span>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">{{ count($all_notifications) }} Read Notifications</span>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="overflow-y: auto; max-height: calc(80vh - 56px);">
+          <span class="dropdown-item dropdown-header" style="position: sticky; top: 0; background-color: #fff; z-index: 1000;">{{ count($all_notifications) }} Read Notifications</span>
          
           @foreach($all_notifications as $pnotification)
           <div class="dropdown-divider"></div>
@@ -146,7 +169,7 @@
           @endforeach
 
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Read Notifications</a>
+          <a href="#" class="dropdown-item dropdown-footer" style="position: sticky; bottom: 0; background-color: #fff; z-index: 1000;">See All Read Notifications</a>
         </div>
       </li>
       <li class="nav-item">
