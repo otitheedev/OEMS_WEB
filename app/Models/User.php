@@ -82,6 +82,13 @@ class User extends Authenticatable
     }
 
 
+    public function hasRole($roles)
+    {
+        if (!is_array($roles)) {
+            $roles = [$roles];
+        }
+        return $this->roles()->whereIn('name', $roles)->exists();
+    }
 
 
 }

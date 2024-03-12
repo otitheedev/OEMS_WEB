@@ -45,6 +45,51 @@
         </div>
       </li>
 
+      <div class="wrapper">
+    <!-- Preloader -->
+    <div class="preloader flex-column justify-content-center align-items-center">
+        <img class="animation__shake" src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo" height="60" width="60">
+    </div>
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+
+        
+         <!-- ######################### -->
+         <ul>
+           @auth
+         Diaplay Content For All Auth User
+          @if(auth()->user()->hasRole(['admin', 'HR', 'Superadmin', 'Root']))
+            <!-- Content for Admin role -->
+            <li class="nav-item">
+            ['admin', 'HR', 'Superadmin', 'Root']
+            </li>
+            @elseif(auth()->user()->hasRole('user'))
+            <!-- Content for User role -->
+            <li class="nav-item">
+             Content For USER
+            </li>
+            @endif
+            @endauth
+          </ul>
+    <!-- ######################### -->
+
+
+
+
+
+
+
+
+            @if(count($notifications) > 0)
+            <!-- Messages Dropdown Menu -->
+            <li class="nav-item dropdown">
+                <!-- Your Notifications content here -->
+            </li>
+            @endif
+
+
+
 
 
    @if(count($notifications) > 0)
@@ -114,6 +159,24 @@
           <i class="fas fa-th-large"></i>
         </a>
       </li>
+
+
+
+      
+<aside class="control-sidebar control-sidebar-dark" style="overflow-y: auto; max-height: calc(100vh - 56px);">
+  <!-- Control sidebar content goes here -->
+  <div class="p-3">
+      @foreach($all_notifications as $pnotification)
+          <a href="#" class="dropdown-item" style="white-space: normal;">
+            <i class="fas fa-envelope mr-2"></i> {{ $pnotification->message }}
+            <span class="float-right text-muted text-sm">{{ $pnotification->created_at->diffForHumans() }}</span>
+          </a>
+          @endforeach
+  </div>
+
+</aside>
+
+
       @endif
 
 

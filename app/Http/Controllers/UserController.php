@@ -335,7 +335,7 @@ if ($request->has('benifits_name') && !empty($request->input('benifits_name'))) 
     }
 }
 if (!empty($benifitsData)) {
-    ExtraBenifits::insert($benifitsData);
+    extra_benifits::insert($benifitsData);
 }
 ##########################################
 
@@ -611,7 +611,7 @@ if ($request->has('child_name') && !empty($request->input('child_name'))) {
 
 ########################## benifits_name ###############
 if ($request->has('benifits_name') && !empty($request->input('benifits_name'))) {
-    ExtraBenifits::where('user_id', $lastInsertID)->delete();
+    extra_benifits::where('user_id', $lastInsertID)->delete();
     $benifitsData = [];
 
     foreach ($request->input('benifits_name') as $key => $professonalformationbenifits_name) {
@@ -624,7 +624,7 @@ if ($request->has('benifits_name') && !empty($request->input('benifits_name'))) 
         }
     }
     if (!empty($benifitsData)) {
-        ExtraBenifits::insert($benifitsData);
+        extra_benifits::insert($benifitsData);
     }
 }
 #########################################
