@@ -207,19 +207,27 @@
 <!-- JavaScript to handle opening popup and loading notification content -->
 <script>
     function openNotificationPopup(notificationId) {
-        // Make an AJAX request to fetch the notification content
-        $.ajax({
-            url: '{{ route('mark-as-read', ['notification' => ':notificationId']) }}'.replace(':notificationId', notificationId),
-            method: 'GET',
-            success: function(response) {
-              $('#reloadMAN').load(document.URL +  ' #reloadMAN');
-              $('#reloadMANREAD').load(document.URL +  ' #reloadMANREAD');
-              //$('#navLoad').load(document.URL +  ' #navLoad');
-            },
-            error: function(xhr) {
-                // Handle errors
-                console.error('Error:', xhr);
-            }
-        });
+        // Display a confirmation dialog
+        var confirmed = confirm("Are you sure you want to mark this notification as read?");
+        
+        // If the user confirms the action
+        if (confirmed) {
+            // Make an AJAX request to fetch the notification content
+            $.ajax({
+                url: '{{ route('mark-as-read', ['notification' => ':notificationId']) }}'.replace(':notificationId', notificationId),
+                method: 'GET',
+                success: function(response) {
+                    // Reload specific elements after successful AJAX request
+                    $('#reloadMAN').load(document.URL +  ' #reloadMAN');
+                    $('#reloadMANREAD').load(document.URL +  ' #reloadMANREAD');
+                    //$('#navLoad').load(document.URL +  ' #navLoad');
+                },
+                error: function(xhr) {
+                    // Handle errors
+                    console.error('Error:', xhr);
+                }
+            });
+        }
     }
 </script>
+
