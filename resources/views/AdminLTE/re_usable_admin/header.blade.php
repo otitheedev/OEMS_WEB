@@ -52,7 +52,37 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
-      <li class="nav-item">
+
+
+      <div class="wrapper">
+    <!-- Preloader -->
+    <div class="preloader flex-column justify-content-center align-items-center">
+        <img class="animation__shake" src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo" height="60" width="60">
+    </div>
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+
+<!--        
+        <ul>
+           @auth
+         Diaplay Content For All Auth User
+          @if(auth()->user()->hasRole(['admin', 'HR', 'Superadmin', 'Root']))
+            <li class="nav-item">
+            ['admin', 'HR', 'Superadmin', 'Root']
+            </li>
+            @elseif(auth()->user()->hasRole('user'))
+            <li class="nav-item">
+             Content For USER
+            </li>
+            @endif
+            @endauth
+          </ul>
+  -->
+
+
+    
+    <li class="nav-item">
         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
           <i class="fas fa-search"></i>
         </a>
@@ -73,88 +103,58 @@
         </div>
       </li>
 
-      <div class="wrapper">
-    <!-- Preloader -->
-    <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__shake" src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo" height="60" width="60">
-    </div>
-
-    <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-
-        
-         <!-- ######################### -->
-         <ul>
-           @auth
-         Diaplay Content For All Auth User
-          @if(auth()->user()->hasRole(['admin', 'HR', 'Superadmin', 'Root']))
-            <!-- Content for Admin role -->
-            <li class="nav-item">
-            ['admin', 'HR', 'Superadmin', 'Root']
-            </li>
-            @elseif(auth()->user()->hasRole('user'))
-            <!-- Content for User role -->
-            <li class="nav-item">
-             Content For USER
-            </li>
-            @endif
-            @endauth
-          </ul>
-    <!-- ######################### -->
-
-
-
-            @if(count($notifications) > 0)
-            <!-- Messages Dropdown Menu -->
-            <li class="nav-item dropdown">
-                <!-- Your Notifications content here -->
-            </li>
-            @endif
 
 
 
 
+<!-- Unread Notifications Dropdown Menu Start -->
+@if(count($notifications) > 0)
+<li class="nav-item dropdown" id="reloadMAN">
+    <a class="nav-link" data-toggle="dropdown" href="#">
+        <i class="fas fa-bell"></i>
+        <span class="badge badge-danger navbar-badge">{{ count($notifications) }}</span>
+    </a>
 
-   @if(count($notifications) > 0)
-      <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-danger navbar-badge">{{ count($notifications) }}</span>
-        </a>
-
-     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-     <span class="dropdown-item dropdown-header">{{ count($notifications) }} Unread Notifications</span>
-     <div class="dropdown-divider"></div>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <span class="dropdown-item dropdown-header">{{ count($notifications) }} Unread Notifications</span>
+        <div class="dropdown-divider"></div>
 
         @foreach($notifications as $notification)
-        <a href="{{ route('mark-as-read', $notification->id) }}">
-         <div class="row p-2">
-          <div class="col-3">
-           @php
-           $user = \App\Models\reg_user::find($notification->user_id);
-           @endphp
-     
-      <img src="{{ url('assets/users/' . ($user->profile_pic ? $user->profile_pic : '')) }}" style="height:63px; width:63px;" class="img-circle"></div>
-      <div class="col-9"> <span class="text-primary">{{ $notification->message }}</span> <br> <span class="text-muted"> {{ $notification->created_at->diffForHumans() }} </span></div>
-          </div>
-         </a> <hr>
-          @endforeach
-  
-         
-     <div class="dropdown-divider"></div>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Unread Notifications</a>
-        </div>
-      </li>
-      @endif
+        <a href="#" onclick="openNotificationPopup('{{ $notification->id }}')">
+            <div class="row p-2">
+                <div class="col-3">
+                    @php
+                    $user = \App\Models\reg_user::find($notification->user_id);
+                    @endphp
+                    <img src="{{ url('assets/users/' . ($user->profile_pic ? $user->profile_pic : '')) }}" style="height:63px; width:63px;" class="img-circle">
+                </div>
+                <div class="col-9">
+                    <span class="text-primary">{{ $notification->message }}</span> <br>
+                    <span class="text-muted"> {{ $notification->created_at->diffForHumans() }} </span>
+                </div>
+            </div>
+        </a>
+        <hr>
+        @endforeach
+
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item dropdown-footer">See All Unread Notifications</a>
+    </div>
+</li>
+@endif
+<!-- Unread Notifications Dropdown End -->
 
 
 
+
+<!-- Read Notification Start-->
       @if(count($all_notifications) > 0)
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown" id="reloadMANREAD">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-comments"></i>
+          <!-- <i class="far fa-comments"></i> -->
+          <i class="far fa-bell	" aria-hidden="true"></i>
+
           <span class="badge badge-warning navbar-badge">{{ count($all_notifications) }}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="overflow-y: auto; max-height: calc(80vh - 56px);">
@@ -163,7 +163,7 @@
           @foreach($all_notifications as $pnotification)
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item" style="white-space: normal;">
-            <i class="fas fa-envelope mr-2"></i> {{ $pnotification->message }}
+            <i class="fas fa-check mr-2"></i> {{ $pnotification->message }}
             <span class="float-right text-muted text-sm">{{ $pnotification->created_at->diffForHumans() }}</span>
           </a>
           @endforeach
@@ -182,28 +182,44 @@
           <i class="fas fa-th-large"></i>
         </a>
       </li>
+<!-- Read Notification End-->
 
-
-
-      
 <aside class="control-sidebar control-sidebar-dark" style="overflow-y: auto; max-height: calc(100vh - 56px);">
   <!-- Control sidebar content goes here -->
   <div class="p-3">
       @foreach($all_notifications as $pnotification)
           <a href="#" class="dropdown-item" style="white-space: normal;">
-            <i class="fas fa-envelope mr-2"></i> {{ $pnotification->message }}
+            <i class="fas fa-check-double mr-2"></i> {{ $pnotification->message }}
             <span class="float-right text-muted text-sm">{{ $pnotification->created_at->diffForHumans() }}</span>
           </a>
           @endforeach
   </div>
 
 </aside>
+@endif
 
 
-      @endif
-
-
-
-      
     </ul>
-  </nav>
+</nav>
+
+
+
+<!-- JavaScript to handle opening popup and loading notification content -->
+<script>
+    function openNotificationPopup(notificationId) {
+        // Make an AJAX request to fetch the notification content
+        $.ajax({
+            url: '{{ route('mark-as-read', ['notification' => ':notificationId']) }}'.replace(':notificationId', notificationId),
+            method: 'GET',
+            success: function(response) {
+              $('#reloadMAN').load(document.URL +  ' #reloadMAN');
+              $('#reloadMANREAD').load(document.URL +  ' #reloadMANREAD');
+              //$('#navLoad').load(document.URL +  ' #navLoad');
+            },
+            error: function(xhr) {
+                // Handle errors
+                console.error('Error:', xhr);
+            }
+        });
+    }
+</script>

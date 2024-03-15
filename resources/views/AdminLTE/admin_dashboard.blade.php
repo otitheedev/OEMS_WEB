@@ -118,7 +118,7 @@
 
   <!-- upcoming birthday next 7 days --> 
  
-  <h4 class="card header p-1"> Upcoming Birthday.. </h4>
+  <h4 class="card header p-1">Upcoming Birthday.. </h4>
   <ol type="1">
    @foreach ($upcomingBirthdays as $upcomingBirthday)
     <li><a href="{{ url('employee/ID/'. $upcomingBirthday->phone_number) }}" target="_blank">{{ $upcomingBirthday->name }}</a> birthday {{ $upcomingBirthday->DOB }}</li>
@@ -131,7 +131,7 @@
   </ol>
 
 
-        </div> 
+  </div> 
       </div> 
   
     </section>
@@ -279,13 +279,19 @@
           </div> 
 
 
-          <div class="col-lg-6 col-6">
+
+
+
+
+
+
+    <div class="col-lg-6 col-6">
           <div class="card bg-gradient-success">
               <div class="card-header border-0">
 
                 <h3 class="card-title">
                   <i class="far fa-calendar-alt"></i>
-                  Calendar
+                  Holiday Calendar
                 </h3>
                 <!-- tools card -->
                 <div class="card-tools">
@@ -308,41 +314,31 @@
                   </button>
                 </div>
               </div>
+              
 <div class="card-body pt-0">
 
 <!--The calendar -->
-
 <!-- DateTimePicker JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 
-  <div id="calendar" style="width: 100%"></div>
-      </div></div>
+<div id="holidaycalendar" style="width: 100%"></div></div></div>
             
-<style>
-.date-highlighted {
-        background-color: yellow !important; 
-        color: black !important; 
-        }
-</style>
-
+<style>.date-highlighted {background-color: yellow !important; color: black !important;}</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    $('#calendar').datetimepicker({
+    $('#holidaycalendar').datetimepicker({
         format: 'L',
         inline: true
     });
-    // Add other static dates and messages here if needed
-    //{ date: new Date('2024-03-05'), message: 'Happy Birthday on March 5th!' },
-    // Highlight specific random dates with different messages
+
     var highlightedDates = [
     @foreach ($users_DOB as $user)
         { date: new Date('{{ $user->DOB }}'), 
         message: "Today is {{ $user->count() }} empoyeer Birthday! " },
     @endforeach
 ];
-
 
     highlightedDates.forEach(function (highlight) {
         var formattedDate = moment(highlight.date).format('L');
@@ -354,7 +350,7 @@ document.addEventListener('DOMContentLoaded', function () {
             targetDay.addEventListener('mouseenter', function () {
                 targetDay.classList.add('hovered-highlighted-date');
 
-               //alert('You clicked on a highlighted date: ' + formattedDate);
+     //alert('You clicked on a highlighted date: ' + formattedDate);
     var Welcome = new bootstrap.Modal(document.getElementById('exampleModal'));
     Welcome.show();
     targetDay.addEventListener('mouseleave', function removeHoveredClass() {
@@ -362,14 +358,13 @@ document.addEventListener('DOMContentLoaded', function () {
         targetDay.removeEventListener('mouseleave', removeHoveredClass);
         Welcome.hide(); // Hide the modal when the mouse leaves the date
     });
-
-
             });
         }
     });
 });
-
 </script>
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -392,7 +387,6 @@ document.addEventListener('DOMContentLoaded', function () {
             @endforeach
 
         @foreach ($user_child as $user)
-     
             @foreach ($user->child_info as $child)
             <li> Our Employer <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $user->name }}'s</a>, @if($child->child_gender == 'female') daughter @else son @endif {{ $child->child_name }}'s Birthday is today! 🎉🎂</li>
             @endforeach
@@ -400,28 +394,146 @@ document.addEventListener('DOMContentLoaded', function () {
          @endforeach
          @endforeach
             </ol> 
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-</div>
+</div></div> 
 
 
 
 
 
 
+
+
+
+
+
+   <div class="col-lg-6 col-6">
+          <div class="card bg-gradient-success">
+              <div class="card-header border-0">
+                <h3 class="card-title">
+                  <i class="far fa-calendar-alt"></i>
+                  Calendar0.
+                </h3>
+                <!-- tools card -->
+                <div class="card-tools">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
+                      <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="dropdown-menu" role="menu">
+                      <a href="#" class="dropdown-item">Add new event</a>
+                      <a href="#" class="dropdown-item">Clear events</a>
+                      <div class="dropdown-divider"></div>
+                      <a href="#" class="dropdown-item">View calendar</a>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              
+<div class="card-body pt-0">
+
+<!--The calendar -->
+<!-- DateTimePicker JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+
+<div id="calendar" style="width: 100%"></div></div></div>
             
-          </div> 
+<style>.date-highlighted {background-color: yellow !important; color: black !important;}</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    $('#calendar').datetimepicker({
+        format: 'L',
+        inline: true
+    });
+
+    var highlightedDates = [
+    @foreach ($users_DOB as $user)
+        { date: new Date('{{ $user->DOB }}'), 
+        message: "Today is {{ $user->count() }} empoyeer Birthday! " },
+    @endforeach
+];
+
+    highlightedDates.forEach(function (highlight) {
+        var formattedDate = moment(highlight.date).format('L');
+        var targetDay = document.querySelector('.datepicker-days td[data-day="' + formattedDate + '"]');
+        
+        if (targetDay) {
+            targetDay.classList.add('date-highlighted');
+
+            targetDay.addEventListener('mouseenter', function () {
+                targetDay.classList.add('hovered-highlighted-date');
+
+     //alert('You clicked on a highlighted date: ' + formattedDate);
+    var Welcome = new bootstrap.Modal(document.getElementById('exampleModal'));
+    Welcome.show();
+    targetDay.addEventListener('mouseleave', function removeHoveredClass() {
+        targetDay.classList.remove('hovered-highlighted-date');
+        targetDay.removeEventListener('mouseleave', removeHoveredClass);
+        Welcome.hide(); // Hide the modal when the mouse leaves the date
+    });
+            });
+        }
+    });
+});
+</script>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> Today is {{ isset($user) ? $user->count() : 0 }} employer Birthday! And {{ $users_anniversary->count() }} employer anniversary and our employer's {{ $user_child_birthday->count() }} child birthday!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            <ol type="1">
+            @foreach ($users_DOB as $user)
+            <li> Today is <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $user->name }}'s</a> Birthday! 🎉🎂 @if($user->birthday_sms_sent == '1') ✔ @else ✗ @endif </li>
+            
+            @foreach ($users_anniversary as $anniversary)
+            <li>Happy Anniversary <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $anniversary->name }}'s</a>! 🎉🎂 </li>
+            @endforeach
+
+        @foreach ($user_child as $user)
+            @foreach ($user->child_info as $child)
+            <li> Our Employer <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $user->name }}'s</a>, @if($child->child_gender == 'female') daughter @else son @endif {{ $child->child_name }}'s Birthday is today! 🎉🎂</li>
+            @endforeach
+    
+         @endforeach
+         @endforeach
+            </ol> 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div></div> 
+
+
+
+
         
         </div>
-
-
-          </section>
-
+</section>
   </div>
   
   @endsection

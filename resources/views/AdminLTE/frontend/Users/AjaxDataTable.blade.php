@@ -52,7 +52,7 @@
 <div class="container-fluid card p-2">
 
 <div class="row mt-2">
-<div class="col-6">  <a href="{{ url('/admin/users/create') }}" class="btn-sm btn-primary p-2"> Create New Users</a></div>
+<div class="col-6">  <a href="{{ url('/admin/users/create') }}" class="btn-sm btn-primary p-2"> Add New Employer</a></div>
 
    <div class="col-6">
         <label for="dateRange">Filter by Date Range:</label>

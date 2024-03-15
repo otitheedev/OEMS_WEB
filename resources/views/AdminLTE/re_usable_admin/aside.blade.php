@@ -60,7 +60,7 @@
             <a href="{{ url('admin/users') }}" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               <p>
-                Users
+              Employer
               </p>
             </a>
           </li>
@@ -127,8 +127,6 @@
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
         </li>
 
-         
-
     
      @endauth
         </ul>
@@ -137,3 +135,6 @@
     </div>
     <!-- /.sidebar -->
   </aside>
+
+
+
