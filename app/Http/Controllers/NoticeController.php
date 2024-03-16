@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\notice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class NoticeController extends Controller
 {
@@ -21,18 +22,23 @@ class NoticeController extends Controller
 
     public function store(Request $request)
     {
-         // Instantiate a new LeaveApplication model
-        $leaveApplication = new notice();
+        
+         $notice_store = new notice();
+         $notice_store->notice_title = $request->input('notice_title');
+         $notice_store->notice_type = $request->input('notice_type');
+         $notice_store->notice_message = $request->input('notice_message');
+         //$notice_store->notice_file = $request->input('notice_file');
+         
+         if ($request->hasFile('notice_file')) {
+            $notice_file = $request->file('notice_file');
+            $extension = $notice_file->getClientOriginalExtension();
+            $department_image_name = $request->input('notice_title') . '-file-.' . $extension;
+            $notice_file->move('assets/notice/', $department_image_name);
+            $notice_store->notice_file = $department_image_name;
+        }
+    
 
-          // Assign values to the properties
-         $leaveApplication->application_type = $request->input('application_type');
-         $leaveApplication->application_message = $request->input('application_message');
-         $leaveApplication->application_start_date = $request->input('application_start_date');
-         $leaveApplication->application_end_date = $request->input('application_end_date');
-         $leaveApplication->approved_user_id = 0;
-         // Save the leave application to the database
-         $leaveApplication->save();
-
+         $notice_store->save();
          return redirect()->route('notice_home')->with('success', 'Leave application submitted successfully!');
     }
 
@@ -65,6 +71,11 @@ class NoticeController extends Controller
         
         if (!$item) {
             return redirect()->route('notice_home')->with('error', 'Item not found!');
+        }
+
+        $destination = public_path('assets/notice/') . $item->notice_file;
+        if (File::exists($destination)) {
+            File::delete($destination);
         }
 
         $item->delete();

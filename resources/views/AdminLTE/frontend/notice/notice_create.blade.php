@@ -11,13 +11,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Create Leave Application</h1>
+            <h1 class="m-0">Create Notice</h1>
           </div>
           
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Create Leave Application</li>
+              <li class="breadcrumb-item active">Create Notice</li>
             </ol>
           </div>
         </div>
@@ -32,41 +32,30 @@
 
 
 <!-- form code  start-->
-<form action="{{ url('/admin/application/store') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ url('/admin/notice/store') }}" method="POST" enctype="multipart/form-data">
   @csrf
 
   <div class="container-fulied" style="background: #fffdfa;padding: 15px;border-radius: 15px;border: 1px solid lightgray;">
 
   <div class="form-group">
-    <label for="formGroupDepartment">Application Type <span class="text-danger">*</span></label>
-    <select class="form-control" name="application_type" required> 
-       <option>Sick leave</option>
-       <option>Annual leave</option>
-       <option>Maternity/paternity leave</option>
-       <option>Bereavement leave</option>
-       <option>Personal leave</option>
-       <option>Jury duty leave</option>
-       <option>Study leave</option>
-       <option>Special leave</option>
-       <option>Unpaid leave</option>
-       <option>Emergency leave</option>
-       <option>Compassionate leave</option>
-       <option>Sabbatical leave</option>
+<label for="formGroupExampleInput3">Notice Title <span class="text-danger">*</span></label>
+	<input type="text" name="notice_title" class="form-control" placeholder="Notice Title" required></input>
+</div>
+
+  
+  <div class="form-group">
+    <label for="formGroupDepartment">Notice Type <span class="text-danger">*</span></label>
+    <select class="form-control" name="notice_type" required> 
+       <option>Regular</option>
+       <option>General</option>
+       <option>Important</option>
     </select>
   </div>
 
-
- <div class="row mt-1 mb-2">
-  <div class="col-sm-6">
-   <label for="start_date"><i class="fa-regular fa-user"></i> Start From <span class="text-danger">*</span></label>
-   <input type="date" class="form-control" name="application_start_date" required>
- </div>
-
- <div class="col-sm-6">
- <label for="end_date"><i class="fa-regular fa-user"></i> End Date <span class="text-danger">*</span></label>
-   <input type="date" class="form-control" name="application_end_date" required>
- </div>
- </div>
+<div class="form-group">
+<label for="formGroupExampleInput3">Notice File</label>
+	<input type="file" name="notice_file" class="form-control"></input>
+</div>
    
 
   <!-- richtext editor start -->
@@ -77,12 +66,12 @@
 <style>.rte_command_insertimage, .rte_command_insertvideo{display:none;} </style>
 
 <div class="form-group">
-<label for="formGroupExampleInput3">Application Details</label>
-	<textarea name="application_message" id="div_editor1"></textarea>
+<label for="formGroupExampleInput3">Notice Details</label>
+	<textarea name="notice_message" id="div_editor1"></textarea>
 </div>
 		<script>
 		  var editor1 = new RichTextEditor("#div_editor1");
-	       editor1.setHTMLCode("<p><b>Why you are want leave</b></p>");
+	     
 			function btngetHTMLCode() {
 				alert(editor1.getHTMLCode())
 			}
@@ -98,7 +87,7 @@
 <!-- richtext editor end -->
 
 <div class="form-group">
-<input type="submit" class="btn btn-primary" value="Submit Application">
+<input type="submit" class="btn btn-primary" value="Submit Notice">
 </div>
 
 </div>

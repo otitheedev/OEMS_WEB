@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('notice', function (Blueprint $table) {
             $table->id();
             $table->text('notice_type')->nullable();
+            $table->text('notice_title')->nullable();
             $table->longtext('notice_message')->nullable();
+            $table->string('notice_file')->nullable();
             $table->boolean('status')->default(false);
             $table->boolean('view')->default(false);
             $table->timestamps();

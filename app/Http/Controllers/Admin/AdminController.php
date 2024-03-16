@@ -8,6 +8,8 @@ use App\Models\adminRole\adminUserRole;
 use App\Models\department;
 use App\Models\UsersChildInfo;
 use App\Models\reg_user;
+use App\Models\notice;
+use App\Models\LeaveApplication;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
@@ -35,11 +37,12 @@ public function admin_dashboard(){
   $query->whereBetween('child_birthday', [$today, $sevenDaysLater]);}])->whereBetween('DOB', [$today, $sevenDaysLater])->get();
 
 $user_child_birthday = UsersChildInfo::whereDay('child_birthday', $today->day)->whereMonth('child_birthday', $today->month)->get();
- $users_DOB= reg_user::whereDay('DOB', $today->day)->whereMonth('DOB', $today->month)->get();
- $user_child = reg_user::with(['child_info' => function ($query) use ($today) {$query->whereDate('child_birthday', $today);}])->get();
- $users_anniversary= reg_user::whereDay('spouse_anniversary', $today->day)->whereMonth('spouse_anniversary', $today->month)->get();
+$users_DOB= reg_user::whereDay('DOB', $today->day)->whereMonth('DOB', $today->month)->get();
+$user_child = reg_user::with(['child_info' => function ($query) use ($today) {$query->whereDate('child_birthday', $today);}])->get();
+$users_anniversary= reg_user::whereDay('spouse_anniversary', $today->day)->whereMonth('spouse_anniversary', $today->month)->get();
 
- 
+ $all_notice= notice::latest()->get();
+ $all_leave= LeaveApplication::latest()->get();
  $users_count= reg_user::count();
  $department_count= department::count();
        return view('AdminLTE/admin_dashboard',[
@@ -50,6 +53,8 @@ $user_child_birthday = UsersChildInfo::whereDay('child_birthday', $today->day)->
            'user_child' =>  $user_child,
            'users_anniversary' =>  $users_anniversary,
            'upcomingBirthdays' => $upcomingBirthdays,
+           'all_notice' => $all_notice,
+           'all_leave' =>  $all_leave,
        ]);
    }
 

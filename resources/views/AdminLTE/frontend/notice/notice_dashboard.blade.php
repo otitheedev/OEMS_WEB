@@ -48,6 +48,7 @@
 <table id="example" class="display" style="max-width:100%">
     <thead>
         <tr>
+            <th>ID</th>
             <th>Notice Type </th>
             <th>Notice Details</th>
             <th>Created_at</th>
@@ -58,8 +59,9 @@
     
     @foreach ($application as $applicate)
     <tr>
-        <td>{{ $applicate->application_type }}</td>
-         <td> <span class="badge-pill badge-primary">Days</span></td>
+        <td>{{ $applicate->id }} </td>
+        <td>{{ $applicate->notice_type }}</td>
+         <td>{{ strip_tags(substr($applicate->notice_message, 0, 100)) }}...</td>
         <td>{{ $applicate->created_at->diffForHumans() }}</td>
             <td>
               <a href="{{ url('admin/notice/destroy/'. $applicate->id) }}" class="btn-sm btn-danger">Delete</a> .
