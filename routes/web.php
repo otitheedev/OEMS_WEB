@@ -48,12 +48,32 @@ Route::get('/runqueueworker', function () {
 });
 
 
+
+#################### Notice Board ####################
+Route::get('/admin/notice', [App\Http\Controllers\DepartmentController::class, 'index'])->name('notice_home');
+Route::get('/admin/notice/create', [App\Http\Controllers\DepartmentController::class, 'create'])->name('notice_create');
+Route::post('/admin/notice/store', [App\Http\Controllers\DepartmentController::class, 'store'])->name('notice_store');
+Route::get('/admin/notice/edit/{id}', [App\Http\Controllers\DepartmentController::class, 'edit'])->name('notice_edit1');
+Route::post('/admin/notice/update', [App\Http\Controllers\DepartmentController::class, 'update'])->name('notice_update1');
+Route::get('/admin/notice/destroy/{id}', [App\Http\Controllers\DepartmentController::class, 'destroy'])->name('notice_destroy');
+
+#################### Leave Application ####################
+Route::get('/admin/application', [App\Http\Controllers\LeaveApplicationController::class, 'index'])->name('application_home');
+Route::get('/admin/application/create', [App\Http\Controllers\LeaveApplicationController::class, 'create'])->name('application_create');
+Route::post('/admin/application/store', [App\Http\Controllers\LeaveApplicationController::class, 'store'])->name('application_store');
+Route::get('/admin/application/edit/{id}', [App\Http\Controllers\LeaveApplicationController::class, 'edit'])->name('application_edit1');
+Route::post('/admin/application/update', [App\Http\Controllers\LeaveApplicationController::class, 'update'])->name('application_update1');
+Route::get('/admin/application/destroy/{id}', [App\Http\Controllers\LeaveApplicationController::class, 'destroy'])->name('application_destroy');
+
+
+########## Login ###########
 Route::post('/login', [App\Http\Controllers\Auth\CustomLoginController::class, 'login'])->name('login');
 Route::get('/login', [App\Http\Controllers\Auth\CustomLoginController::class, 'login'])->name('loginweb');
 Route::post('/logout', [App\Http\Controllers\Auth\CustomLoginController::class, 'logout'])->name('logout');
 
 # AjaxDataTable
 Route::get('/AjaxDataTable', [App\Http\Controllers\FrontendController::class, 'AjaxDataTable'])->name('AjaxDataTable');
+
 
 ######### OEMS START ###################
 //AuthController.php getAjaxDataTable All_Users_Index

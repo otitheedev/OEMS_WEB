@@ -21,10 +21,6 @@
       </div>
 
 
-
-
-
-    
       <!-- SidebarSearch Form -->
       <div class="form-inline">
         <div class="input-group" data-widget="sidebar-search">
@@ -110,13 +106,13 @@
 
           <!-- Start Code here for Other Auth -->
           <li class="nav-item">
-            <a href="{{ url('') }}" class="nav-link">
+            <a href="{{ url('/admin/application') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i> <p>Leave Application</p>
             </a>
           </li>
         
           <li class="nav-item">
-            <a href="{{ url('') }}" class="nav-link">
+            <a href="{{ url('#') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i> <p>Attendance</p>
             </a>
           </li>
