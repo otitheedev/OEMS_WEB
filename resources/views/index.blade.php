@@ -17,13 +17,19 @@ a {text-decoration: none;}
 .form-right i {font-size: 100px;}
 </style>
 
-<div class="login-page bg-light">
+<div class="login-page bg-light" style="background-image: url('/dist/loginbackground.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-color: #f0f0f0;
+            background-attachment: fixed;
+            background-clip: border-box;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 offset-lg-1">
 
 
-                  <h3 class="mb-2">Otithee Employee Login</h3>
+                  <h3 class="mb-2 text-white" style="text-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.5); ">Otithee Employee Login</h3>
                     <div class="bg-white shadow rounded">
                     @if(auth()->check())<div class="col-12 alert-success p-1"> Welcome back {{ auth()->user()->name }}! </div>@endif
                         <div class="row">
@@ -61,9 +67,9 @@ a {text-decoration: none;}
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-6">
+                                         <!--    <div class="col-sm-6">
                                                 <a href="{{ url('password/reset')}}" class="float-end text-primary">Forgot Password?</a>
-                                            </div>
+                                            </div> -->
 
                                             <div class="col-12">
                                                 <button type="submit" class="btn btn-primary px-4 float-end mt-4">{{ __('Login') }} </button>
@@ -88,7 +94,7 @@ a {text-decoration: none;}
                 </div>   
                
                 <div class="col-6 mt-2 text-right">
-                         <div class="text-right"> <p class="text-secondary" style="text-align:right;">Otithee Staff Login</p> </div>  
+                         <div class="text-right"> <p class="text-secondary text-white" style="text-align:right;">Otithee Staff Login</p> </div>  
                  </div>
             </div>
             </div>
