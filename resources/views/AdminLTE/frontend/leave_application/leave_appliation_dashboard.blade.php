@@ -45,13 +45,13 @@
 <hr>
 
 <!-- Your DataTable HTML -->
-<table id="example" class="display" style="max-width:100%">
+<table id="example" class="display" style="max-width:100%; text-align:center;">
     <thead>
         <tr>
             <th> Employee </th>
             <th>Application Type</th>
             <th>Apply Date</th>
-            <th> Total Days </th>
+            <th>Duration</th>
             <th>Application Status </th>
             <th>Application Details </th>
             <th>Created At</th>
@@ -66,8 +66,8 @@
         <td>{{ $applicate->application_type }}</td>
             
    <td>
-    {{ $applicate->application_start_date->format('d M, Y') }} to
-    {{ $applicate->application_end_date->format('d M, Y') }} 
+   <span class="badge-pill badge-primary">{{ $applicate->application_start_date->format('d M, Y l') }}</span> to
+   <span class="badge-pill badge-primary"> {{ $applicate->application_end_date->format('d M, Y l') }} </span>
     @php
         // Convert start and end dates to Carbon instances
         $startDate = \Carbon\Carbon::parse($applicate->application_start_date);
@@ -78,7 +78,19 @@
     @endphp
   </td>
 
-<td> <span class="badge-pill badge-primary">{{ $totalDays }} Days</span></td>
+          <td> <span class="badge-pill badge-primary">{{ $totalDays }} Days</span></td>
+          
+        <td> 
+          @if ($applicate->status == 0)
+        <span class="badge-pill badge-danger">Pending</span>
+         @elseif ($applicate->status == 1)
+        <span class="badge-pill badge-success">Approved</span>
+         @elseif ($applicate->status == 3)
+        <span class="badge-pill badge-warning">Rejected</span>
+           @else
+        <span class="badge-pill badge-secondary">Unknown</span>
+         @endif
+          </td>
 
             <td>{{ strip_tags(substr($applicate->application_message, 0, 100)) }}...</td>
             <td>{{ $applicate->created_at->diffForHumans() }}</td>

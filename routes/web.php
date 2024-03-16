@@ -50,12 +50,13 @@ Route::get('/runqueueworker', function () {
 
 
 #################### Notice Board ####################
-Route::get('/admin/notice', [App\Http\Controllers\DepartmentController::class, 'index'])->name('notice_home');
-Route::get('/admin/notice/create', [App\Http\Controllers\DepartmentController::class, 'create'])->name('notice_create');
-Route::post('/admin/notice/store', [App\Http\Controllers\DepartmentController::class, 'store'])->name('notice_store');
-Route::get('/admin/notice/edit/{id}', [App\Http\Controllers\DepartmentController::class, 'edit'])->name('notice_edit1');
-Route::post('/admin/notice/update', [App\Http\Controllers\DepartmentController::class, 'update'])->name('notice_update1');
-Route::get('/admin/notice/destroy/{id}', [App\Http\Controllers\DepartmentController::class, 'destroy'])->name('notice_destroy');
+Route::get('/admin/notice', [App\Http\Controllers\NoticeController::class, 'index'])->name('notice_home');
+Route::get('/admin/notice/create', [App\Http\Controllers\NoticeController::class, 'create'])->name('notice_create');
+Route::post('/admin/notice/store', [App\Http\Controllers\NoticeController::class, 'store'])->name('notice_store');
+Route::get('/admin/notice/edit/{id}', [App\Http\Controllers\NoticeController::class, 'edit'])->name('notice_edit1');
+Route::post('/admin/notice/update', [App\Http\Controllers\NoticeController::class, 'update'])->name('notice_update1');
+Route::get('/admin/notice/destroy/{id}', [App\Http\Controllers\NoticeController::class, 'destroy'])->name('notice_destroy');
+
 
 #################### Leave Application ####################
 Route::get('/admin/application', [App\Http\Controllers\LeaveApplicationController::class, 'index'])->name('application_home');

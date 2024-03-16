@@ -93,6 +93,17 @@
 
 
           <li class="nav-item">
+            <a href="{{ url('/admin/notice') }}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+              Notice
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+
+
+          <li class="nav-item">
             <a href="{{ url('/admin/activitylogs') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
@@ -101,6 +112,7 @@
               </p>
             </a>
           </li>
+          
           @elseif(auth()->user()->hasRole('user'))
           @endif
 
