@@ -160,7 +160,8 @@
        <div class="card-body" style="height: 350px; overflow-y: scroll;">
                
        <ul class="todo-list" data-widget="todo-list">
-                  
+        
+@if(count($all_notice) > 0)
  @foreach ($all_notice as $all_notices)          
   <li>
    <span class="handle"><i class="fas fa-ellipsis-v"></i><i class="fas fa-ellipsis-v"></i></span>
@@ -170,7 +171,10 @@
     <div class="tools"><i class="fas fa-eye"></i></a></div>
   </li>
   @endforeach
-          
+  @else 
+  <li>No data found</li>
+  @endif 
+
      </ul>
         </div>
   
@@ -200,9 +204,10 @@
 
    <div class="card-body">
      <ul class="todo-list" data-widget="todo-list">
+
+     @if(count($all_leave) > 0)
      @foreach ($all_leave as $all_leaves)    
        <li>
-
          <span class="handle">
            <i class="fas fa-ellipsis-v"></i>
            <i class="fas fa-ellipsis-v"></i>
@@ -218,6 +223,10 @@
 
        </li>
        @endforeach
+
+  @else 
+  <li>No data found</li>
+  @endif 
   
      </ul>
    </div>
@@ -230,14 +239,7 @@
 
 
 
-
-
-
-
-
-
 <div class="col-lg-6 col-6">
-   
           <div class="card bg-gradient-secondary">
               <div class="card-header border-0">
                 <h3 class="card-title">

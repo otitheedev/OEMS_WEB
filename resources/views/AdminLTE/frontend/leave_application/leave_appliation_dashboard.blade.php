@@ -45,7 +45,7 @@
 <hr>
 
 <!-- Your DataTable HTML -->
-<table id="example" class="display" style="max-width:100%; text-align:center;">
+<table id="example" class="table-responsive-lg display" style="max-width:100%; text-align:center;">
     <thead>
         <tr>
             <th> Employee </th>
@@ -66,8 +66,8 @@
         <td>{{ $applicate->application_type }}</td>
             
    <td>
-   <span class="badge-pill badge-primary">{{ $applicate->application_start_date->format('d M, Y l') }}</span> to
-   <span class="badge-pill badge-primary"> {{ $applicate->application_end_date->format('d M, Y l') }} </span>
+   <span class="badge badge-info" style="font-size:16px;">{{ $applicate->application_start_date->format('d M, Y l') }}</span> to
+   <span class="badge badge-info" style="font-size:16px;"> {{ $applicate->application_end_date->format('d M, Y l') }} </span>
     @php
         // Convert start and end dates to Carbon instances
         $startDate = \Carbon\Carbon::parse($applicate->application_start_date);
@@ -78,7 +78,7 @@
     @endphp
   </td>
 
-          <td> <span class="badge-pill badge-primary">{{ $totalDays }} Days</span></td>
+          <td> <span class="badge badge-primary" style="font-size:16px;">{{ $totalDays }} Days</span></td>
           
         <td> 
           @if ($applicate->status == 0)

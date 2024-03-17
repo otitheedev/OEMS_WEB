@@ -45,7 +45,7 @@
 <hr>
 
 <!-- Your DataTable HTML -->
-<table id="example" class="display" style="max-width:100%">
+<table id="example" class="table-responsive-lg display" style="max-width:100%">
     <thead>
         <tr>
             <th>ID</th>

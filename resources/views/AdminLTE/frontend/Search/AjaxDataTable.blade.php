@@ -45,7 +45,7 @@
         <button id="applyFilter">Apply Filter</button>
     </div>
  -->
-    <table id="ajaxDataTable" class="table table-bordered table-responsive">
+    <table id="ajaxDataTable" class="table table-bordered table-responsive-lg">
         <thead>
             <tr>
                 <th>ID</th>
