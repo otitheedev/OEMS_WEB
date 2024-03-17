@@ -125,11 +125,12 @@ ul.timeline > li.active:before {
                                         class="rounded-circle p-1" style="width:250px; max-width:300px; height:250px; border:2px solid lightgrey;">
                                 
                                     <div class="mt-3"> 
-                                 
-    @if(auth()->check())          
-     <a href="{{ url('/admin/users/edit/'). '/' . $user->id }}"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>   
-     @endif
 
+    @auth                            
+     @if(auth()->user()->hasRole(['admin', 'HR', 'Superadmin', 'Root']))         
+     <a href="{{ url('/admin/users/edit/'). '/' . $user->id }}"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit Profile</a>   
+     @endif
+  @endauth
 
                                         <h4> {{ $user->name }} </h4>
                                         <p class="text-secondary mb-1">{{ $user->designation }}</p>
@@ -138,13 +139,24 @@ ul.timeline > li.active:before {
                                         {{ \Carbon\Carbon::parse($user->DOB)->format('d F, Y') }}
                                         </p>
                                         <p class="text-secondary mb-2">Account Created {{ \Carbon\Carbon::parse($user->created_at)->diffForHumans() }} </p>
-                                        <p class="text-muted font-size-sm">
-                                            <span class="badge-lg badge-success p-2" style="border-radius:5px;">Basic Salary: {{ $user->normal_salary }} tk ({{ $user->pay_frequency }})</span></p>
+                                        
+                                        
+   @auth                            
+     @php
+        $currentUser = auth()->user();
+     @endphp
+    
+    @if($currentUser->phone_number === auth()->user()->phone_number || 
+        $currentUser->hasRole(['admin', 'HR', 'Superadmin', 'Root']))
 
-                                            <p class="text-muted font-size-sm">
-                                            <span class="badge-lg badge-info p-2" style="border-radius:5px;">Total Pay: {{ $user->totalAmount }} tk ({{ $user->pay_frequency }})</span> 
-                                         </p>
+          <p class="text-muted font-size-sm">
+           <span class="badge-lg badge-success p-2" style="border-radius:5px;">Basic Salary: {{ $user->normal_salary }} tk ({{ $user->pay_frequency }})</span></p>
 
+           <p class="text-muted font-size-sm">
+           <span class="badge-lg badge-info p-2" style="border-radius:5px;">Total Pay: {{ $user->totalAmount }} tk ({{ $user->pay_frequency }})</span> 
+          </p>
+   @endif
+  @endauth
 
    @if($otherBenifitsbyPercentage->isNotEmpty())
     <table class="table table-bordered" style="width:100%; text-align:left;"> 
@@ -161,11 +173,23 @@ ul.timeline > li.active:before {
 
 
 
-                           <!-- Add font awesome icons -->
-                           <a href="{{ $user->facebook_link }}" class="fa fa-facebook-official fa-3x"></a>
-                           <a href="{{ $user->instagram_link }}" class="fa fa-instagram fa-3x"></a>
-                           <a href="{{ $user->twitter_link }}" class="fa fa-twitter-square fa-3x"></a>
-                           <a href="{{ $user->linkedin_link }}" class="fa fa-linkedin-square fa-3x"></a>
+<!-- Add font awesome icons -->
+@if(!empty($user->facebook_link))
+    <a href="{{ $user->facebook_link }}" class="fa fa-facebook-official fa-3x"></a> 
+@endif
+
+@if(!empty($user->instagram_link))
+    <a href="{{ $user->instagram_link }}" class="fa fa-instagram fa-3x"></a>
+@endif
+
+@if(!empty($user->twitter_link))
+    <a href="{{ $user->twitter_link }}" class="fa fa-twitter-square fa-3x"></a>
+@endif
+
+@if(!empty($user->linkedin_link))
+    <a href="{{ $user->linkedin_link }}" class="fa fa-linkedin-square fa-3x"></a>
+@endif
+
 
                                     </div>
                                 </div>
@@ -403,6 +427,8 @@ ul.timeline > li.active:before {
                 </div>
             </div>
         </div>
+
+        
     </section>
 
     <!-- Optional JavaScript -->
@@ -416,6 +442,12 @@ ul.timeline > li.active:before {
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+
+
+
+
+
+        
 </body>
 
 </html>

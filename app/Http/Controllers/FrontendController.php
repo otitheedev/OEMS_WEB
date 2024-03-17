@@ -34,6 +34,7 @@ class FrontendController extends Controller
          $job_expriences = $user->job_expriences;
          $extra_benifits = $user->extra_benifits;
          $otherBenifitsbyPercentage = $user->otherBenifitsbyPercentage;
+         
 
          return view('AdminLTE/frontend/Search/employee_profile',[
             'user' => $user, 
@@ -45,14 +46,7 @@ class FrontendController extends Controller
             'otherBenifitsbyPercentage' => $otherBenifitsbyPercentage,
         ]);
         
-        # return $user->academicRecords[0]->id;
-        # return $user=reg_user::get()->all();
-        # Access the academic_records array
-        # Loop through each academic record and print pass_year
-        # foreach ($academicRecords as $record) {
-        # $passYear = $record->pass_year;
-        # echo "Pass Year: $passYear<br>";
-        # }
+  
 
     }
 
