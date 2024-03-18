@@ -49,7 +49,8 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('AdminLTE/frontend/Users/create_users');
+        $department=department::all();
+        return view('AdminLTE/frontend/Users/create_users',['department' => $department]);
     }
 
 
@@ -347,7 +348,7 @@ if (!empty($benifitsData)) {
 /* $sender = Sender::getInstance();
 $sender->setProvider(BulkSmsBD::class);
 $sender->setMobile($request->input('phone_number'));
-$sender->setMessage('Hi '. $request->input('name') . '! Your account has been created successfully! Login:'. $request->input('phone_number') .'; Password:'. $request->input('password'));
+$sender->setMessage('Hi '. $request->input('name') . '! Welcome to OEMS! Your Login ID:'. $request->input('phone_number') .'; Password:'. $request->input('password') .'Login: https://otitheesoftwaresolution.com');
 $sender->setQueue(true); 
 $sender->setConfig(
 [
@@ -373,8 +374,8 @@ public function edit(Request $request, $id)
     $UsersChildInfo = UsersChildInfo::where('user_id', $id)->get(); 
     $extra_benifits = extra_benifits::where('user_id', $id)->get(); 
     $otherbyPercentage = otherBenifitsbyPercentage::where('user_id', $id)->get(); 
-    
-    
+    $department=department::all();
+
     return view('AdminLTE/frontend/Users/edit_user_profile', [
         'user_data' => $user_data,
         'academic' => $academic,
@@ -383,6 +384,7 @@ public function edit(Request $request, $id)
         'JobExpriences' => $JobExpriences,
         'extra_benifits' => $extra_benifits,
         'otherbyPercentage' => $otherbyPercentage,
+        'department' => $department,
     
     ]);
 }

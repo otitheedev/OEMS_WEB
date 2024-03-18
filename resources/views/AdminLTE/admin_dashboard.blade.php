@@ -269,7 +269,7 @@
                 </h3>
                 <!-- tools card -->
                 <div class="card-tools">
-                  <div class="btn-group">
+            <!--       <div class="btn-group">
                     <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
                       <i class="fas fa-bars"></i>
                     </button>
@@ -279,7 +279,7 @@
                       <div class="dropdown-divider"></div>
                       <a href="#" class="dropdown-item">View calendar</a>
                     </div>
-                  </div>
+                  </div> -->
                   <button type="button" class="btn btn-secondary btn-sm" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
                   </button>
@@ -388,7 +388,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </h3>
                 <!-- tools card -->
                 <div class="card-tools">
-                  <div class="btn-group">
+             <!--      <div class="btn-group">
                     <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
                       <i class="fas fa-bars"></i>
                     </button>
@@ -398,7 +398,7 @@ document.addEventListener('DOMContentLoaded', function () {
                       <div class="dropdown-divider"></div>
                       <a href="#" class="dropdown-item">View calendar</a>
                     </div>
-                  </div>
+                  </div> -->
                   <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
                   </button>

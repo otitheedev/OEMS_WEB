@@ -6,7 +6,7 @@
 
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
+    <!-- Content Header (Page headers) -->
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -66,12 +66,12 @@
         <tr>
             <td>{{ $depart->department_name }}</td>
             <td><img src="{{ asset('assets/department/' . $depart->department_photo) }}" width="60px"></td>
-            <td>{!! htmlspecialchars(substr($depart->department_information, 0, 100)) !!}...</td>
+            <td>{{ strip_tags(substr($depart->department_information, 0, 150)) }}... </td>
             <td>{{ $depart->department_director }}</td>
             <td>{{ $depart->department_gm }}</td>
             <td>
-              <a href="{{ url('/admin/department/destroy/'. $depart->id) }}">Delete</a> .
-              <a href="{{ url('admin/department/edit/'. $depart->id) }}">Edit</a>
+              <a href="{{ url('/admin/department/destroy/'. $depart->id) }}" class="btn-sm btn-danger">Delete</a> 
+              <a href="{{ url('admin/department/edit/'. $depart->id) }}" class="btn-sm btn-info">Edit</a>
            </td>
         </tr>
         @endforeach

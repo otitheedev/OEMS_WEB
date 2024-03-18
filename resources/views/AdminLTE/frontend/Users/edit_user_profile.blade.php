@@ -103,8 +103,9 @@
         <label for="department_name"><i class="fa-regular fa-building"></i> Department Name <span class="text-danger">*</span></label>
         <select class="form-control custom-select browser-default" name="department_name">
           <option selected> {{ $user_data->department_name }} </option>
-          <option>IT Department</option>
-          <option>Marketing Department</option>
+          @foreach ($department as $depart)
+          <option>{{ $depart->department_name }}</option>
+          @endforeach
         </select>
       </div>
      
