@@ -83,11 +83,17 @@
         <td> 
           @if ($applicate->status == 0)
         <span class="badge-pill badge-danger">Pending</span>
+
          @elseif ($applicate->status == 1)
         <span class="badge-pill badge-success">Approved</span>
-         @elseif ($applicate->status == 3)
-        <span class="badge-pill badge-warning">Rejected</span>
-           @else
+        
+         @elseif ($applicate->status == 2)
+        <span class="badge-pill badge-danger">Rejected</span>
+
+        @elseif ($applicate->status == 3)
+        <span class="badge-pill badge-secondary">Contact HR Department</span>
+
+        @else
         <span class="badge-pill badge-secondary">Unknown</span>
          @endif
           </td>

@@ -62,14 +62,14 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
+                <h3>{{ \App\Models\LeaveApplication::count() }}</h3>
 
-                <p>Total Feedback</p>
+                <p>Leave Application</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{ url('admin/application') }}" class="small-box-footer">View All <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
 
@@ -78,56 +78,62 @@
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>65</h3>
+                <h3>{{ \App\Models\notice::count() }}</h3>
 
-                <p>Total Task</p>
+                <p>Notice Board</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{ url('admin/notice') }}" class="small-box-footer">View All <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
         </div>
     </section>
 
 
-  
+
    <section class="content">
       <div class="container-fluid">
         <div class="card p-2">
-  <h4 class="card header p-1"> Today Birthday! </h4>
-       <ol type="1">
-            @foreach ($users_DOB as $user)
-            <li> Today is <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $user->name }}'s</a> Birthday! 🎉🎂 @if($user->birthday_sms_sent == '1') ✔ @else ✗ @endif </li>
-            
+        <div class="card">
+        @if(count($users_DOB) > 0) 
+        <h4 class="card-header" style="font-size: 1.5rem;"><i class="ion ion-load-a mr-1"></i> Today Birthday! </h4>@endif
+       
+        <ol type="1">
+          @foreach ($users_DOB as $user)
+            <li class="mt-1"> Today is <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $user->name }}'s</a> Birthday! 🎉🎂 @if($user->birthday_sms_sent == '1') ✔ @else ✗ @endif </li>
+
             @foreach ($users_anniversary as $anniversary)
-            <li>Happy Anniversary <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $anniversary->name }}'s</a>! 🎉🎂 </li>
+            <li class="mt-1">Happy Anniversary <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $anniversary->name }}'s</a>! 🎉🎂 </li>
             @endforeach
 
-        @foreach ($user_child as $user)
-     
+           @foreach ($user_child as $user)
             @foreach ($user->child_info as $child)
-            <li> Our Employer <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $user->name }}'s</a>, @if($child->child_gender == 'female') daughter @else son @endif {{ $child->child_name }}'s Birthday is today! 🎉🎂</li>
+            <li class="mt-1"> Our Employer <a href="{{ url('employee/ID/'. $user->phone_number) }}" target="_blank">{{ $user->name }}'s</a>, @if($child->child_gender == 'female') daughter @else son @endif {{ $child->child_name }}'s Birthday is today! 🎉🎂</li>
             @endforeach
 
          @endforeach
          @endforeach
             </ol> 
-
+</div>
 
   <!-- upcoming birthday next 7 days --> 
- 
-  <h4 class="card header p-1">Upcoming Birthday.. </h4>
+  @if(count($upcomingBirthdays) > 0)
+  <div class="card">
+  <h4 class="card-header" style="font-size: 1.5rem;"><i class="ion ion-ios-clock mr-1"></i> Upcoming Birthday.. </h4>
   <ol type="1">
-   @foreach ($upcomingBirthdays as $upcomingBirthday)
-    <li><a href="{{ url('employee/ID/'. $upcomingBirthday->phone_number) }}" target="_blank">{{ $upcomingBirthday->name }}</a> birthday {{ $upcomingBirthday->DOB }}</li>
+  @foreach ($upcomingBirthdays as $upcomingBirthday)
+    <li class="mt-2"><a href="{{ url('employee/ID/'. $upcomingBirthday->phone_number) }}" target="_blank">{{ $upcomingBirthday->name }}</a> birthday (
+    {{ \Carbon\Carbon::parse($upcomingBirthday->DOB)->format('F d, Y') }} )</li>
         
        @foreach ($upcomingBirthday->child_info as $child)
             <li> <a href="{{ url('employee/ID/'. $child->reg_user->phone_number) }}" target="_blank">{{ $child->reg_user->name }}'s</a> @if($child->child_gender == 'female') daughter @else son @endif {{ $child->child_name }}'s birthday {{ $child->child_birthday }}</li>
         @endforeach
 
     @endforeach
+    </div>
+    @endif
   </ol>
 
 
@@ -145,6 +151,22 @@
         <div class="row">
           
         
+
+
+<div class="col-lg-12 col-12"> 
+<div class="card p-2">
+   <div class="card">
+   <h4 class="card-header" style="font-size: 1.5rem;"><i class="ion ion-clipboard mr-1"></i> Upcoming leaves</h4>
+
+   <div class="card-body">
+    ...
+   </div>
+   </div>
+  </div>
+</div>
+
+
+
         
         <div class="col-lg-6 col-6"> 
 
@@ -157,7 +179,7 @@
                 </h3>
               </div>
           
-       <div class="card-body" style="height: 350px; overflow-y: scroll;">
+       <div class="card-body" style="max-height: 350px; overflow-y: scroll;">
                
        <ul class="todo-list" data-widget="todo-list">
         
@@ -187,7 +209,6 @@
 
 
 
-
 <div class="col-lg-6 col-6"> 
 
 <!-- TO DO List -->
@@ -202,7 +223,7 @@
      </div>
    </div>
 
-   <div class="card-body">
+   <div class="card-body" style="max-height: 350px; overflow-y: scroll;">
      <ul class="todo-list" data-widget="todo-list">
 
      @if(count($all_leave) > 0)
@@ -213,10 +234,10 @@
            <i class="fas fa-ellipsis-v"></i>
          </span>
   
-         <div  class="icheck-primary d-inline ml-2">
+      <!--    <div  class="icheck-primary d-inline ml-2">
            <input type="checkbox" value="" name="todo1" id="todoCheck1">
            <label for="todoCheck1"></label>
-         </div>
+         </div> -->
     
          <span class="text"><a href="{{ url('/employee/ID/' . $all_leaves->user->phone_number)  }}" target="_blank">{{ $all_leaves->user->name }}</a> ({{ $all_leaves->user->department_name }})</span> applied for leave
          <small class="badge badge-danger"><i class="far fa-clock"></i> {{ $all_leaves->created_at->diffForHumans() }}</small>
@@ -393,7 +414,6 @@ document.addEventListener('DOMContentLoaded', function () {
 <!-- DateTimePicker JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
-
 <div id="holidaycalendar" style="width: 100%;height:300px;"></div></div></div>
             
 <style>.date-highlighted {background-color: yellow !important; color: black !important;}</style>
@@ -476,13 +496,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
-
-
-
-
-        
-        </div>
+</div>
 </section>
   </div>
   

@@ -39,6 +39,22 @@
 
   <div class="container-fulied" style="background: #fffdfa;padding: 15px;border-radius: 15px;border: 1px solid lightgray;">
 
+  @auth                            
+  @if(auth()->user()->hasRole(['admin', 'HR', 'Superadmin', 'Root']))     
+  <div class="form-group">
+    <label for="formGroupDepartment">Status <span class="text-danger">*</span></label>
+    <select class="form-control" name="status" style="background:#fffdc9; font-weight:bold;" required> 
+    <option value="0" {{ $leave->status == 0 ? 'selected' : '' }}>Pending</option>
+    <option value="1" {{ $leave->status == 1 ? 'selected' : '' }}>Approved</option>
+    <option value="2" {{ $leave->status == 2 ? 'selected' : '' }}>Rejected</option>
+    <option value="3" {{ $leave->status == 3 ? 'selected' : '' }}>Contact HR Department</option>
+
+    </select>
+  </div>
+  @endif
+  @endauth
+
+
   <div class="form-group">
     <label for="formGroupDepartment">Application Type <span class="text-danger">*</span></label>
     <select class="form-control" name="application_type" required> 

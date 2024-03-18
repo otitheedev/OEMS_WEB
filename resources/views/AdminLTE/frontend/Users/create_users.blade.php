@@ -944,7 +944,7 @@ if (maritalStatus && maritalStatus.value === 'married') {newUserForm.style.displ
             </div>
 
             <div class="col-sm-3 form-group">
-                <label for="degree">Degree</label>
+                <label for="degree">Institute/College Name</label>
                 <input type="text" class="form-control" name="degree[]" placeholder="Degree name 1" value="Degree" required>
             </div>
 

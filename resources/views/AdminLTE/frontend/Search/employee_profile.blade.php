@@ -389,11 +389,29 @@ ul.timeline > li.active:before {
 
 
 
-
+                    @if($professional_certificate->isNotEmpty() || $academicRecords->isNotEmpty())
                         <div class="card mt-2">
                             <div class="card-body">
                                 <h4><i class="fa fa-list" aria-hidden="true"></i> Timeline</h4>
                                     <ul class="timeline">
+
+                                      @foreach ($professional_certificate as $certificates)
+                                        <li class="active">
+                                            <h6>{{ \Carbon\Carbon::parse($certificates->start_date)->format('Y') }} - {{ \Carbon\Carbon::parse($user->end_date)->format('Y') }}</h6>
+                                            <p class="mb-0 text-muted">{{ $certificates->certificate_name }} From {{ $certificates->organization_name }}</p>
+                                            <o class="text-muted">{{ \Carbon\Carbon::parse($user->end_date)->format('d F, Y') }}</p>
+                                        </li>
+                                        @endforeach
+
+                                        @foreach ($academicRecords as $record)
+                                        <li class="active">
+                                            <h6>{{ \Carbon\Carbon::parse($record->join_year)->format('Y') }} - {{ \Carbon\Carbon::parse($user->pass_year)->format('Y') }}</h6>
+                                            <p class="mb-0 text-muted">{{ $record->degree }} from {{ $record->degree_information }}</p>
+                                            <o class="text-muted">{{ \Carbon\Carbon::parse($user->pass_year)->format('d F, Y') }}</p>
+                                        </li>
+                                        @endforeach
+
+<!-- 
                                         <li class="active">
                                             <h6>PICKED</h6>
                                             <p class="mb-0 text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque Lorem ipsum dolor</p>
@@ -403,25 +421,13 @@ ul.timeline > li.active:before {
                                             <h6>PICKED</h6>
                                             <p class="mb-0 text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque</p>
                                             <o class="text-muted">21 March, 2014</p>
-                                        </li>
-                                        <li>
-                                            <h6>PICKED</h6>
-                                            <p class="mb-0 text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque</p>
-                                            <o class="text-muted">21 March, 2014</p>
-                                        </li>
-                                        <li>
-                                            <h6>PICKED</h6>
-                                            <p class="mb-0 text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque</p>
-                                            <o class="text-muted">21 March, 2014</p>
-                                        </li>
-                                        <li>
-                                            <h6>PICKED</h6>
-                                            <p class="mb-0 text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque</p>
-                                            <o class="text-muted">21 March, 2014</p>
-                                        </li>
+                                        </li> -->
+
+                                       
                                     </ul>
                             </div>
                         </div>
+                        @endif
 
                     </div>
                 </div>

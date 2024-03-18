@@ -56,6 +56,7 @@ class LeaveApplicationController extends Controller
          $leave->application_message = $request->input('application_message');
          $leave->application_start_date = $request->input('application_start_date');
          $leave->application_end_date = $request->input('application_end_date');
+         $leave->status = $request->input('status');
          $leave->user_id = Auth::id();
          $leave->approved_user_id = 0;
          $leave->update();

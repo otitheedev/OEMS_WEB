@@ -45,6 +45,9 @@ $users_anniversary= reg_user::whereDay('spouse_anniversary', $today->day)->where
  $all_leave= LeaveApplication::latest()->get();
  $users_count= reg_user::count();
  $department_count= department::count();
+ $LeaveApplication_count= LeaveApplication::count();
+ $notice_count= notice::count();
+
        return view('AdminLTE/admin_dashboard',[
            'users_count' => $users_count,
            'department_count' => $department_count, 
@@ -55,6 +58,8 @@ $users_anniversary= reg_user::whereDay('spouse_anniversary', $today->day)->where
            'upcomingBirthdays' => $upcomingBirthdays,
            'all_notice' => $all_notice,
            'all_leave' =>  $all_leave,
+           'notice_count' => $notice_count,
+           'LeaveApplication_count' => $LeaveApplication_count,
        ]);
    }
 
