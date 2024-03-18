@@ -20,6 +20,10 @@ use Illuminate\Validation\Rule;
 use App\Helpers\LogActivityHelper;
 use App\Helpers\NotificationSender;
 
+##SMS
+use Xenon\LaravelBDSms\Provider\BulkSmsBD;
+use Xenon\LaravelBDSms\Sender;
+
 
 
 
@@ -339,6 +343,21 @@ if (!empty($benifitsData)) {
 }
 ##########################################
 
+############ SMS SEND ################
+/* $sender = Sender::getInstance();
+$sender->setProvider(BulkSmsBD::class);
+$sender->setMobile($request->input('phone_number'));
+$sender->setMessage('Hi '. $request->input('name') . '! Your account has been created successfully! Login:'. $request->input('phone_number') .'; Password:'. $request->input('password'));
+$sender->setQueue(true); 
+$sender->setConfig(
+[
+   'api_key' => 'qfI5bCOCc04w4812MUv4',
+   'type' => 'text',
+   'senderid' => '8809617615488',
+]
+);
+$status = $sender->send(); */
+############ SMS SEND END################
 
     return redirect()->route('users_home')->with('success', '`' . $user->name . '` Successfully Added' . '<a href="/employee/ID/'. $user->phone_number .'">Check Profile</a>');
     #return response()->json(['message' => 'User created successfully'], 201);
