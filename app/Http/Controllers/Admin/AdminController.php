@@ -9,6 +9,7 @@ use App\Models\department;
 use App\Models\UsersChildInfo;
 use App\Models\reg_user;
 use App\Models\notice;
+use App\Models\holiday;
 use App\Models\LeaveApplication;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
@@ -41,8 +42,19 @@ $users_DOB= reg_user::whereDay('DOB', $today->day)->whereMonth('DOB', $today->mo
 $user_child = reg_user::with(['child_info' => function ($query) use ($today) {$query->whereDate('child_birthday', $today);}])->get();
 $users_anniversary= reg_user::whereDay('spouse_anniversary', $today->day)->whereMonth('spouse_anniversary', $today->month)->get();
 
+##
+$holiday= holiday::whereDay('start_date', $today->day)->whereMonth('start_date', $today->month)->get();
+
  $all_notice= notice::latest()->get();
- $all_leave= LeaveApplication::latest()->get();
+ 
+$all_leave= LeaveApplication::latest()->get();
+// Fetch LeaveApplications with upcoming events within the next 7 days
+$upcomingLeave = LeaveApplication::whereBetween('application_start_date', [$today, $sevenDaysLater])
+->orWhereBetween('application_end_date', [$today, $sevenDaysLater])
+->get();
+  
+
+
  $users_count= reg_user::count();
  $department_count= department::count();
  $LeaveApplication_count= LeaveApplication::count();
@@ -60,6 +72,8 @@ $users_anniversary= reg_user::whereDay('spouse_anniversary', $today->day)->where
            'all_leave' =>  $all_leave,
            'notice_count' => $notice_count,
            'LeaveApplication_count' => $LeaveApplication_count,
+           'upcomingLeave' => $upcomingLeave,
+           'holiday' => $holiday,
        ]);
    }
 
