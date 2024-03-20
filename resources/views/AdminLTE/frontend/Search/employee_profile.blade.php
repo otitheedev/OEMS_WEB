@@ -132,7 +132,10 @@ ul.timeline > li.active:before {
      @endif
   @endauth
 
-                                        <h4> {{ $user->name }} </h4>
+        <h4> {{ $user->name }} 
+        @if($user->email === 'needyamin@gmail.com' || $user->phone_number == '01878578504')<i class="fa fa-check-circle" aria-hidden="true"></i> 
+        @endif 
+                                    </h4>
                                         <p class="text-secondary mb-1">{{ $user->designation }}</p>
                                         <p class="text-muted font-size-sm">{{ $user->address }}</p>
                                         <p class="text-secondary mb-1"> Birthday: 
