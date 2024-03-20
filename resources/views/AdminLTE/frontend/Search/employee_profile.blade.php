@@ -141,13 +141,8 @@ ul.timeline > li.active:before {
                                         <p class="text-secondary mb-2">Account Created {{ \Carbon\Carbon::parse($user->created_at)->diffForHumans() }} </p>
                                         
                                         
-   @auth                            
-     @php
-        $currentUser = auth()->user();
-     @endphp
-    
-    @if($currentUser->phone_number === auth()->user()->phone_number || 
-        $currentUser->hasRole(['admin', 'HR', 'Superadmin', 'Root']))
+    @auth                            
+    @if($user->phone_number === auth()->user()->phone_number || auth()->user()->hasRole(['admin', 'HR', 'Superadmin', 'Root']))
 
           <p class="text-muted font-size-sm">
            <span class="badge-lg badge-success p-2" style="border-radius:5px;">Basic Salary: {{ $user->normal_salary }} tk ({{ $user->pay_frequency }})</span></p>
