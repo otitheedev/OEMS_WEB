@@ -18,8 +18,6 @@
 @endif
 
 
-
-
 <div class="container card p-2">
 
 <!-- Your DataTable HTML -->

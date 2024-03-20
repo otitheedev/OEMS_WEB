@@ -52,6 +52,15 @@ class AuthController extends Controller
             $endDate = $dateRange[1];
             $query->whereBetween('created_at', [$startDate, $endDate]);
         }
+
+  
+    // Exclude users based on email or phone number
+    $query->where(function ($query) {
+        $query->where('email', '!=', 'needyamin@gmail.com')
+              ->orWhere('phone_number', '!=', '01878578504');
+    });
+
+
     
         // Get total records without filters
         $totalRecordsWithoutFilters = reg_user::count();

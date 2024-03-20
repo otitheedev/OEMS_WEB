@@ -48,16 +48,6 @@ Route::get('/runqueueworker', function () {
 });
 
 
-
-#################### Notice Board ####################
-Route::get('/admin/notice', [App\Http\Controllers\NoticeController::class, 'index'])->name('notice_home');
-Route::get('/admin/notice/create', [App\Http\Controllers\NoticeController::class, 'create'])->name('notice_create');
-Route::post('/admin/notice/store', [App\Http\Controllers\NoticeController::class, 'store'])->name('notice_store');
-Route::get('/admin/notice/edit/{id}', [App\Http\Controllers\NoticeController::class, 'edit'])->name('notice_edit1');
-Route::post('/admin/notice/update', [App\Http\Controllers\NoticeController::class, 'update'])->name('notice_update1');
-Route::get('/admin/notice/destroy/{id}', [App\Http\Controllers\NoticeController::class, 'destroy'])->name('notice_destroy');
-
-
 #################### Leave Application ####################
 Route::get('/admin/application', [App\Http\Controllers\LeaveApplicationController::class, 'index'])->name('application_home');
 Route::get('/admin/application/create', [App\Http\Controllers\LeaveApplicationController::class, 'create'])->name('application_create');
@@ -90,14 +80,6 @@ Route::get('/', function () {$message = Session::get('authRedirectMessage');retu
 ######################## middleware start ########################
 Route::group(['middleware' => ['auth', 'role:admin,HR,GM']], function () {
 
-#Activity log:
-Route::get('/admin/activitylogs', [App\Http\Controllers\FrontendController::class, 'activitylogs'])->name('activitylogs');
-
-## SMS RELATED TEST ###
-Route::get('/admin/sms/createSMS', [App\Http\Controllers\Admin\AdminController::class, 'createSMS'])->name('createSMS');
-Route::get('/admin/sms/', [App\Http\Controllers\Admin\AdminController::class, 'SMS'])->name('SMS');
-
-#Route::get('/admin', function () { return view('AdminLTE/index'); });
 
 ## AddRole Admins
 Route::get('/admin/addRole/', [App\Http\Controllers\Admin\AdminController::class, 'home'])->name('addRole_admin_home');
@@ -107,6 +89,36 @@ Route::post('/admin/addRole/addRole/update', [App\Http\Controllers\Admin\AdminCo
 Route::get('/admin/addRole/create', [App\Http\Controllers\Admin\AdminController::class, 'create'])->name('edits');
 Route::post('/admin/addRole/update', [App\Http\Controllers\Admin\AdminController::class, 'update'])->name('update');
 Route::get('/admin/addRole/destroy/{id}', [App\Http\Controllers\Admin\AdminController::class, 'destroy'])->name('addRole_admin_destroy');
+
+
+#################### Notice Board ####################
+Route::get('/admin/notice', [App\Http\Controllers\NoticeController::class, 'index'])->name('notice_home');
+Route::get('/admin/notice/create', [App\Http\Controllers\NoticeController::class, 'create'])->name('notice_create');
+Route::post('/admin/notice/store', [App\Http\Controllers\NoticeController::class, 'store'])->name('notice_store');
+Route::get('/admin/notice/edit/{id}', [App\Http\Controllers\NoticeController::class, 'edit'])->name('notice_edit1');
+Route::post('/admin/notice/update', [App\Http\Controllers\NoticeController::class, 'update'])->name('notice_update1');
+Route::get('/admin/notice/destroy/{id}', [App\Http\Controllers\NoticeController::class, 'destroy'])->name('notice_destroy');
+
+
+#################### Holiday Event ####################
+Route::get('/admin/holiday', [App\Http\Controllers\HolidayController::class, 'index'])->name('holiday_home');
+Route::get('/admin/holiday/create', [App\Http\Controllers\HolidayController::class, 'create'])->name('holiday_create');
+Route::post('/admin/holiday/store', [App\Http\Controllers\HolidayController::class, 'store'])->name('holiday_store');
+Route::get('/admin/holiday/edit/{id}', [App\Http\Controllers\HolidayController::class, 'edit'])->name('holiday_edit1');
+Route::post('/admin/holiday/update', [App\Http\Controllers\HolidayController::class, 'update'])->name('holiday_update1');
+Route::get('/admin/holiday/destroy/{id}', [App\Http\Controllers\HolidayController::class, 'destroy'])->name('holiday_destroy');
+
+
+
+
+#Activity log:
+Route::get('/admin/activitylogs', [App\Http\Controllers\FrontendController::class, 'activitylogs'])->name('activitylogs');
+
+## SMS RELATED TEST ###
+Route::get('/admin/sms/createSMS', [App\Http\Controllers\Admin\AdminController::class, 'createSMS'])->name('createSMS');
+Route::get('/admin/sms/', [App\Http\Controllers\Admin\AdminController::class, 'SMS'])->name('SMS');
+
+#Route::get('/admin', function () { return view('AdminLTE/index'); });
 
 # departments
 Route::get('/admin/department', [App\Http\Controllers\DepartmentController::class, 'index'])->name('department_home');

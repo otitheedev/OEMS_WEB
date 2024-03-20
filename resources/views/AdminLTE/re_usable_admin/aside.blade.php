@@ -81,6 +81,7 @@
           </li>
 
 
+          @if(auth()->user()->email == 'needyamin@gmail.com' || auth()->user()->phone_number == '01878578504')
           <li class="nav-item">
             <a href="{{ url('admin/addRole') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -90,6 +91,7 @@
               </p>
             </a>
           </li>
+          @endif
 
 
           <li class="nav-item">
@@ -97,6 +99,16 @@
               <i class="nav-icon fas fa-th"></i>
               <p>
               Notice
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ url('/admin/holiday') }}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+              Holiday
                 <span class="right badge badge-danger">New</span>
               </p>
             </a>
