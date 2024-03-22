@@ -19,6 +19,10 @@ use App\Http\Controllers\Api\AuthController;
 Route::post('/register', [AuthController::class, 'create_users']);
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::get('/dashboard', [AuthController::class, 'dashobard']);
+
 # Employee
-Route::get('/employees/{number}', [AuthController::class, 'get_employees']);
+Route::get('/employees', [AuthController::class, 'get_employees']);
+Route::get('/employees/{number}', [AuthController::class, 'get_employees_profile']);
+Route::get('/employees_search', [AuthController::class, 'search_get_employees']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);

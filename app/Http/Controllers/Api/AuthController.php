@@ -12,6 +12,11 @@ use App\Models\Academic;
 use App\Models\UsersProfessionalCertificate;
 use App\Models\JobExpriences;
 use App\Models\UsersChildInfo;
+use App\Models\notice;
+use App\Models\holiday;
+use App\Models\LeaveApplication;
+use App\Models\department;
+use Carbon\Carbon;
 
 ## role user
 use App\Models\Role;
@@ -60,8 +65,6 @@ class AuthController extends Controller
               ->orWhere('phone_number', '!=', '01878578504');
     });
 
-
-    
         // Get total records without filters
         $totalRecordsWithoutFilters = reg_user::count();
     
@@ -242,17 +245,6 @@ public function create_users(Request $request)
 }
 
 
- 
-public function get_employees(Request $request, $number){
-  $user = reg_user::with('child_info', 'academicRecords', 'professional_certificate', 'job_expriences')
-  ->where('phone_number', $number)->first();
-
-if (!$user) {
-  return response()->json(['error' => 'User not found'], 404);
-}
-return response()->json(['user' => $user], 200);
-
-}
 
 
 
@@ -295,4 +287,138 @@ public function logout(Request $request){
    # Return success message as JSON
    return response()->json(['message' => 'Logged out']);
 }
+
+
+
+public function dashobard(){
+    // Get today's date
+    $today = Carbon::now();
+
+    // Calculate the date 7 days from today
+    $sevenDaysLater = $today->copy()->addDays(7);
+
+    // Fetch users with upcoming birthdays in the next 7 days
+    $upcomingBirthdays = reg_user::with(['child_info' => function ($query) use ($today, $sevenDaysLater) {
+        $query->whereBetween('child_birthday', [$today, $sevenDaysLater]);
+    }])->whereBetween('DOB', [$today, $sevenDaysLater])->get();
+
+    $userChildBirthday = UsersChildInfo::whereDay('child_birthday', $today->day)
+                                        ->whereMonth('child_birthday', $today->month)->get();
+    
+    $usersDOB = reg_user::whereDay('DOB', $today->day)->whereMonth('DOB', $today->month)->get();
+    
+    $userChild = reg_user::with(['child_info' => function ($query) use ($today) {
+        $query->whereDate('child_birthday', $today);
+    }])->get();
+    
+    $usersAnniversary = reg_user::whereDay('spouse_anniversary', $today->day)
+                                ->whereMonth('spouse_anniversary', $today->month)->get();
+
+    $holiday = holiday::whereDay('start_date', $today->day)->whereMonth('start_date', $today->month)->get();
+
+    $allNotice = notice::latest()->get();
+    
+    $allLeave = LeaveApplication::latest()->get();
+
+    // Fetch LeaveApplications with upcoming events within the next 7 days
+    $upcomingLeave = LeaveApplication::whereBetween('application_start_date', [$today, $sevenDaysLater])
+                                     ->orWhereBetween('application_end_date', [$today, $sevenDaysLater])
+                                     ->get();
+
+    $usersCount = reg_user::count();
+    $departmentCount = department::count();
+    $leaveApplicationCount = LeaveApplication::count();
+    $noticeCount = notice::count();
+
+    // Prepare the data to be returned as JSON
+    $data = [
+        'users_count' => $usersCount,
+        'department_count' => $departmentCount, 
+        'users_DOB' => $usersDOB,
+        'user_child_birthday' => $userChildBirthday,
+        'user_child' =>  $userChild,
+        'users_anniversary' =>  $usersAnniversary,
+        'upcomingBirthdays' => $upcomingBirthdays,
+        'all_notice' => $allNotice,
+        'all_leave' =>  $allLeave,
+        'notice_count' => $noticeCount,
+        'leave_application_count' => $leaveApplicationCount,
+        'upcoming_leave' => $upcomingLeave,
+        'holiday' => $holiday,
+    ];
+
+
+    // Check each data field and replace with "No content found" if empty
+    foreach ($data as $key => $value) {
+        if (is_array($value) && count($value) === 0) {
+            $data[$key] = 'No content found';
+        }
+    }
+
+    // Return the data as JSON response
+    return response()->json($data);
+
+
+}
+
+
+# GET /api/employees?per_page=10&page=2
+public function get_employees(Request $request){
+    $perPage = $request->query('per_page', 10);
+    $page = $request->query('page', 1);
+
+    // Assuming 'reg_users' is your employees table
+    $users = reg_user::paginate($perPage, ['*'], 'page', $page);
+
+    // Check if any users are found
+    if ($users->isEmpty()) {
+        return response()->json(['error' => 'Users not found'], 404);
+    }
+    // Return paginated users
+    return response()->json(['users' => $users], 200);
+}
+
+
+
+public function get_employees_profile(Request $request, $number){
+  $user = reg_user::with('child_info', 'academicRecords', 'professional_certificate', 'job_expriences')
+  ->where('phone_number', $number)->first();
+
+if (!$user) {
+  return response()->json(['error' => 'User not found'], 404);
+}
+return response()->json(['user' => $user], 200);
+
+}
+
+
+# GET /api/employees_search?search=john&page=1&per_page=10
+public function search_get_employees(Request $request){
+    $perPage = $request->query('per_page', 10);
+    $page = $request->query('page', 1);
+    $search = $request->query('search'); // Get search query from request
+
+    // Assuming 'reg_users' is your employees table
+    $query = reg_user::query();
+
+    // Apply search filter if search query is provided
+    if ($search) {
+        $query->where('name', 'like', '%' . $search . '%')
+            ->orWhere('email', 'like', '%' . $search . '%'); // Add more fields to search if needed
+    }
+
+    // Paginate the results
+    $users = $query->paginate($perPage, ['*'], 'page', $page);
+
+    // Check if any users are found
+    if ($users->isEmpty()) {
+        return response()->json(['error' => 'Users not found'], 404);
+    }
+
+    // Return paginated users
+    return response()->json(['users' => $users], 200);
+}
+
+
+
 }
