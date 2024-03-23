@@ -2,6 +2,8 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 
+
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request; 
 use Illuminate\Support\Facades\Auth; 
@@ -16,7 +18,7 @@ use App\Models\notice;
 use App\Models\holiday;
 use App\Models\LeaveApplication;
 use App\Models\department;
-use Carbon\Carbon;
+
 
 ## role user
 use App\Models\Role;
@@ -88,208 +90,59 @@ class AuthController extends Controller
 
 
 
-# Function to handle user registration
-public function create_users(Request $request)
-{
+// Function to handle user login
+public function login(Request $request) {
+    // Validate request data
     $validator = Validator::make($request->all(), [
-        'profile_pic' => 'mimes:jpeg,png,jpg,gif,svg|max:1000',
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email',
-        'password' => ['required', 'string', 'min:4'],
-        'designation' => 'required|string',
-        'address' => 'required|string',
-        'department_name' => 'required|string',
-        'otithee_joining_date' => 'required|date',
-        'blood_group' => 'sometimes|string',
-        'nationality_country' => 'required|string',
-        'DOB' => 'required|date',
-        'pay_frequency' => 'required|string',
-        'bonus_information' => 'required|string',
-        'extra_benefits' => 'required|string',
-        'curriculum_vita_cv' => 'required|mimetypes:application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document|max:50240',
-        'degree_information.*' => 'required|string',
-        'degree.*' => 'required|string',
-        'joining_year.*' => 'sometimes|date',
-        'passing_year.*' => 'required|date',
-        'nid_Information' => 'required|string',
-        'gender' => 'required|string',
-        'phoneCountry' => 'required|string',
-        'phone_number' => 'required|string|unique:users,phone_number',
+        //'email' => 'required|email', // Validation rule for email
+        'password' => 'required|string|min:6', // Validation rule for password
     ]);
 
+    // If validation fails, return error response
     if ($validator->fails()) {
         return response()->json(['error' => $validator->errors()], 400);
     }
 
-    $user = new reg_user();
-    $user->name = $request->input('name');
-    $user->email = $request->input('email');
-    $user->password = Hash::make($request->input('password'));
-    $user->designation = $request->input('designation');
-    $user->address = $request->input('address');
-    $user->department_name = $request->input('department_name');
-    $user->otithee_joining_date = $request->input('otithee_joining_date');
-    $user->blood_group = $request->input('blood_group');
-    $user->nationality_country = $request->input('nationality_country');
-    $user->dob = $request->input('DOB');
-    $user->totalAmount = $request->input('totalAmount');
-    $user->normal_salary = $request->input('normal_salary');
-    $user->pay_frequency = $request->input('pay_frequency');
-    $user->healthcare_insurance = $request->input('healthcare_insurance');
-    $user->mobile_bill = $request->input('mobile_bill');
-    $user->bonus_information = $request->input('bonus_information');
-    $user->extra_benefits = $request->input('extra_benefits');
-    $user->nid_Information = $request->input('nid_Information');
-    $user->language = $request->input('language');
-    $user->gender = $request->input('gender');
-    $user->marital_status = $request->input('marital_status');
-    $user->spouse_name = $request->input('spouse_name');
-    $user->spouse_birthday = $request->input('spouse_birthday');
-    $user->spouse_nid = $request->input('spouse_nid');
-    $user->spouse_anniversary = $request->input('spouse_anniversary');
-    $user->medical_history = $request->input('medical_history');
-    $user->hobbies_and_interest = $request->input('hobbies_and_interest');
-    $user->phoneCountry = $request->input('phoneCountry');
-    $user->phone_number = $request->input('phone_number');
-    $user->father_name = $request->input('father_name');
-    $user->father_occupation = $request->input('father_occupation');
-    $user->mother_name = $request->input('mother_name');
-    $user->mother_occupation = $request->input('mother_occupation');
-    $user->emergency_contact_name_1 = $request->input('emergency_contact_name_1');
-    $user->emergency_contact_number_1 = $request->input('emergency_contact_number_1');
-    $user->emergency_contact_relationship_1 = $request->input('emergency_contact_relationship_1');
-    $user->emergency_contact_name_2 = $request->input('emergency_contact_name_2');
-    $user->emergency_contact_number_2 = $request->input('emergency_contact_number_2');
-    $user->emergency_contact_relationship_2 = $request->input('emergency_contact_relationship_2');
-    $user->facebook_link = $request->input('facebook_link');
-    $user->twitter_link = $request->input('twitter_link');
-    $user->instagram_link = $request->input('instagram_link');
-    $user->linkedin_link = $request->input('linkedin_link');
-    $user->tiktok_link = $request->input('tiktok_link');
-    $user->youtube_link = $request->input('youtube_link');
-
-    $image1 = $request->file('profile_pic');
-    if ($request->hasfile('profile_pic')) {
-        $extension = $image1->getClientOriginalExtension();
-        $department_image_name = $user->name . '-phone_number-.' . $extension;
-        $image1->move('assets/users/', $department_image_name);
-        $user->profile_pic = $department_image_name;
+    // Attempt to authenticate the user
+    if (!Auth::attempt($request->only('email', 'phone_number', 'password'))) {
+        return response()->json(['message' => 'Invalid login credentials'], 401);
     }
 
-    $CV = $request->file('curriculum_vita_cv');
-    if ($request->hasfile('curriculum_vita_cv')) {
-        $extension = $CV->getClientOriginalExtension();
-        $UserCV = $user->phone_number . '-CV-.' . $extension;
-        $CV->move('assets/users/UserCV/', $UserCV);
-        $user->curriculum_vita_cv = $UserCV;
-    }
+    // Get the authenticated user
+    $user = $request->user();
 
-    $user->save();
-    $lastInsertID = $user->id;
+    // Create a new token for this user
+    $token = $user->createToken('authToken')->plainTextToken;
 
-    if ($request->has('degree_information') && !empty($request->input('degree_information'))) {
-        foreach ($request->input('degree_information') as $key => $degreeInformation) {
-            if (!empty($degreeInformation)) {
-                Academic::create([
-                    'degree_information' => $degreeInformation,
-                    'degree' => $request->input('degree')[$key],
-                    'join_year' => $request->input('joining_year')[$key],
-                    'pass_year' => $request->input('passing_year')[$key],
-                    'user_id' => $lastInsertID,
-                ]);
-            }
-        }
-    }
+    // Retrieve roles for the user
+    $roles = Role::all();
+    $role_user = Role::select('user_id', $user->id);
+    $main_role = Role::find($user->id);
 
-    if ($request->has('cert_name') && !empty($request->input('cert_name'))) {
-        foreach ($request->input('cert_name') as $key => $professionalInformation) {
-            if (!empty($professionalInformation)) {
-                UsersProfessionalCertificate::create([
-                    'certificate_name' => $professionalInformation,
-                    'organization_name' => $request->input('cert_org_name')[$key],
-                    'start_date' => $request->input('cert_start_date')[$key],
-                    'end_date' => $request->input('cert_end_date')[$key],
-                    'user_id' => $lastInsertID,
-                ]);
-            }
-        }
-    }
+    // Determine main role name
+    $main_role_name = $main_role ? $main_role->name : null;
 
-    if ($request->has('job_designation_name') && !empty($request->input('job_designation_name'))) {
-        foreach ($request->input('job_designation_name') as $key => $JobExpriencesformation) {
-            if (!empty($JobExpriencesformation)) {
-                JobExpriences::create([
-                    'job_designation_name' => $JobExpriencesformation,
-                    'job_org_name' => $request->input('job_org_name')[$key],
-                    'job_start_date' => $request->input('job_start_date')[$key],
-                    'job_end_date' => $request->input('job_end_date')[$key],
-                    'user_id' => $lastInsertID,
-                ]);
-            }
-        }
-    }
-
-    if ($request->has('child_name') && !empty($request->input('child_name'))) {
-        foreach ($request->input('child_name') as $key => $professonalformation) {
-            if (!empty($professonalformation)) {
-                UsersChildInfo::create([
-                    'child_name' => $professonalformation,
-                    'child_gender' => $request->input('child_gender')[$key],
-                    'child_birthday' => $request->input('child_birthday')[$key],
-                    'user_id' => $lastInsertID,
-                ]);
-            }
-        }
-    }
-    return response()->json(['message' => 'User created successfully', 'user_id' => $lastInsertID], 201);
+    // Return user data and token as JSON
+    return response()->json([
+        'user' => $user, 
+        'token' => $token,
+        'status' => 'login success',
+        'main_role_name' => $main_role_name,
+    ]);
 }
 
 
 
 
 
-// Function to handle user login
-public function login(Request $request){
-$validator = Validator::make($request->all(), [
-'email' => '', 
-'password' => 'required|string|min:6', 
-]);
-
-if ($validator->fails()) {
-  return response()->json(['error' => $validator->errors()], 400);
-}
-
-if (!Auth::attempt($request->only('phone_number', 'password'))) {
-return response()->json(['message' => 'Invalid login credientials'], 401);
-}
-
-$user = $request->user(); # If credentials are valid, get the authenticated user
-$token = $user->createToken('authToken')->plainTextToken; # Create a new token for this user
-$roles = Role::all();
-$role_user = Role::select('user_id',$user->id);
-$main_role = Role::find($user->id);
-
-if ($main_role) {$main_role_name = $main_role->name;} else {$main_role_name = null; }
-
-# Return user data and token as JSON
-return response()->json([
-    'user' => $user, 
-    'token' => $token,
-    'status' => 'login success',
-    'main_role_name' =>$main_role_name,
-]);
-}
-
- # Function to handle user logout
+# Function to handle user logout
 public function logout(Request $request){
-  # Delete all tokens for the authenticated user
   $request->user()->tokens()->delete();
-   # Return success message as JSON
    return response()->json(['message' => 'Logged out']);
 }
 
 
-
+#GET /api/dashboard
 public function dashobard(){
     // Get today's date
     $today = Carbon::now();
@@ -362,7 +215,7 @@ public function dashobard(){
 }
 
 
-# GET /api/employees?per_page=10&page=2
+# GET /api/employees?per_page=10&page=1
 public function get_employees(Request $request){
     $perPage = $request->query('per_page', 10);
     $page = $request->query('page', 1);
@@ -396,21 +249,17 @@ return response()->json(['user' => $user], 200);
 public function search_get_employees(Request $request){
     $perPage = $request->query('per_page', 10);
     $page = $request->query('page', 1);
-    $search = $request->query('search'); // Get search query from request
+    $search = $request->query('search'); 
 
-    // Assuming 'reg_users' is your employees table
     $query = reg_user::query();
 
-    // Apply search filter if search query is provided
     if ($search) {
         $query->where('name', 'like', '%' . $search . '%')
-            ->orWhere('email', 'like', '%' . $search . '%'); // Add more fields to search if needed
+            ->orWhere('email', 'like', '%' . $search . '%'); 
     }
 
-    // Paginate the results
     $users = $query->paginate($perPage, ['*'], 'page', $page);
 
-    // Check if any users are found
     if ($users->isEmpty()) {
         return response()->json(['error' => 'Users not found'], 404);
     }
@@ -418,6 +267,116 @@ public function search_get_employees(Request $request){
     // Return paginated users
     return response()->json(['users' => $users], 200);
 }
+
+
+
+# GET /api/notice?per_page=10&page=1
+public function all_notice(Request $request){
+    $perPage = $request->query('per_page', 10);
+    $page = $request->query('page', 1);
+
+    $notice = notice::paginate($perPage, ['*'], 'page', $page);
+
+    // Check if any users are found
+    if ($notice->isEmpty()) {
+        return response()->json(['error' => 'Notices not found'], 404);
+    }
+    // Return paginated users
+    return response()->json(['notice' => $notice], 200);
+}
+
+
+# GET /api/department?per_page=10&page=1
+public function all_department(Request $request){
+    $perPage = $request->query('per_page', 10);
+    $page = $request->query('page', 1);
+
+    $department = department::paginate($perPage, ['*'], 'page', $page);
+
+    // Check if any users are found
+    if ($department->isEmpty()) {
+        return response()->json(['error' => 'Department not found'], 404);
+    }
+    // Return paginated users
+    return response()->json(['department' => $department], 200);
+}
+
+
+
+# GET /api/leave_application?user_id=123&per_page=10&page=1
+public function leave_applications(Request $request) {
+    // Define validation rules for the search parameters
+    $validator = Validator::make($request->all(), [
+        'user_id' => 'integer|exists:users,id', // Ensure user_id is an integer and exists in the users table
+        'per_page' => 'integer',
+        'page' => 'integer',
+    ]);
+
+    // If validation fails, return error response
+    if ($validator->fails()) {
+        return response()->json(['error' => $validator->errors()], 400);
+    }
+
+    // Extract search parameters from the request
+    $userId = $request->input('user_id', auth()->id()); 
+    $perPage = $request->input('per_page', 10);
+    $page = $request->input('page', 1);
+
+    // Retrieve leave applications based on the provided user ID
+    $applications = LeaveApplication::where('user_id', $userId)
+                                    ->paginate($perPage, ['*'], 'page', $page);
+
+    // Check if any leave applications are found
+    if ($applications->isEmpty()) {
+        return response()->json(['error' => 'Leave applications not found for the specified user'], 404);
+    }
+
+    // Return paginated leave applications
+    return response()->json(['applications' => $applications], 200);
+}
+
+
+
+
+
+# POST /api/submit_leave_applications
+/*
+    "application_type": "Sick leave",
+    "application_message": "I just want",
+    "application_start_date": "2024-03-19",
+    "application_end_date": "2024-03-19"
+*/
+
+public function submit_leave_applications(Request $request)
+{
+    // Validate the incoming request data
+    $validator = Validator::make($request->all(), [
+        'application_type' => 'required|string',
+        'application_message' => 'required|string',
+        'application_start_date' => 'required|date',
+        'application_end_date' => 'required|date',
+        // Add more validation rules as needed
+    ]);
+
+    // If validation fails, return error response
+    if ($validator->fails()) {
+        return response()->json(['error' => $validator->errors()], 400);
+    }
+
+    // Create the leave application record
+    $leaveApplication = LeaveApplication::create([
+        'user_id' => auth()->id(),
+        'application_type' => $request->input('application_type'),
+        'application_message' => $request->input('application_message'),
+        'application_start_date' => $request->input('application_start_date'),
+        'application_end_date' => $request->input('application_end_date'),
+        // Add more fields here if needed
+    ]);
+
+    // Return success response with the newly created leave application
+    return response()->json(['message' => 'Leave application created successfully', 'data' => $leaveApplication], 201);
+}
+
 
 
 

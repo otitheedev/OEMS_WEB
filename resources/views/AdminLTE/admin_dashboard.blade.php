@@ -160,7 +160,7 @@
    <div class="card">
    <h4 class="card-header" style="font-size: 1.5rem;"><i class="ion ion-clipboard mr-1"></i> Today employees are submitting leave applications</h4>
 
-   <div class="card-body">
+   <div class="card-body" style="max-height: 370px; overflow-y: scroll;">
 
    @if($all_leave->isEmpty())
     <p>No upcoming leave applications found.</p>
