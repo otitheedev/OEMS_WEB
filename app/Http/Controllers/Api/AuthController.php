@@ -2,7 +2,6 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 
-
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request; 
@@ -132,9 +131,6 @@ public function login(Request $request) {
 }
 
 
-
-
-
 # Function to handle user logout
 public function logout(Request $request){
   $request->user()->tokens()->delete();
@@ -168,9 +164,7 @@ public function dashobard(){
                                 ->whereMonth('spouse_anniversary', $today->month)->get();
 
     $holiday = holiday::whereDay('start_date', $today->day)->whereMonth('start_date', $today->month)->get();
-
     $allNotice = notice::latest()->get();
-    
     $allLeave = LeaveApplication::latest()->get();
 
     // Fetch LeaveApplications with upcoming events within the next 7 days
@@ -334,8 +328,6 @@ public function leave_applications(Request $request) {
     // Return paginated leave applications
     return response()->json(['applications' => $applications], 200);
 }
-
-
 
 
 

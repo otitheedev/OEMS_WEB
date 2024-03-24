@@ -9,8 +9,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => 'api'], function () {
+
 #ajaxDataTable
-Route::get('/AjaxDataTable', [App\Http\Controllers\Api\AuthController::class, 'getAjaxDataTable'])->name('employee_profile');
+Route::get('/AjaxDataTable', [AuthController::class, 'getAjaxDataTable'])->name('employee_profile');
 
 #Dashboard
 Route::get('/dashboard', [AuthController::class, 'dashobard']);
@@ -18,8 +19,8 @@ Route::get('/notice', [AuthController::class, 'all_notice']);
 Route::get('/department', [AuthController::class, 'all_department']);
 Route::get('/leave_application', [AuthController::class, 'leave_applications']);
 
+#Submit Leave Application
 Route::middleware(['auth:sanctum'])->post('/submit_leave_applications', [AuthController::class, 'submit_leave_applications']);
-
 
 # Employee
 Route::get('/employees', [AuthController::class, 'get_employees']);

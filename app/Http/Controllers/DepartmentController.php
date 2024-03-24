@@ -54,11 +54,6 @@ class DepartmentController extends Controller
     }
 
 
-    public function show(department $department)
-    {
-        //
-    }
-
 
     public function edit(Request $request, $id)
     {

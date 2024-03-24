@@ -133,7 +133,7 @@ ul.timeline > li.active:before {
   @endauth
 
         <h4> {{ $user->name }} 
-        @if($user->email === 'needyamin@gmail.com' || $user->phone_number == '01878578504')<i class="fa fa-check-circle" aria-hidden="true"></i> 
+        @if($user->email === 'needyamin@gmail.com' || $user->phone_number == '01878578504')<i class="fa fa-check-circle" aria-hidden="true" style="color:#1730fc;"></i>
         @endif 
                                     </h4>
                                         <p class="text-secondary mb-1">{{ $user->designation }}</p>
@@ -156,10 +156,10 @@ ul.timeline > li.active:before {
    @endif
   @endauth
 
-   @if($otherBenifitsbyPercentage->isNotEmpty())
+   @if($user->otherBenifitsbyPercentage->isNotEmpty())
     <table class="table table-bordered" style="width:100%; text-align:left;"> 
      <tr><td>Benefits Name </td> <td> Benefits Percentage</td> </tr>
-     @foreach($otherBenifitsbyPercentage as $item)
+     @foreach($user->otherBenifitsbyPercentage as $item)
      <tr><td>{{ $item['other_benifits_name'] }} </td> <td> {{ $item['other_benifits_by_percentage'] }}</td> </tr>
      @endforeach
 
@@ -211,7 +211,7 @@ ul.timeline > li.active:before {
                     <div class="col-lg-8">
 
                     
-                    @if($academicRecords->isNotEmpty())
+                    @if($user->academicRecords->isNotEmpty())
                         <div class="card p-1">
                         <div class="card-body p-0 table-responsive">
                                 <h4 class="p-3 mb-0"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Educational Information</h4>
@@ -225,7 +225,7 @@ ul.timeline > li.active:before {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                      @foreach ($academicRecords as $record)
+                                      @foreach ($user->academicRecords as $record)
                                         <tr>
                                             <td>{{ $record->degree_information }} </td>
                                             <td>{{ $record->degree }}</td>
@@ -240,7 +240,7 @@ ul.timeline > li.active:before {
                         @endif
 
 
-                        @if($professional_certificate->isNotEmpty())
+                        @if($user->professional_certificate->isNotEmpty())
                         <div class="card mt-2 p-1">
                             <div class="card-body p-0 table-responsive">
                                 <h4 class="p-3 mb-0"><i class="fa fa-certificate" aria-hidden="true"></i> Professional Courses</h4>
@@ -255,7 +255,7 @@ ul.timeline > li.active:before {
                                     </thead>
                                     <tbody>
 
-                                      @foreach ($professional_certificate as $certificates)
+                                      @foreach ($user->professional_certificate as $certificates)
                                         <tr>
                                             <td>{{ $certificates->certificate_name }} </td>
                                             <td>{{ $certificates->organization_name }}</td>
@@ -328,7 +328,7 @@ ul.timeline > li.active:before {
                                     </thead>
 
                                   <tbody>
-                                      @foreach ($child_info as $child)
+                                      @foreach ($user->child_info as $child)
                                         <tr>
                                             <td>{{ $child->child_name }} </td>
                                             <td>{{ $child->child_gender }} </td>
@@ -387,13 +387,13 @@ ul.timeline > li.active:before {
 
 
 
-                    @if($professional_certificate->isNotEmpty() || $academicRecords->isNotEmpty())
+                    @if($user->professional_certificate->isNotEmpty() || $user->academicRecords->isNotEmpty())
                         <div class="card mt-2">
                             <div class="card-body">
                                 <h4><i class="fa fa-list" aria-hidden="true"></i> Timeline</h4>
                                     <ul class="timeline">
 
-                                      @foreach ($professional_certificate as $certificates)
+                                      @foreach ($user->professional_certificate as $certificates)
                                         <li class="active">
                                             <h6>{{ \Carbon\Carbon::parse($certificates->start_date)->format('Y') }} - {{ \Carbon\Carbon::parse($user->end_date)->format('Y') }}</h6>
                                             <p class="mb-0 text-muted">{{ $certificates->certificate_name }} From {{ $certificates->organization_name }}</p>
@@ -401,7 +401,7 @@ ul.timeline > li.active:before {
                                         </li>
                                         @endforeach
 
-                                        @foreach ($academicRecords as $record)
+                                        @foreach ($user->academicRecords as $record)
                                         <li class="active">
                                             <h6>{{ \Carbon\Carbon::parse($record->join_year)->format('Y') }} - {{ \Carbon\Carbon::parse($user->pass_year)->format('Y') }}</h6>
                                             <p class="mb-0 text-muted">{{ $record->degree }} from {{ $record->degree_information }}</p>

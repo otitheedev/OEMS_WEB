@@ -283,12 +283,7 @@
 <!-- this part only view admin/HR end-->
 
 
-
-
-
-        
         <div class="col-lg-6 col-6"> 
-
            <!-- TO DO List -->
            <div class="card">
               <div class="card-header">

@@ -84,7 +84,7 @@
           @if(auth()->user()->email == 'needyamin@gmail.com' || auth()->user()->phone_number == '01878578504')
           <li class="nav-item">
             <a href="{{ url('admin/addRole') }}" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fas fa-asterisk"></i>
               <p>
                Add Admin Role
                 <span class="right badge badge-danger"></span>
@@ -96,20 +96,20 @@
 
           <li class="nav-item">
             <a href="{{ url('/admin/notice') }}" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fas fa-bullhorn"></i>
               <p>
               Notice
-                <span class="right badge badge-danger">New</span>
+              
               </p>
             </a>
           </li>
 
           <li class="nav-item">
             <a href="{{ url('/admin/holiday') }}" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fas fa-calendar-alt"></i>
               <p>
               Holiday
-                <span class="right badge badge-danger">New</span>
+              
               </p>
             </a>
           </li>
@@ -117,7 +117,7 @@
 
           <li class="nav-item">
             <a href="{{ url('/admin/activitylogs') }}" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fas fa-file-contract"></i>
               <p>
                Activity Logs
                 <span class="right badge badge-danger">New</span>
@@ -131,13 +131,13 @@
           <!-- Start Code here for Other Auth -->
           <li class="nav-item">
             <a href="{{ url('/admin/application') }}" class="nav-link">
-              <i class="nav-icon fas fa-th"></i> <p>Leave Application</p>
+              <i class="nav-icon fab fa-avianex"></i> <p>Leave Application</p>
             </a>
           </li>
         
           <li class="nav-item">
             <a href="{{ url('#') }}" class="nav-link">
-              <i class="nav-icon fas fa-th"></i> <p>Attendance</p>
+              <i class="nav-icon fab fa-algolia"></i> <p>Attendance</p>
             </a>
           </li>
           

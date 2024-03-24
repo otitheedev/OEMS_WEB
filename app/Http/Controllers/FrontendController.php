@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 use App\Models\reg_user;
 use App\Models\ActivityLog;
-
-
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -25,30 +23,11 @@ class FrontendController extends Controller
 
     public function profile(Request $request, $number)
     {
-         
-         $user = reg_user::with('child_info','academicRecords', 'professional_certificate', 'job_expriences','otherBenifitsbyPercentage','extra_benifits')->where('phone_number',$number)->first();
-         if (!$user){abort(404);}
-         $child_info = $user->child_info;
-         $academicRecords = $user->academicRecords;
-         $professional_certificate = $user->professional_certificate;
-         $job_expriences = $user->job_expriences;
-         $extra_benifits = $user->extra_benifits;
-         $otherBenifitsbyPercentage = $user->otherBenifitsbyPercentage;
-         
-
-         return view('AdminLTE/frontend/Search/employee_profile',[
-            'user' => $user, 
-            'child_info' => $child_info,
-            'academicRecords'=> $academicRecords,
-            'professional_certificate' => $professional_certificate,
-            'job_expriences' => $job_expriences,
-            'extra_benifits' => $extra_benifits,
-            'otherBenifitsbyPercentage' => $otherBenifitsbyPercentage,
-        ]);
-        
-  
-
+        $user = reg_user::with('child_info', 'academicRecords', 'professional_certificate', 'job_expriences', 'otherBenifitsbyPercentage', 'extra_benifits')->where('phone_number', $number)->firstOrFail();
+    
+        return view('AdminLTE/frontend/Search/employee_profile', compact('user'));
     }
+    
 
 
     public function employee()
