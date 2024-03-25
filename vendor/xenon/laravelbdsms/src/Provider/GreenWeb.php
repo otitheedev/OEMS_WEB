@@ -17,6 +17,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class GreenWeb extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://api.greenweb.com.bd/api.php?json';
+
     /**
      * GreenWeb constructor.
      * @param Sender $sender
@@ -35,6 +37,9 @@ class GreenWeb extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'token' => $config['token'],
@@ -42,7 +47,7 @@ class GreenWeb extends AbstractProvider
             'message' => $text,
         ];
 
-        $requestObject = new Request('https://api.greenweb.com.bd/api.php?json', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $response = $requestObject->get();
         if ($queue) {
             return true;

@@ -17,6 +17,7 @@ use Xenon\LaravelBDSms\Sender;
 
 class Tense extends AbstractProvider
 {
+    private string $apiEndpoint = 'http://sms.tense.com.bd/api-sendsms';
     /**
      * Tense constructor.
      * @param Sender $sender
@@ -37,6 +38,9 @@ class Tense extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
         $query = [
             'user' => $config['user'],
             'password' => $config['password'],
@@ -46,7 +50,7 @@ class Tense extends AbstractProvider
             'text' => $text,
         ];
 
-        $requestObject = new Request('http://sms.tense.com.bd/api-sendsms', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $response = $requestObject->get();
         if ($queue) {
             return true;

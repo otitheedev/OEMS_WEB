@@ -17,6 +17,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class Muthofun extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://sysadmin.muthobarta.com/api/v1/send-sms';
+
     /**
      * Muthofun constructor.
      * @param Sender $sender
@@ -36,6 +38,9 @@ class Muthofun extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries = $this->senderObject->getTries();
+        $backoff = $this->senderObject->getBackoff();
 
         $query = [
             'sender_id' => $config['sender_id'],
@@ -45,10 +50,10 @@ class Muthofun extends AbstractProvider
         ];
 
         if (is_array($mobile)) {
-            $query['receiver'] =  implode(',', $mobile);
+            $query['receiver'] = implode(',', $mobile);
         }
 
-        $requestObject = new Request('https://sysadmin.muthobarta.com/api/v1/send-sms', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName, $tries, $backoff);
 
         if (!str_starts_with($config['api_key'], "Token ")) {
             $config['api_key'] = "Token " . $config['api_key'];

@@ -17,6 +17,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class Sms4BD extends AbstractProvider
 {
+    private string $apiEndpoint = 'http://www.sms4bd.net';
+
     /**
      * SMS4BD constructor.
      * @param Sender $sender
@@ -35,6 +37,9 @@ class Sms4BD extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'publickey' => $config['publickey'],
@@ -46,7 +51,7 @@ class Sms4BD extends AbstractProvider
             'message' => $text,
         ];
 
-        $requestObject = new Request('http://www.sms4bd.net', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $response = $requestObject->get();
         if ($queue) {
             return true;

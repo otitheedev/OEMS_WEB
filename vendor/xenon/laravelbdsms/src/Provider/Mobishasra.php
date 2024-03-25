@@ -19,6 +19,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class Mobishasra extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://mshastra.com/sendurlcomma.aspx';
+
     /**
      * BulkSmsBD constructor.
      * @param Sender $sender
@@ -38,6 +40,9 @@ class Mobishasra extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries = $this->senderObject->getTries();
+        $backoff = $this->senderObject->getBackoff();
         $query = [
             'user' => $config['user'],
             'pwd' => $config['pwd'],
@@ -47,7 +52,7 @@ class Mobishasra extends AbstractProvider
             'priority' => 'High',
             'CountryCode' => 'ALL',
         ];
-        $requestObject = new Request('https://mshastra.com/sendurlcomma.aspx', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName, $tries, $backoff);
 
         $response = $requestObject->get();
         if ($queue) {

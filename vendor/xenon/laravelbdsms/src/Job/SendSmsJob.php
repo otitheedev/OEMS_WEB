@@ -24,6 +24,21 @@ class SendSmsJob implements ShouldQueue
     private array $jobDetails;
 
     /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 3;
+
+    /**
+     * The number of seconds to wait before retrying the job.
+     *
+     * @var int
+     */
+    public $backoffSeconds = 60;
+
+
+    /**
      * Create a new job instance.
      *
      * @return void
@@ -31,23 +46,28 @@ class SendSmsJob implements ShouldQueue
     public function __construct(array $jobDetails)
     {
         $this->jobDetails = $jobDetails;
+        if (isset($jobDetails['tries']) && is_integer($jobDetails['tries'])) {
+            $this->tries = $jobDetails['tries'];
+        }
+        if (isset($jobDetails['backoff']) && is_integer($jobDetails['backoff'])) {
+            $this->backoffSeconds = $jobDetails['backoff'];
+        }
     }
 
     /**
      * Execute the job.
      *
-     * @return ResponseInterface|null
+     * @return void
      * @throws GuzzleException|JsonException
      */
     public function handle()
     {
 
         if ($this->jobDetails['method'] == 'post') {
-            return $this->postMethodHandler();
-
+             $this->postMethodHandler();
         }
 
-        return $this->getMethodHandler();
+         $this->getMethodHandler();
     }
 
     /**
@@ -122,5 +142,13 @@ class SendSmsJob implements ShouldQueue
         if ($config['sms_log']) {
             Logger::createLog($log);
         }
+    }
+
+    /**
+     * Calculate the number of seconds to wait before retrying the job.
+     */
+    public function backoff(): int
+    {
+        return $this->backoffSeconds;
     }
 }

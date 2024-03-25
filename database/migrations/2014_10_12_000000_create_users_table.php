@@ -79,7 +79,7 @@ return new class extends Migration
             $table->string('youtube_link')->nullable();
 
             #Medical History
-            $table->longtext('medical_history')->nullable();
+            $table->longtext('medical_history_others')->nullable();
             $table->longtext('hobbies_and_interest')->nullable();
             
             # Leave and Time-off Details:

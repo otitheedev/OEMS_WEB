@@ -1479,14 +1479,49 @@ if (maritalStatus && maritalStatus.value === 'married') {newUserForm.style.displ
     <div id="medicalForm" class="col-12 hidden">
     <div class="container mt-2" style="background: #fffdfa;padding: 15px;border-radius: 15px;border: 1px solid lightgray;">
         <h4><i class="fa-solid fa-suitcase-medical"></i> Medical History</h4> <hr>
-        <div class="card p-2"> <textarea class="form-control" name="medical_history" placeholder="Medical History All Details Input Here">{{ $user_data->medical_history }}</textarea></div></div>
+      
+      <div class="card p-2"> <textarea class="form-control" name="medical_history_others" placeholder="Medical History All Details Input Here">{{ $user_data->medical_history_others }}</textarea>
+
+    @foreach ($medicalHistory as $print_medicalHistory)
+      <label><input type="checkbox" name="medicalHistory[]" value="{{ $print_medicalHistory->medical_history }}" {{ in_array($print_medicalHistory->medical_history,  $selectedMedicalHistory) ? 'checked' : '' }}> {{ $print_medicalHistory->medical_history }}</label>
+     @endforeach
+
+ @php
+    $existingMedicalHistory = $medicalHistory->pluck('medical_history')->toArray();
+    $filteredMedicalHistory = array_diff($selectedMedicalHistory, $existingMedicalHistory);
+  @endphp
+
+@foreach ($filteredMedicalHistory as $medical_condition)
+    <label><input type="checkbox" name="medical_history[]" value="{{ $medical_condition }}"> {{ $medical_condition }}</label>
+@endforeach
+
+      
+      </div></div>
     </div>
 
 
     <div id="HobbiesInterestCheckForm" class="col-12 hidden">
     <div class="container mt-2" style="background: #fffdfa;padding: 15px;border-radius: 15px;border: 1px solid lightgray;">
         <h4><i class="fa-solid fa-suitcase-medical"></i> Hobbies and interests</h4> <hr>
-        <div class="card p-2"> <textarea class="form-control" name="hobbies_and_interest" placeholder="Hobbies and interests">{{ $user_data->hobbies_and_interest }}</textarea></div></div>
+        <div class="card p-2"> 
+    
+      <textarea class="form-control" name="hobbies_and_interest" placeholder="Hobbies and interests" value="{{ $user_data->hobbies_and_interest }}">{{ $user_data->hobbies_and_interest }}</textarea>
+      
+  @foreach ($hobbies as $print_hobbies)
+    <label><input type="checkbox" name="hobbies[]" value="{{ $print_hobbies->hobbies }}" {{ in_array($print_hobbies->hobbies, $selectedHobbies) ? 'checked' : '' }}> {{ $print_hobbies->hobbies }}</label>
+  @endforeach
+
+   @php
+    $existingHobbies = $hobbies->pluck('hobbies')->toArray();
+    $filteredHobbies = array_diff($selectedHobbies, $existingHobbies);
+   @endphp
+
+    @foreach ($filteredHobbies as $hobby)
+    <label><input type="checkbox" name="hobbies[]" value="{{ $hobby }}" checked> {{ $hobby }}</label>
+    @endforeach
+
+
+      </div></div>
     </div>
 
     

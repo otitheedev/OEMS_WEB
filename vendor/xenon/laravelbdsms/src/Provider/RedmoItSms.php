@@ -18,6 +18,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class RedmoItSms extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://sms.redmoit.com/api/v3/sms/send';
+
     /**
      * DianaHost constructor.
      * @param Sender $sender
@@ -37,6 +39,9 @@ class RedmoItSms extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'sender_id' => $config['sender_id'],
@@ -49,7 +54,7 @@ class RedmoItSms extends AbstractProvider
             'Content-Type' => 'application/json'
         ];
 
-        $requestObject = new Request('https://sms.redmoit.com/api/v3/sms/send', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $requestObject->setHeaders($headers)->setContentTypeJson(true);
         $response = $requestObject->post();
         if ($queue) {

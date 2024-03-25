@@ -19,6 +19,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class Metronet extends AbstractProvider
 {
+    private string $apiEndpoint = '202.164.208.212/smsnet/bulk/api';
+
     /**
      * MentroNet constructor.
      * @param Sender $sender
@@ -40,6 +42,9 @@ class Metronet extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'api_key' => $config['api_key'],
@@ -48,7 +53,7 @@ class Metronet extends AbstractProvider
             'message' => $text,
         ];
 
-        $requestObject = new Request('202.164.208.212/smsnet/bulk/api', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $response = $requestObject->get();
         if ($queue) {
             return true;

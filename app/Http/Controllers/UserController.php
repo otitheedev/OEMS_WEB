@@ -9,6 +9,10 @@ use App\Models\otherBenifitsbyPercentage;
 use App\Models\department;
 use App\Models\academic;
 use App\Models\UsersProfessionalCertificate;
+
+use App\Models\hobbies;
+use App\Models\medicalHistory;
+
 use App\Models\JobExpriences;
 use App\Models\UsersChildInfo;
 use Illuminate\Http\Request;
@@ -128,7 +132,7 @@ public function create_users(Request $request)
     $user->spouse_birthday = $request->input('spouse_birthday');
     $user->spouse_nid = $request->input('spouse_nid');
     $user->spouse_anniversary = $request->input('spouse_anniversary'); 
-    $user->medical_history=$request->input('medical_history');
+    $user->medical_history_others=$request->input('medical_history_others');
     $user->hobbies_and_interest=$request->input('hobbies_and_interest');
 
     $user->phoneCountry = $request->input('phoneCountry');
@@ -217,27 +221,6 @@ public function create_users(Request $request)
   }
 ##########################################
   
-
-
-
- /*  if ($request->has('cert_name') && !empty($request->input('cert_name'))) {
-    foreach ($request->input('cert_name') as $key => $professionalInformation) {
-
-         #Check if 'certificate_name' is not empty before creating the record
-        if (!empty($professionalInformation)) {
-            UsersProfessionalCertificate::create([
-                'certificate_name' => $professionalInformation,
-                'organization_name' => $request->input('cert_org_name')[$key],
-                'start_date' => $request->input('cert_start_date')[$key],
-                'end_date' => $request->input('cert_end_date')[$key],
-                'user_id' => $lastInsertID,
-            ]);
-        }
-    }
-} */
-
-
-
 
 
 ##################### OPTIMIZE cert_name CODE ######################
@@ -344,6 +327,43 @@ if (!empty($benifitsData)) {
 }
 ##########################################
 
+
+###################### historyData ####################
+$historyData = [];
+if ($request->has('medical_history') && !empty($request->input('medical_history'))) {
+    foreach ($request->input('medical_history') as $key => $professonalformationhistory) {
+        if (!empty($professonalformationhistory)) {
+            $historyData[] = [
+                'medical_history' => $professonalformationhistory,
+                'user_id' => $lastInsertID,
+            ];
+        }
+    }
+}
+if (!empty($historyData)) {
+    medicalHistory::insert($historyData);
+}
+##########################################
+
+
+###################### hobbiesData ####################
+$hobbiesData = [];
+if ($request->has('hobbies') && !empty($request->input('hobbies'))) {
+    foreach ($request->input('hobbies') as $key => $professonalformationhobbies) {
+        if (!empty($professonalformationhobbies)) {
+            $hobbiesData[] = [
+                'hobbies' => $professonalformationhobbies,
+                'user_id' => $lastInsertID,
+            ];
+        }
+    }
+}
+if (!empty($hobbiesData)) {
+    hobbies::insert($hobbiesData);
+}
+##########################################
+
+
 ############ SMS SEND ################
 /* $sender = Sender::getInstance();
 $sender->setProvider(BulkSmsBD::class);
@@ -360,7 +380,7 @@ $sender->setConfig(
 $status = $sender->send(); */
 ############ SMS SEND END################
 
-    return redirect()->route('users_home')->with('success', '`' . $user->name . '` Successfully Added' . '<a href="/employee/ID/'. $user->phone_number .'">Check Profile</a>');
+ return redirect()->route('users_home')->with('success', '`' . $user->name . '` Successfully Added' . '<a href="/employee/ID/'. $user->phone_number .'">Check Profile</a>');
     #return response()->json(['message' => 'User created successfully'], 201);
 }
 
@@ -374,6 +394,10 @@ public function edit(Request $request, $id)
     $UsersChildInfo = UsersChildInfo::where('user_id', $id)->get(); 
     $extra_benifits = extra_benifits::where('user_id', $id)->get(); 
     $otherbyPercentage = otherBenifitsbyPercentage::where('user_id', $id)->get(); 
+    $hobbies = hobbies::where('user_id', $id)->get(); 
+    $selectedHobbies = ['Reading', 'Writing', 'Painting', 'Drawing', 'Playing Musical Instruments', 'Singing', 'Dancing', 'Photography', 'Cooking', 'Gardening', 'Traveling', 'Sports', 'Gaming', 'Crafting', 'Yoga']; 
+    $medicalHistory = medicalHistory::where('user_id', $id)->get(); 
+    $selectedMedicalHistory = ['High Blood Pressure','Diabetes','Asthma','Heart Disease','Cancer','Stroke','Depression','Anxiety','Obesity','Chronic Kidney Disease','Chronic Obstructive Pulmonary Disease (COPD)','Rheumatoid Arthritis','Osteoporosis','Anemia','Thyroid Disorders','Gastrointestinal Disorders']; 
     $department=department::all();
 
     return view('AdminLTE/frontend/Users/edit_user_profile', [
@@ -384,14 +408,17 @@ public function edit(Request $request, $id)
         'JobExpriences' => $JobExpriences,
         'extra_benifits' => $extra_benifits,
         'otherbyPercentage' => $otherbyPercentage,
+        'hobbies' => $hobbies,
+        'selectedHobbies' => $selectedHobbies,
+        'selectedMedicalHistory' => $selectedMedicalHistory,
+        'medicalHistory' => $medicalHistory,
         'department' => $department,
     
     ]);
 }
 
 
-// Redirect or respond accordingly// Redirect or respond accordingly// Redirect or respond accordingly// Redirect or respond accordingly
-// In your controller
+
 public function update_users(Request $request, $id)
 {
     // Validate the incoming request data
@@ -472,7 +499,7 @@ public function update_users(Request $request, $id)
     $user->spouse_birthday = $request->input('spouse_birthday');
     $user->spouse_nid = $request->input('spouse_nid');
     $user->spouse_anniversary = $request->input('spouse_anniversary'); 
-    $user->medical_history=$request->input('medical_history');
+    $user->medical_history_others=$request->input('medical_history_others');
     $user->hobbies_and_interest=$request->input('hobbies_and_interest');
 
     $user->phoneCountry = $request->input('phoneCountry');
@@ -562,7 +589,6 @@ if ($request->has('cert_name') && !empty($request->input('cert_name'))) {
 
     $certificatesData = [];
     foreach ($request->input('cert_name') as $key => $professionalInformation) {
-        // Check if 'cert_name' is not empty before creating the record
         if (!empty($professionalInformation)) {
             $certificatesData[] = [
                 'certificate_name' => $professionalInformation,
@@ -604,7 +630,7 @@ if ($request->has('job_designation_name') && !empty($request->input('job_designa
         JobExpriences::insert($jobExperiencesData);
     }
 }
-#########################################
+############################################################
 
 
     
@@ -626,11 +652,11 @@ if ($request->has('child_name') && !empty($request->input('child_name'))) {
         UsersChildInfo::insert($childInfoData);
     }
 }
-#########################################
+############################################################
 
 
 
-########################## benifits_name ###############
+################################# benifits_name ##################################
 if ($request->has('benifits_name') && !empty($request->input('benifits_name'))) {
     extra_benifits::where('user_id', $lastInsertID)->delete();
     $benifitsData = [];
@@ -648,15 +674,13 @@ if ($request->has('benifits_name') && !empty($request->input('benifits_name'))) 
         extra_benifits::insert($benifitsData);
     }
 }
-#########################################
+############################################################
 
 
-############################ other_benifits_name #############
+############################ other_benifits_name ###############################
 if ($request->has('other_benifits_name') && !empty($request->input('other_benifits_name'))) {
-    // Delete old 'other_benifits_name' records associated with the user
     OtherBenifitsbyPercentage::where('user_id', $lastInsertID)->delete();
 
-    // Loop through the new 'other_benifits_name' data and associate it with the user
     $otherBenifitsData = [];
 
     foreach ($request->input('other_benifits_name') as $key => $professonalformationbenifits_name) {
@@ -669,12 +693,72 @@ if ($request->has('other_benifits_name') && !empty($request->input('other_benifi
         }
     }
 
-    // Insert the new 'other_benifits_name' records
+    # Insert the new 'other_benifits_name' records
     if (!empty($otherBenifitsData)) {
         OtherBenifitsbyPercentage::insert($otherBenifitsData);
     }
 }
-#########################################
+################################################
+
+
+
+
+
+###################### historyData ####################
+if ($request->has('medical_history') && is_array($request->input('medical_history'))) {
+    // Assuming $lastInsertID is defined somewhere above this code block
+    if (!empty($request->input('medical_history'))) {
+        // Delete existing MedicalHistory records for the user
+        medicalHistory::where('user_id', $lastInsertID)->delete();
+        
+        // Prepare data for insertion
+        $historyData = [];
+        foreach ($request->input('medical_history') as $history) {
+            if (!empty($history)) {
+                $historyData[] = [
+                    'medical_history' => $history,
+                    'user_id' => $lastInsertID,
+                ];
+            }
+        }
+
+        // Insert new 'history' records
+        if (!empty($historyData)) {
+            medicalHistory::insert($historyData);
+        }
+    } else {
+        // If medical history is empty, delete existing records
+        medicalHistory::where('user_id', $lastInsertID)->delete();
+    }
+}
+
+##########################################
+
+
+###################### hobbiesData ####################
+if ($request->has('hobbies') && !empty($request->input('hobbies'))) {
+    // Delete existing Hobbies records for the user
+    Hobbies::where('user_id', $lastInsertID)->delete();
+    $hobbiesData = [];
+
+    foreach ($request->input('hobbies') as $key => $hobby) {
+        if (!empty($hobby)) {
+            $hobbiesData[] = [
+                'hobbies' => $hobby,
+                'user_id' => $lastInsertID,
+            ];
+        }
+    }
+
+    // Insert the new 'hobbies' records
+    if (!empty($hobbiesData)) {
+        Hobbies::insert($hobbiesData);
+    }
+}
+##########################################
+
+
+
 
 LogActivityHelper::addToLog('<a href="' . url("employee/ID/{$user->phone_number}") . '" target="_blank">' . $user->name . "'s</a> Account Has Been Edited by " . auth()->user()->name, $request);
 

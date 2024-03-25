@@ -17,6 +17,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class QuickSms extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://server1.quicksms.xyz/smsapi';
+
     /**
      * QuickSms constructor.
      * @param Sender $sender
@@ -36,6 +38,9 @@ class QuickSms extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'api_key' => $config['api_key'],
@@ -56,7 +61,7 @@ class QuickSms extends AbstractProvider
             $query['contacts'] =  implode(',', $mobile);
         }
 
-        $requestObject = new Request('https://server1.quicksms.xyz/smsapi', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $requestObject->setContentTypeJson(true);
 
         $response = $requestObject->post();

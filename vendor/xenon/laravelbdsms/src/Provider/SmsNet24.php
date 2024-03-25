@@ -18,6 +18,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class SmsNet24 extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://sms.apinet.club/sendSms';
+
     /**
      * SmsNet24 constructor.
      * @param Sender $sender
@@ -37,6 +39,9 @@ class SmsNet24 extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'user_id' => $config['user_id'],
@@ -63,7 +68,7 @@ class SmsNet24 extends AbstractProvider
             $query['sms_type_id'] = $config['sms_type_id'];
         }
 
-        $requestObject = new Request('https://sms.apinet.club/sendSms', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $response = $requestObject->post();
         if ($queue) {
             return true;

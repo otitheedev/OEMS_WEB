@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
             'linkedin_link' => $faker->url,
             'tiktok_link' => $faker->url,
             'youtube_link' => $faker->url,
-            'medical_history' => $faker->paragraph,
+            'medical_history_others' => $faker->paragraph,
             'hobbies_and_interest' => $faker->paragraph,
             'work_authorization' => $faker->word,
             'curriculum_vita_cv' => $faker->url,

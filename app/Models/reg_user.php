@@ -60,7 +60,7 @@ class reg_user extends Model
         'linkedin_link',
         'tiktok_link',
         'youtube_link',
-        'medical_history',
+        'medical_history_others',
         'hobbies_and_interest',
         'work_authorization',
         'curriculum_vita_cv',
@@ -97,6 +97,20 @@ class reg_user extends Model
     {
         return $this->hasMany(extra_benifits::class, 'user_id', 'id');
     }
+
+    
+    public function medicalHistory()
+    {
+        return $this->hasMany(medicalHistory::class, 'user_id', 'id');
+    }
+    
+    public function hobbies()
+    {
+        return $this->hasMany(hobbies::class, 'user_id', 'id');
+    }
+
+
+
 
     public function UserNameActivity()
     {

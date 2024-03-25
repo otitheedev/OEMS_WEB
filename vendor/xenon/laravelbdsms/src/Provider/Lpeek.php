@@ -19,6 +19,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class Lpeek extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://sms.lpeek.com/API/sendSMS';
+
     /**
      * Lpeek constructor.
      * @param Sender $sender
@@ -39,6 +41,9 @@ class Lpeek extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $data = [
             'auth' => [
@@ -55,7 +60,7 @@ class Lpeek extends AbstractProvider
             ],
         ];
 
-        $requestObject = new Request('https://sms.lpeek.com/API/sendSMS', $data, $queue);
+        $requestObject = new Request($this->apiEndpoint, $data, $queue, [], $queueName,$tries,$backoff);
         $requestObject->setContentTypeJson(true);
         $response = $requestObject->post();
         if ($queue) {

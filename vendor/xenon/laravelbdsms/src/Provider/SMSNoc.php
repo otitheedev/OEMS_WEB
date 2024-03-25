@@ -8,6 +8,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class SMSNoc extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://app.smsnoc.com/api/v3/sms/send';
+
     /**
      * Infobip Constructor
      * @param Sender $sender
@@ -43,6 +45,9 @@ class SMSNoc extends AbstractProvider
     {
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
         $text = $this->senderObject->getMessage();
         $number = $this->senderObject->getMobile();
 
@@ -53,7 +58,7 @@ class SMSNoc extends AbstractProvider
             'sender_id' => $config['sender_id'],
         ];
 
-        $requestObject = new Request('https://app.smsnoc.com/api/v3/sms/send', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $requestObject->setHeaders($this->getHeaders($config))->setContentTypeJson(true);
 
         $response = $requestObject->post();

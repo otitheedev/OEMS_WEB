@@ -20,7 +20,7 @@ Route::get('/clear-cache', function () {
 
 
 #### php artisan serve --host 192.168.68.231 --port 8080
-#### php artisan migrate:refresh --path=/database/migrations/subcategory_newtable_for_description_and_keywords.php
+#### php artisan migrate:refresh --path=/database/migrations/2024_10_12_000000_create_p_medical_history.php
 
 /* 
 php artisan db:seed

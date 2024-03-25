@@ -19,6 +19,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class Twenty4BulkSms extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://24bulksms.com/24bulksms/api/api-sms-send';
+
     /**
      * Twenty4BulkSms constructor.
      * @param Sender $sender
@@ -30,7 +32,7 @@ class Twenty4BulkSms extends AbstractProvider
 
     /**
      * Send Request To Api and Send Message
-     * @throws GuzzleException|RenderException
+     * @throws RenderException
      */
     public function sendRequest()
     {
@@ -38,6 +40,9 @@ class Twenty4BulkSms extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'api_key' => $config['api_key'],
@@ -53,7 +58,7 @@ class Twenty4BulkSms extends AbstractProvider
         $headers = [
             'Content-Type' => 'application/json',
         ];
-        $requestObject = new Request('https://24bulksms.com/24bulksms/api/api-sms-send', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $requestObject->setHeaders($headers)->setContentTypeJson(true);
         $response = $requestObject->post();
         if ($queue) {

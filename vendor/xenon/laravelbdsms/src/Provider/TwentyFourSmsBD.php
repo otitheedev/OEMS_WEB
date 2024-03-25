@@ -18,6 +18,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class TwentyFourSmsBD extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://24smsbd.com/api/bulkSmsApi';
+
     /**
      * TwenforSmsBD constructor.
      * @param Sender $sender
@@ -38,6 +40,9 @@ class TwentyFourSmsBD extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
         $query = [
             'apiKey' => $config['apiKey'],
             'sender_id' => $config['sender_id'],
@@ -45,7 +50,7 @@ class TwentyFourSmsBD extends AbstractProvider
             'message' => $text,
         ];
 
-        $requestObject = new Request('https://24smsbd.com/api/bulkSmsApi', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $response = $requestObject->post();
         if ($queue) {
             return true;

@@ -19,6 +19,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class Mobireach extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://api.mobireach.com.bd/SendTextMessage';
+
     /**
      * Mobireach constructor.
      * @param Sender $sender
@@ -40,6 +42,9 @@ class Mobireach extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries = $this->senderObject->getTries();
+        $backoff = $this->senderObject->getBackoff();
 
         $query = [
             'Username' => $config['Username'],
@@ -49,7 +54,7 @@ class Mobireach extends AbstractProvider
             'Message' => $text,
         ];
 
-        $requestObject = new Request('https://api.mobireach.com.bd/SendTextMessage', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName, $tries, $backoff);
         $response = $requestObject->get();
         if ($queue) {
             return true;

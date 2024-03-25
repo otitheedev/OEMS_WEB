@@ -18,6 +18,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class SmsQ extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://api.smsq.global/api/v2/SendSMS';
+
     /**
      * SmsQ constructor.
      * @param Sender $sender
@@ -37,6 +39,9 @@ class SmsQ extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'SenderId' => $config['sender_id'],
@@ -50,7 +55,7 @@ class SmsQ extends AbstractProvider
             'Content-Type' => 'application/json'
         ];
 
-        $requestObject = new Request('https://api.smsq.global/api/v2/SendSMS', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $requestObject->setHeaders($headers)->setContentTypeJson(true);
         $response = $requestObject->post();
         if ($queue) {

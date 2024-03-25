@@ -1434,18 +1434,59 @@ if (maritalStatus && maritalStatus.value === 'married') {newUserForm.style.displ
   <!-- Professional Certificate end -->
 
     <!-- Medical History Form -->
-    
-    <div id="medicalForm" class="col-12 hidden">
+  <div id="medicalForm" class="col-12 hidden">
     <div class="container mt-2" style="background: #fffdfa;padding: 15px;border-radius: 15px;border: 1px solid lightgray;">
         <h4><i class="fa-solid fa-suitcase-medical"></i> Medical History</h4> <hr>
-        <div class="card p-2"> <textarea class="form-control" name="medical_history" placeholder="Medical History All Details Input Here"></textarea></div></div>
+        <div class="card p-2"> 
+          <textarea class="form-control" name="medical_history_others" placeholder="Medical History All Details Input Here"></textarea>
+        
+        <label><input type="checkbox" name="medical_history[]" value="High Blood Pressure"> High Blood Pressure</label>
+        <label><input type="checkbox" name="medical_history[]" value="Diabetes"> Diabetes</label>
+        <label><input type="checkbox" name="medical_history[]" value="Asthma"> Asthma</label>
+        <label><input type="checkbox" name="medical_history[]" value="Heart Disease"> Heart Disease</label>
+        <label><input type="checkbox" name="medical_history[]" value="Cancer"> Cancer</label>
+        <label><input type="checkbox" name="medical_history[]" value="Stroke"> Stroke</label>
+        <label><input type="checkbox" name="medical_history[]" value="Depression"> Depression</label>
+        <label><input type="checkbox" name="medical_history[]" value="Anxiety"> Anxiety</label>
+        <label><input type="checkbox" name="medical_history[]" value="Obesity"> Obesity</label>
+        <label><input type="checkbox" name="medical_history[]" value="Chronic Kidney Disease"> Chronic Kidney Disease</label>
+        <label><input type="checkbox" name="medical_history[]" value="Chronic Obstructive Pulmonary Disease (COPD)"> Chronic Obstructive Pulmonary Disease (COPD)</label>
+        <label><input type="checkbox" name="medical_history[]" value="Rheumatoid Arthritis"> Rheumatoid Arthritis</label>
+        <label><input type="checkbox" name="medical_history[]" value="Osteoporosis"> Osteoporosis</label>
+        <label><input type="checkbox" name="medical_history[]" value="Anemia"> Anemia</label>
+        <label><input type="checkbox" name="medical_history[]" value="Thyroid Disorders"> Thyroid Disorders</label>
+        <label><input type="checkbox" name="medical_history[]" value="Gastrointestinal Disorders"> Gastrointestinal Disorders</label>
+
+        </div></div>
     </div>
+
+
+
 
 
     <div id="HobbiesInterestCheckForm" class="col-12 hidden">
     <div class="container mt-2" style="background: #fffdfa;padding: 15px;border-radius: 15px;border: 1px solid lightgray;">
         <h4><i class="fa-solid fa-suitcase-medical"></i> Hobbies and interests</h4> <hr>
-        <div class="card p-2"> <textarea class="form-control" name="hobbies_and_interest" placeholder="Hobbies and interests"></textarea></div></div>
+        <div class="card p-2"> <textarea class="form-control" name="hobbies_and_interest" placeholder="Hobbies and interests"></textarea>
+      
+        <label><input type="checkbox" name="hobbies[]" value="Reading"> Reading</label>
+        <label><input type="checkbox" name="hobbies[]" value="Writing"> Writing</label>
+        <label><input type="checkbox" name="hobbies[]" value="Painting"> Painting</label>
+        <label><input type="checkbox" name="hobbies[]" value="Drawing"> Drawing</label>
+        <label><input type="checkbox" name="hobbies[]" value="Playing Musical Instruments"> Playing Musical Instruments</label>
+        <label><input type="checkbox" name="hobbies[]" value="Singing"> Singing</label>
+        <label><input type="checkbox" name="hobbies[]" value="Dancing"> Dancing</label>
+        <label><input type="checkbox" name="hobbies[]" value="Photography"> Photography</label>
+        <label><input type="checkbox" name="hobbies[]" value="Cooking"> Cooking</label>
+        <label><input type="checkbox" name="hobbies[]" value="Gardening"> Gardening</label>
+        <label><input type="checkbox" name="hobbies[]" value="Traveling"> Traveling</label>
+        <label><input type="checkbox" name="hobbies[]" value="Sports"> Sports</label>
+        <label><input type="checkbox" name="hobbies[]" value="Gaming"> Gaming</label>
+        <label><input type="checkbox" name="hobbies[]" value="Crafting"> Crafting</label>
+        <label><input type="checkbox" name="hobbies[]" value="Yoga"> Yoga</label>
+
+      
+      </div></div>
     </div>
 
     
@@ -1524,6 +1565,7 @@ if (maritalStatus && maritalStatus.value === 'married') {newUserForm.style.displ
 
 
 
+
 <!-- Include the following script in your Blade view -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -1547,7 +1589,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Iterate through the error object and display each error
                 for (var field in data.error) {
                     if (data.error.hasOwnProperty(field)) {
-                        var errorMessage = data.error[field][0] ; //Assuming you want to display the first error for each field
+                        var errorMessage = data.error[field][0] ; 
                         
                         alertify.set('notifier', 'position', 'top-right');
                         alertify.error(`${field}: ${errorMessage}`);
@@ -1571,12 +1613,12 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 5000);
 
           
-
         });
     });
 });
 
 </script>
+
 
 
 <!-- include the script -->

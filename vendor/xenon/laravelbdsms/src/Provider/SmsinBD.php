@@ -18,6 +18,8 @@ use Xenon\LaravelBDSms\Sender;
 
 class SmsinBD extends AbstractProvider
 {
+    private string $apiEndpoint = 'https://api.smsinbd.com/sms-api/sendsms';
+
     /**
      * DianaHost constructor.
      * @param Sender $sender
@@ -37,6 +39,9 @@ class SmsinBD extends AbstractProvider
         $text = $this->senderObject->getMessage();
         $config = $this->senderObject->getConfig();
         $queue = $this->senderObject->getQueue();
+        $queueName = $this->senderObject->getQueueName();
+        $tries=$this->senderObject->getTries();
+        $backoff=$this->senderObject->getBackoff();
 
         $query = [
             'api_token' => $config['api_token'],
@@ -45,7 +50,7 @@ class SmsinBD extends AbstractProvider
             'message' => $text,
         ];
 
-        $requestObject = new Request('https://api.smsinbd.com/sms-api/sendsms', $query, $queue);
+        $requestObject = new Request($this->apiEndpoint, $query, $queue, [], $queueName,$tries,$backoff);
         $response = $requestObject->post();
         if ($queue) {
             return true;
