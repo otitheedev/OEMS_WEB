@@ -69,19 +69,6 @@
         </tr>
     </thead>
     <tbody>
-    
-     @foreach ($logs as $log)
-        <tr>
-            <td>{{ $log->id }}</td>
-            <td>{{ $log->user_name }}</td>
-            <td>{!! $log->description !!}</td>
-            <td>{{ $log->ip_address }}</td>
-            <td>{{ $log->url }}</td>
-            <td>{{ $log->created_at->format('F j, Y h:i A') }}</td>
-            <td>{{ $log->browser_agent }}</td>
-        </tr>
-     @endforeach
-
     </tbody>
 </table>
 
@@ -89,10 +76,23 @@
 <script>
     $(document).ready(function() {
         $('#example').DataTable({
-            searching: true, 
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('activitylogsAJAX') }}", 
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'user_name', name: 'user_name' },
+                { data: 'description', name: 'description' },
+                { data: 'ip_address', name: 'ip_address' },
+                { data: 'url', name: 'url' },
+                { data: 'created_at', name: 'created_at' },
+                { data: 'browser_agent', name: 'browser_agent' }
+            ]
         });
     });
 </script>
+
+
 
       </div>
 </section>

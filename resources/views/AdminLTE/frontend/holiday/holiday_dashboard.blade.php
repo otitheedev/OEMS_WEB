@@ -58,33 +58,41 @@
         </tr>
     </thead>
     <tbody>
-    
-    @foreach ($application as $applicate)
-    <tr>
-        <td>{{ $applicate->id }} </td>
-        <td>{{ $applicate->holiday_type }}</td>
-         <td>{{ strip_tags(substr($applicate->holiday_message, 0, 100)) }}...</td>
-         <td>{{ $applicate->start_date->format('d F, Y') }}</td>
-         <td>{{ $applicate->end_date->format('d F, Y') }}
-</td>
-        <td>{{ $applicate->created_at->diffForHumans() }}</td>
-            <td>
-              <a href="{{ url('admin/holiday/destroy/'. $applicate->id) }}" class="btn-sm btn-danger">Delete</a> .
-              <a href="{{ url('admin/holiday/edit/'. $applicate->id) }}" class="btn-sm btn-info">Edit</a>
-           </td>
-        </tr>
-        @endforeach
     </tbody>
 </table>
-
 
 <script>
     $(document).ready(function() {
         $('#example').DataTable({
-            searching: true, 
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('holiday_homeindexAjax') }}", 
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'holiday_type', name: 'holiday_type' },
+                { data: 'holiday_message', name: 'holiday_message' },
+                { data: 'start_date', name: 'start_date' },
+                { data: 'end_date', name: 'end_date' },
+                { data: 'created_at', name: 'created_at' },
+                { 
+                    data: 'action', 
+                    name: 'action', 
+                    orderable: false, 
+                    searchable: false,
+                    render: function(data, type, row) {
+                        return `
+                            <a href="/admin/holiday/destroy/${row.id}" class="btn-sm btn-danger pl-2 pr-2">Delete</a>
+                            <a href="/admin/holiday/edit/${row.id}" class="btn-sm btn-info pl-2 pr-2">Edit</a>
+                        `;
+                    }
+                }
+            ]
         });
     });
 </script>
+
+
+
 
       </div>
 </section>

@@ -4,13 +4,19 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\File;
 use App\Models\holiday;
 use Illuminate\Http\Request;
+use DataTables;
 
 class HolidayController extends Controller
 {
     public function index()
     {  
-        $application = holiday::all();
-        return view('AdminLTE/frontend/holiday/holiday_dashboard',['application' => $application]);
+        return view('AdminLTE/frontend/holiday/holiday_dashboard');
+    }
+
+    public function indexAjax()
+    {  
+        $model = holiday::query();
+        return DataTables::eloquent($model)->toJson();
     }
 
 

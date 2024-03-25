@@ -62,14 +62,14 @@
 <div class="col-sm-6 form-group">
 <div class="form-group">
 <label for="formGroupExampleInput3">Holiday Start</label>
-	<input type="date" name="start_date" class="form-control"></input>
+	<input type="date" name="start_date" class="form-control" value="{{ date('Y-m-d') }}"></input>
 </div>
 </div>
 
 <div class="col-sm-6 form-group">
 <div class="form-group">
 <label for="formGroupExampleInput3">Holiday End</label>
-	<input type="date" name="end_date" class="form-control"></input>
+	<input type="date" name="end_date" class="form-control" value="{{ date('Y-m-d') }}"></input>
 </div>
 
 </div>

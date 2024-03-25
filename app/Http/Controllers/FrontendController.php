@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 use App\Models\reg_user;
 use App\Models\ActivityLog;
 use Illuminate\Http\Request;
+use DataTables;
+
+
 
 class FrontendController extends Controller
 {
@@ -14,11 +17,19 @@ class FrontendController extends Controller
         return view('AdminLTE/frontend/Search/AjaxDataTable',['users' => $users]);
     }
 
+    # GET TEMPLETE
     public function activitylogs()
     {
-       $logs = ActivityLog::orderBy('created_at', 'desc')->get();
-       return view('AdminLTE/frontend/activitylogs/index',['logs' => $logs]);
+       return view('AdminLTE/frontend/activitylogs/index');
     }
+    
+    #AJAX HIT
+    public function activitylogsAJAX()
+    {
+        $model = ActivityLog::query();
+        return DataTables::eloquent($model)->toJson();
+    }
+    
 
 
     public function profile(Request $request, $number)

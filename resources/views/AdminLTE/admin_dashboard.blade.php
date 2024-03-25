@@ -301,9 +301,10 @@
 @foreach ($all_notice as $all_notices)
     <li>
         <span class="handle"><i class="fas fa-ellipsis-v"></i><i class="fas fa-ellipsis-v"></i></span>
-        @if(file_exists(public_path('assets/notice/' . $all_notices->notice_file)))
-            <a href="{{ url('assets/notice/' . $all_notices->notice_file) }}" target="_blank">
-        @endif
+        @if($all_notices->notice_file && file_exists(public_path('assets/notice/' . $all_notices->notice_file)))
+    <a href="{{ url('assets/notice/' . $all_notices->notice_file) }}" target="_blank">
+@endif
+
             <span class="text">
                 <span class="badge badge badge-primary">{{ $all_notices->notice_type }}</span> {{ $all_notices->notice_title }}
             </span>
