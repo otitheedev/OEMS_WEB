@@ -118,7 +118,7 @@
             </ol> 
 </div>
 
-  <!-- upcoming birthday next 7 days --> 
+  <!-- upcoming birthday next 7 days ---> 
   @if(count($upcomingBirthdays) > 0)
   <div class="card">
   <h4 class="card-header" style="font-size: 1.5rem;"><i class="ion ion-ios-clock mr-1"></i> Upcoming Birthday.. </h4>
@@ -155,7 +155,7 @@
 <!-- this part only view admin/HR start-->
 @auth
 @if(auth()->user()->hasRole(['admin', 'HR', 'Superadmin', 'Root']))  
-<div class="col-lg-12 col-12"> 
+<div class="col-lg-12 col-lg-12"> 
 <div class="card p-2">
    <div class="card">
    <h4 class="card-header" style="font-size: 1.5rem;"><i class="ion ion-clipboard mr-1"></i> Today employees are submitting leave applications</h4>
@@ -219,7 +219,7 @@
 
 
 
-<div class="col-lg-12 col-12"> 
+<div class="col-lg-12 col-lg-12"> 
 <div class="card p-2">
    <div class="card">
    <h4 class="card-header" style="font-size: 1.5rem;"><i class="ion ion-clock mr-1"></i> Upcoming leaves</h4>
@@ -283,7 +283,7 @@
 <!-- this part only view admin/HR end-->
 
 
-        <div class="col-lg-6 col-6"> 
+        <div class="col-lg-6 col-lg-6"> 
            <!-- TO DO List -->
            <div class="card">
               <div class="card-header">
@@ -331,7 +331,7 @@
 
 
 
-<div class="col-lg-6 col-6"> 
+<div class="col-lg-6 col-lg-6"> 
 
 <!-- TO DO List -->
 <div class="card">
@@ -382,7 +382,7 @@
 
 
 
-<div class="col-lg-6 col-6">
+<div class="col-lg-6 col-lg-6">
           <div class="card bg-gradient-secondary">
               <div class="card-header border-0">
                 <h3 class="card-title">
@@ -500,7 +500,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    <div class="col-lg-6 col-6">
+    <div class="col-lg-6 col-lg-6">
           <div class="card bg-gradient-success">
               <div class="card-header border-0">
 
