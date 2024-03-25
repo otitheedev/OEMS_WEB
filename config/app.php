@@ -5,6 +5,10 @@ use Illuminate\Support\ServiceProvider;
 
 return [
 
+     'jsonapi_username' => env('JSONAPI_USERNAME', 'default_username'),
+     'jsonapi_key' => env('JSONAPI_KEY', 'default_key'),
+
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

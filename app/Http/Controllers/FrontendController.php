@@ -23,10 +23,13 @@ class FrontendController extends Controller
 
     public function profile(Request $request, $number)
     {
-        $user = reg_user::with('child_info', 'academicRecords', 'professional_certificate', 'job_expriences', 'otherBenifitsbyPercentage', 'extra_benifits')->where('phone_number', $number)->firstOrFail();
+        $user = reg_user::with('child_info', 'academicRecords', 'professional_certificate', 'job_expriences', 'otherBenifitsbyPercentage', 'extra_benifits','hobbies','medicalHistory')->where('phone_number', $number)->firstOrFail();
     
         return view('AdminLTE/frontend/Search/employee_profile', compact('user'));
     }
+
+
+
     
 
 

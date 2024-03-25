@@ -11,7 +11,6 @@ use App\Models\reg_user;
 use App\Models\notice;
 use App\Models\holiday;
 use App\Models\LeaveApplication;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;

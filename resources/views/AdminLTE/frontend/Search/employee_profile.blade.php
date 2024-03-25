@@ -352,6 +352,7 @@ ul.timeline > li.active:before {
 
 
 
+
               <div class="card mt-2 p-1">
                             <div class="card-body p-0 table-responsive">
                                 <h4 class="p-3 mb-0"><i class="fa fa-ambulance" aria-hidden="true"></i> Emergency Contact</h4>
@@ -426,6 +427,33 @@ ul.timeline > li.active:before {
                             </div>
                         </div>
                         @endif
+
+
+
+            @if($user->hobbies->isNotEmpty())
+                 <div class="card mt-2 p-1">
+                 <div class="card-body p-0 table-responsive">
+                  <h4 class="p-3 mb-0"><i class="fa fa-houzz" aria-hidden="true"></i> Hobbies</h4>
+                  @foreach ($user->hobbies as $record)
+                  {!! "<span class='btn btn-sm btn-success mt-2'>" . $record->hobbies . '</span>' !!}
+                  @endforeach
+                    </div>
+                </div>
+                @endif
+
+                @if($user->medicalHistory->isNotEmpty())
+                <div class="card mt-2 p0">
+                    <div class="card-header">
+                  <h4 class="p-3 mb-0"><i class="fa fa-user-md" aria-hidden="true"></i> Medical History</h4>
+                 </div>
+                  <div class="card-body p-0 table-responsive">
+                  @foreach ($user->medicalHistory as $recordi)
+                  {!! "<span class='btn btn-sm btn-success mt-2'>" . $recordi->medical_history . '</span>' !!}
+                  @endforeach
+                    </div>
+                </div>
+                @endif
+
 
                     </div>
                 </div>

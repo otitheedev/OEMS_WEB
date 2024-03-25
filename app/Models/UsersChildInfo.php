@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class UsersChildInfo extends Model
 {
        #use HasFactory;
-       protected $table='child_users_childInfo';
+       protected $table='child_users_childinfo';
        protected $fillable=[
            'child_name',
            'child_gender',
