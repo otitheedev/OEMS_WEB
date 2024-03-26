@@ -15,7 +15,7 @@ class HolidayController extends Controller
 
     public function indexAjax()
     {  
-        $model = holiday::query();
+        $model = holiday::query()->orderBy('created_at', 'desc');
         return DataTables::eloquent($model)->toJson();
     }
 

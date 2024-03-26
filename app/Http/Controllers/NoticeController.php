@@ -16,7 +16,7 @@ class NoticeController extends Controller
 
     public function noticeAjax()
     {  
-        $model = notice::query();
+        $model = notice::query()->orderBy('created_at', 'desc');
         return DataTables::eloquent($model)->toJson();
     }
 

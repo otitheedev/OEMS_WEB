@@ -26,7 +26,7 @@ class FrontendController extends Controller
     #AJAX HIT
     public function activitylogsAJAX()
     {
-        $model = ActivityLog::query();
+        $model = ActivityLog::query()->orderBy('created_at', 'desc');
         return DataTables::eloquent($model)->toJson();
     }
     

@@ -79,6 +79,8 @@
             processing: true,
             serverSide: true,
             ajax: "{{ route('activitylogsAJAX') }}", 
+           // searching: false, // Disable search bar
+           // lengthChange: false, // Disable show entries dropdown
             columns: [
                 { data: 'id', name: 'id' },
                 { data: 'user_name', name: 'user_name' },
