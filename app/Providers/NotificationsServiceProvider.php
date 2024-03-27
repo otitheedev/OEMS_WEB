@@ -18,12 +18,12 @@ class NotificationsServiceProvider extends ServiceProvider
         $notifications = Notification::where('user_id', Auth::id())
             ->where('read', false)
             ->orderBy('created_at', 'desc')
-            ->paginate(5);
+            ->paginate(15);
 
         $all_notifications = Notification::where('user_id', Auth::id())
             ->where('read', true)
             ->orderBy('created_at', 'desc')
-            ->paginate(15);
+            ->paginate(20);
 
         // You can add additional conditions if needed
         $view->with('notifications', $notifications)

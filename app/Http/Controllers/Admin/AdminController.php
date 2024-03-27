@@ -45,9 +45,9 @@ $users_anniversary= reg_user::whereDay('spouse_anniversary', $today->day)->where
 ##
 $holiday= holiday::whereDay('start_date', $today->day)->whereMonth('start_date', $today->month)->get();
 
- $all_notice= notice::latest()->get();
- 
-$all_leave= LeaveApplication::latest()->get();
+$all_notice= notice::latest()->paginate(20);
+$all_leave= LeaveApplication::latest()->paginate(20);
+
 // Fetch LeaveApplications with upcoming events within the next 7 days
 $upcomingLeave = LeaveApplication::whereBetween('application_start_date', [$today, $sevenDaysLater])
 ->orWhereBetween('application_end_date', [$today, $sevenDaysLater])

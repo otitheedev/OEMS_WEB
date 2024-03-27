@@ -49,7 +49,7 @@ Route::get('/runqueueworker', function () {
 
 
 #################### Leave Application ####################
-Route::get('/admin/application', [App\Http\Controllers\LeaveApplicationController::class, 'index'])->name('application_home');
+Route::get('/admin/application', [App\Http\Controllers\LeaveApplicationController::class, 'index'])->name('application_home')->middleware('auth');
 Route::get('/admin/application/create', [App\Http\Controllers\LeaveApplicationController::class, 'create'])->name('application_create');
 Route::post('/admin/application/store', [App\Http\Controllers\LeaveApplicationController::class, 'store'])->name('application_store');
 Route::get('/admin/application/edit/{id}', [App\Http\Controllers\LeaveApplicationController::class, 'edit'])->name('application_edit1');
@@ -77,6 +77,16 @@ Route::get('/admin', [App\Http\Controllers\Admin\AdminController::class, 'admin_
 ## redirect users to login Page
 Route::get('/', function () {$message = Session::get('authRedirectMessage');return view('index', compact('message'));})->name('root_index');
 
+#################### Notice Board AUTH ONLY ####################
+Route::get('/admin/notice', [App\Http\Controllers\NoticeController::class, 'index'])->name('notice_home')->middleware('auth');
+Route::get('/admin/noticeAjax', [App\Http\Controllers\NoticeController::class, 'noticeAjax'])->name('notice_homenoticeAjax');
+Route::get('/admin/notice/view/{id}', [App\Http\Controllers\NoticeController::class, 'notice_view'])->name('notice_view')->middleware('auth');
+
+#################### Holiday Event AUTH ONLY ####################
+Route::get('/admin/holiday', [App\Http\Controllers\HolidayController::class, 'index'])->name('holiday_home')->middleware('auth');
+Route::get('/admin/holidayAjax', [App\Http\Controllers\HolidayController::class, 'indexAjax'])->name('holiday_homeindexAjax');
+
+
 ######################## middleware start ########################
 Route::group(['middleware' => ['auth', 'role:admin,HR,GM']], function () {
 
@@ -92,7 +102,6 @@ Route::get('/admin/addRole/destroy/{id}', [App\Http\Controllers\Admin\AdminContr
 
 
 #################### Notice Board ####################
-Route::get('/admin/notice', [App\Http\Controllers\NoticeController::class, 'index'])->name('notice_home');
 Route::get('/admin/notice/create', [App\Http\Controllers\NoticeController::class, 'create'])->name('notice_create');
 Route::post('/admin/notice/store', [App\Http\Controllers\NoticeController::class, 'store'])->name('notice_store');
 Route::get('/admin/notice/edit/{id}', [App\Http\Controllers\NoticeController::class, 'edit'])->name('notice_edit1');
@@ -101,7 +110,6 @@ Route::get('/admin/notice/destroy/{id}', [App\Http\Controllers\NoticeController:
 
 
 #################### Holiday Event ####################
-Route::get('/admin/holiday', [App\Http\Controllers\HolidayController::class, 'index'])->name('holiday_home');
 Route::get('/admin/holiday/create', [App\Http\Controllers\HolidayController::class, 'create'])->name('holiday_create');
 Route::post('/admin/holiday/store', [App\Http\Controllers\HolidayController::class, 'store'])->name('holiday_store');
 Route::get('/admin/holiday/edit/{id}', [App\Http\Controllers\HolidayController::class, 'edit'])->name('holiday_edit1');
@@ -113,6 +121,8 @@ Route::get('/admin/holiday/destroy/{id}', [App\Http\Controllers\HolidayControlle
 
 #Activity log:
 Route::get('/admin/activitylogs', [App\Http\Controllers\FrontendController::class, 'activitylogs'])->name('activitylogs');
+Route::get('/admin/activitylogsAJAX', [App\Http\Controllers\FrontendController::class, 'activitylogsAJAX'])->name('activitylogsAJAX');
+
 
 ## SMS RELATED TEST ###
 Route::get('/admin/sms/createSMS', [App\Http\Controllers\Admin\AdminController::class, 'createSMS'])->name('createSMS');

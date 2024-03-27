@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DataTables;
 use App\Models\notice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -10,10 +11,25 @@ class NoticeController extends Controller
 {
     public function index()
     {  
-        $application = notice::all();
-        return view('AdminLTE/frontend/notice/notice_dashboard',['application' => $application]);
+        return view('AdminLTE/frontend/notice/notice_dashboard');
     }
 
+    public function noticeAjax()
+    {  
+        $model = notice::query()->orderBy('created_at', 'desc');
+        return DataTables::eloquent($model)->toJson();
+    }
+
+    public function notice_view(Request $request, $id){
+        $all_notice= notice::latest()->paginate(20);
+        $notice_count= notice::count();
+        $notice_view= notice::find($id);
+        return view('AdminLTE/frontend/notice/notice_view',[
+            'notice_view' => $notice_view,
+            'all_notice' => $all_notice,
+            'notice_count' => $notice_count,
+        ]);
+    }
 
     public function create()
     {  
@@ -45,21 +61,34 @@ class NoticeController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $leave= notice::find($id);
-        return view('AdminLTE/frontend/notice/notice_edit',['leave' => $leave]);
+        $notice= notice::find($id);
+        return view('AdminLTE/frontend/notice/notice_edit',['notice' => $notice]);
     }
 
 
     public function update(Request $request)
     {
-         $id=$request->input('leave_id') ;
-         $leave = notice::find($id);
-         $leave->application_type = $request->input('application_type');
-         $leave->application_message = $request->input('application_message');
-         $leave->application_start_date = $request->input('application_start_date');
-         $leave->application_end_date = $request->input('application_end_date');
-         $leave->approved_user_id = 0;
-         $leave->update();
+         $id=$request->input('notice_id') ;
+         $notice_update = notice::find($id);
+         $notice_update->notice_title = $request->input('notice_title');
+         $notice_update->notice_type = $request->input('notice_type');
+         $notice_update->notice_message = $request->input('notice_message');
+         
+         if ($request->hasFile('notice_file')) {
+            $notice_file = $request->file('notice_file');
+            if ($notice_update->notice_file) {
+                $previous_file_path = public_path('assets/notice/' . $notice_update->notice_file);
+                if (file_exists($previous_file_path)) {
+                    unlink($previous_file_path);
+                }
+            }
+            $extension = $notice_file->getClientOriginalExtension();
+            $department_image_name = $request->input('notice_title') . '-file-.' . $extension;
+            $notice_file->move('assets/notice/', $department_image_name);
+            $notice_update->notice_file = $department_image_name;
+        }
+        
+         $notice_update->update();
          return redirect()->route('notice_home')->with('success', 'Leave application updated successfully!');
         
     }

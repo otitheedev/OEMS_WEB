@@ -59,12 +59,12 @@
  <div class="row mt-1 mb-2">
   <div class="col-sm-6">
    <label for="start_date"><i class="fa-regular fa-user"></i> Start From <span class="text-danger">*</span></label>
-   <input type="date" class="form-control" name="application_start_date" required>
+   <input type="date" class="form-control" name="application_start_date" value="{{ date('Y-m-d') }}" required>
  </div>
 
  <div class="col-sm-6">
  <label for="end_date"><i class="fa-regular fa-user"></i> End Date <span class="text-danger">*</span></label>
-   <input type="date" class="form-control" name="application_end_date" required>
+   <input type="date" class="form-control" name="application_end_date" value="{{ date('Y-m-d') }}" required>
  </div>
  </div>
    
@@ -82,7 +82,7 @@
 </div>
 		<script>
 		  var editor1 = new RichTextEditor("#div_editor1");
-	       editor1.setHTMLCode("<p><b>Why you are want leave</b></p>");
+	       //editor1.setHTMLCode("<p><b>Why you are want leave</b></p>");
 			function btngetHTMLCode() {
 				alert(editor1.getHTMLCode())
 			}

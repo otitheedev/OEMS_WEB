@@ -31,21 +31,26 @@
  <section class="container-fluid">
 
 
-<!-- form code  start-->
-<form action="{{ url('/admin/notice/store') }}" method="POST" enctype="multipart/form-data">
+<!-- form code  starts-->
+<form action="{{ url('/admin/notice/update') }}" method="POST" enctype="multipart/form-data">
   @csrf
+
+
+  <input type="hidden" class="form-control" name="notice_id" value="{{ $notice->id }}" required>
+
 
   <div class="container-fulied" style="background: #fffdfa;padding: 15px;border-radius: 15px;border: 1px solid lightgray;">
 
   <div class="form-group">
 <label for="formGroupExampleInput3">Notice Title <span class="text-danger">*</span></label>
-	<input type="text" name="notice_title" class="form-control" placeholder="Notice Title" required></input>
+	<input type="text" name="notice_title" value="{{ $notice->notice_title }}" class="form-control" placeholder="Notice Title" required></input>
 </div>
 
   
   <div class="form-group">
     <label for="formGroupDepartment">Notice Type <span class="text-danger">*</span></label>
-    <select class="form-control" name="notice_type" required> 
+    <select class="form-control" name="notice_type" required>
+      <option selected> {{ $notice->notice_type }} </option> 
        <option>Regular</option>
        <option>General</option>
        <option>Important</option>

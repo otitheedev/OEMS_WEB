@@ -41,7 +41,12 @@
 
 <div class="container-fluid card p-2">
 
+@auth
+@if(auth()->user()->hasRole(['admin', 'HR', 'Superadmin', 'Root']))     
 <div class="text-left p-2"> <a href="{{ url('/admin/notice/create') }}" class="btn-sm btn-primary p-2"> Add New Notices </a></div>
+@endif
+@endauth
+
 <hr>
 
 <!-- Your DataTable HTML -->
@@ -57,18 +62,6 @@
     </thead>
     <tbody>
     
-    @foreach ($application as $applicate)
-    <tr>
-        <td>{{ $applicate->id }} </td>
-        <td>{{ $applicate->notice_type }}</td>
-         <td>{{ strip_tags(substr($applicate->notice_message, 0, 100)) }}...</td>
-        <td>{{ $applicate->created_at->diffForHumans() }}</td>
-            <td>
-              <a href="{{ url('admin/notice/destroy/'. $applicate->id) }}" class="btn-sm btn-danger">Delete</a> .
-              <a href="{{ url('admin/notice/edit/'. $applicate->id) }}" class="btn-sm btn-info">Edit</a>
-           </td>
-        </tr>
-        @endforeach
     </tbody>
 </table>
 
@@ -76,10 +69,42 @@
 <script>
     $(document).ready(function() {
         $('#example').DataTable({
-            searching: true, 
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('notice_homenoticeAjax') }}",
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'notice_type', name: 'notice_type' },
+                { 
+                    data: 'notice_message', 
+                    name: 'notice_message', 
+                    render: function(data, type, row, meta) {
+                        // Render HTML code for notice_message column
+                        return data;
+                    }
+                },
+                { data: 'created_at', name: 'created_at' },
+                { 
+                    data: 'action', 
+                    name: 'action', 
+                    orderable: false, 
+                    searchable: false,
+                    render: function(data, type, row, meta) {
+                        @auth
+                            @if(auth()->user()->hasRole(['admin', 'HR', 'Superadmin', 'Root']))
+                                return '<a href="/admin/notice/destroy/' + row.id + '" class="btn-sm btn-danger">Delete</a> ' + 
+                                       '<a href="/admin/notice/edit/' + row.id + '" class="btn-sm btn-info">Edit</a>';
+                            @endif
+                        @endauth
+                        return '';
+                    }
+                }
+            ]
         });
     });
 </script>
+
+
 
       </div>
 </section>

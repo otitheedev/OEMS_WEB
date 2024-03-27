@@ -94,6 +94,21 @@
           @endif
 
 
+
+
+          <li class="nav-item">
+            <a href="{{ url('/admin/activitylogs') }}" class="nav-link">
+              <i class="nav-icon fas fa-file-contract"></i>
+              <p>
+               Activity Logs
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+          
+          @elseif(auth()->user()->hasRole('user'))
+          @endif
+
           <li class="nav-item">
             <a href="{{ url('/admin/notice') }}" class="nav-link">
               <i class="nav-icon fas fa-bullhorn"></i>
@@ -114,19 +129,6 @@
             </a>
           </li>
 
-
-          <li class="nav-item">
-            <a href="{{ url('/admin/activitylogs') }}" class="nav-link">
-              <i class="nav-icon fas fa-file-contract"></i>
-              <p>
-               Activity Logs
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          
-          @elseif(auth()->user()->hasRole('user'))
-          @endif
 
           <!-- Start Code here for Other Auth -->
           <li class="nav-item">

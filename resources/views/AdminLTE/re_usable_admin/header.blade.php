@@ -81,7 +81,7 @@
   -->
 
 
-    
+    <!-- 
     <li class="nav-item">
         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
           <i class="fas fa-search"></i>
@@ -101,11 +101,13 @@
             </div>
           </form>
         </div>
-      </li>
+      </li> -->
 
 
 
 
+@auth
+@if(auth()->user()->hasRole(['admin', 'HR', 'Superadmin', 'Root']))     
 
 <!-- Unread Notifications Dropdown Menu Start -->
 @if(count($notifications) > 0)
@@ -197,9 +199,14 @@
 
 </aside>
 @endif
+@endif
+@endauth
 
 
     </ul>
+
+
+
 </nav>
 
 
