@@ -55,9 +55,8 @@
             <th>User_ID</th>
             <th>Description</th>
             <th>Ip Address</th>
-            <th>URL</th>
             <th>Time</th>
-            <th>Browser_Agent</th>
+            <th style="width:30%">Browser_Agent</th>
         </tr>
     </thead>
     <tbody>
@@ -76,10 +75,31 @@
             columns: [
                 { data: 'id', name: 'id' },
                 { data: 'user_name', name: 'user_name' },
-                { data: 'description', name: 'description' },
+                { 
+                    data: 'description', 
+                    name: 'description',
+                    render: function(data, type, row) {
+                        // Return the data as HTML
+                        return $('<div/>').html(data).text();
+                    }
+                },
                 { data: 'ip_address', name: 'ip_address' },
-                { data: 'url', name: 'url' },
-                { data: 'created_at', name: 'created_at' },
+                { 
+                    data: 'created_at', 
+                    name: 'created_at',
+                    render: function(data, type, row) {
+                        // Format the date
+                        const date = new Date(data);
+                        const options = { 
+                            year: 'numeric', 
+                            month: 'short', 
+                            day: '2-digit', 
+                            hour: '2-digit', 
+                            minute: '2-digit' 
+                        };
+                        return date.toLocaleDateString('en-US', options);
+                    }
+                },
                 { data: 'browser_agent', name: 'browser_agent' }
             ]
         });

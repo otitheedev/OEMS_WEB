@@ -897,7 +897,7 @@ if (maritalStatus && maritalStatus.value === 'married') {newUserForm.style.displ
     calculateTotalAmount();
   }
 
-  function removeFormFieldsBF(button) {
+ function removeFormFieldsBF(button) {
     var rowToRemove = button.parentNode.parentNode;
     rowToRemove.parentNode.removeChild(rowToRemove);
     calculateTotalAmount();
@@ -962,7 +962,6 @@ if (maritalStatus && maritalStatus.value === 'married') {newUserForm.style.displ
 </script>
 
 </div></div>
-
 
 
       <div class="container mt-2" style="background: #fffdfa;padding: 15px;border-radius: 15px; border: 1px solid lightgray;">

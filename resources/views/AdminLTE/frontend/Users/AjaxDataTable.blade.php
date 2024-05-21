@@ -66,6 +66,7 @@
                 <th> Department </th>
                 <th> Gender </th>
                 <th> Designation </th>
+                <th> Phone </th>
                 <th>Email</th>
                 <th>Basic Salary</th>
                 <th> </th>
@@ -96,7 +97,7 @@
         },
        
         "columns": [
-            {"data": "id", "className":"text-center"},
+            {"data": "id", "className":"text-center", searchable: false},
             {"data": "name",
                 "render": function(data, type, row) {
                     var escapedName = $('<div/>').text(row.name).html();
@@ -109,10 +110,11 @@
                     return '<img src="' + imageUrl + '" width="60px">';
                 },
                 "orderData": [0] 
-            },
+                , searchable: false},
             {"data": "department_name"},
-            {"data": "gender", "className":"text-center"},
+            {"data": "gender", "className":"text-center", searchable: false},
             {"data": "designation"},
+            {"data": "phone_number"},
             {"data": "email"},
             {"data": "totalAmount", "className":"text-center"},
             {
@@ -126,7 +128,7 @@
                     return deleteButton + editButton;
                 },
                 "orderData": [0]
-            }
+                , searchable: false}
         ]
     });
 
