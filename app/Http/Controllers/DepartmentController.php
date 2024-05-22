@@ -16,7 +16,7 @@ class DepartmentController extends Controller
     }
 
 
-    public function create(){
+    public function create() {
         return view('AdminLTE/frontend/Department/department_create');
     }
 

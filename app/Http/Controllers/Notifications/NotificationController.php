@@ -9,8 +9,7 @@ use App\Http\Controllers\Controller;
 
 class NotificationController extends Controller
 {
-    public function markAsRead(Notification $notification)
-    {
+    public function markAsRead(Notification $notification) {
         $notification->update(['read' => true]);
         return redirect()->back();
     }

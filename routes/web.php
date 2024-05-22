@@ -167,4 +167,5 @@ Route::get('/attendance_mysql', [App\Http\Controllers\MachineController::class, 
 
 //Route::get('/my_attendance_mysql', [App\Http\Controllers\MachineController::class, 'my_attendance_mysql'])->name('machine.my_attendance_mysql');
 Route::get('/my_attendance_mysql/{uid}', [App\Http\Controllers\MachineController::class, 'my_attendance_mysql'])->name('machine.my_attendance_mysql');
+Route::get('/my_attendance_datatable/{uid}', [App\Http\Controllers\MachineController::class, 'my_attendance_datatable'])->name('machine.my_attendance_datatable');
 

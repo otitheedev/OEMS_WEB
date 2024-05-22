@@ -71,6 +71,44 @@ class MachineController extends Controller
           return view('AdminLTE.frontend.attendance.attendance_mysql', compact('attendances'));
   }
 
+
+
+  public function my_attendance_datatable(Request $request, $uid) {
+    if ($uid == auth()->user()->attendance_uid) {
+        $firstDayOfMonth = Carbon::now()->startOfMonth()->toDateString();
+        $lastDayOfMonth = Carbon::now()->endOfMonth()->toDateString();
+        $attendances = Attendance::where('userid', $uid)
+            ->whereBetween('timestamp', [$firstDayOfMonth, $lastDayOfMonth])
+            ->orderByDesc('timestamp')
+            ->with('user')  // Eager load the user relationship
+            ->get();
+
+        $coloredRecords = [];
+        foreach ($attendances as $attendance) {
+            $checkInTime = strtotime($attendance['timestamp']);
+            $checkInHour = date('H', $checkInTime);
+            $date = date('Y-m-d', $checkInTime);
+
+            if ($attendance['type'] == 0 && ($checkInHour >= 10 && $checkInHour < 13) && !isset($coloredRecords[$attendance['uid']][$date])) {
+                $coloredRecords[$attendance['uid']][$date] = true;
+                $attendance['needs_color'] = true;
+            } else {
+                $attendance['needs_color'] = false;
+            }
+        }
+
+        return response()->json($attendances);
+    } else {
+        return response()->json(['error' => 'You are not authorized to see this page'], 403);
+    }
+}
+
+
+
+
+
+
+
     # Direct get Device IP from Machine
     public function device_ip(){
         if (session()->exists('dip')) {
