@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\File;
 
 class LeaveApplicationController extends Controller{
 
-    public function index(){   
+    public function index() {   
         $id = Auth::id();
         $application = LeaveApplication::where('user_id', $id)->get();
         return view('AdminLTE/frontend/leave_application/leave_appliation_dashboard',['application' => $application]);
     }
 
 
-    public function leave_application_view(Request $request, $view){
+    public function leave_application_view(Request $request, $view) {
     $application = LeaveApplication::where('status', $view)->get();
         return view('AdminLTE/frontend/leave_application/view',
         [
@@ -26,7 +26,7 @@ class LeaveApplicationController extends Controller{
     }
 
     #########################
-    public function delay_office(Request $request, $delay_office){
+    public function delay_office(Request $request, $delay_office) {
         $application = LeaveApplication::where('application_type', $delay_office)->get();
             return view('AdminLTE/frontend/leave_application/view',
             [
@@ -35,7 +35,7 @@ class LeaveApplicationController extends Controller{
         }
 
 
-    public function create(){   
+    public function create() {   
        $id = Auth::id();
        $leave_status = LeaveApplication::where('user_id', $id)->whereIn('status', [0, 4])->get();
         return view('AdminLTE/frontend/leave_application/leave_application_create',[
@@ -43,7 +43,7 @@ class LeaveApplicationController extends Controller{
         ]);
     }
 
-    public function delay_office_application(){
+    public function delay_office_application() {
         $id = Auth::id();
         $leave_status = LeaveApplication::where('user_id', $id)->whereIn('status', [0, 4])->get();
          return view('AdminLTE/frontend/leave_application/delay_office_application',[
@@ -52,7 +52,7 @@ class LeaveApplicationController extends Controller{
     }
 
 
-    public function store(Request $request){
+    public function store(Request $request) {
        ## Validate the request data
        $leaveApplication = $request->validate([
         'file_applications' => 'mimes:jpeg,png,jpg,gif,svg,pdf|max:2000',
@@ -81,13 +81,13 @@ class LeaveApplicationController extends Controller{
     }
 
 
-    public function edit(Request $request, $id){
+    public function edit(Request $request, $id) {
         $leave= LeaveApplication::find($id);
         return view('AdminLTE/frontend/leave_application/leave_application_edit',['leave' => $leave]);
     }
 
 
-    public function update(Request $request){
+    public function update(Request $request) {
          $id=$request->input('leave_id') ;
          $leave = LeaveApplication::find($id);
          $leave->application_type = $request->input('application_type');
@@ -112,7 +112,7 @@ class LeaveApplicationController extends Controller{
     }
 
 
-    public function destroy($id){
+    public function destroy($id) {
         $item = LeaveApplication::find($id);
         
         if (!$item) {

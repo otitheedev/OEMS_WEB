@@ -44,7 +44,7 @@ class NoticeController extends Controller{
             ->toJson();
     }
 
-    public function notice_view(Request $request, $id){
+    public function notice_view(Request $request, $id) {
         $all_notice= notice::latest()->paginate(20);
         $notice_count= notice::count();
         $notice_view= notice::find($id);
@@ -55,11 +55,11 @@ class NoticeController extends Controller{
         ]);
     }
 
-    public function create(){  
+    public function create() {  
         return view('AdminLTE/frontend/notice/notice_create');
     }
 
-    public function store(Request $request){
+    public function store(Request $request) {
          $notice_store = new notice();
          $notice_store->notice_title = $request->input('notice_title');
          $notice_store->notice_type = $request->input('notice_type');

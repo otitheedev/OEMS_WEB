@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\department;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 class DepartmentController extends Controller
 {
 
-    public function index()
-    {
+    public function index() {
         $departments=department::all();
         return view('AdminLTE/frontend/Department/department',['department' => $departments]);
     }
@@ -21,7 +21,7 @@ class DepartmentController extends Controller
     }
 
 
-    public function store(Request $request){
+    public function store(Request $request) {
        ## Validate the request data
        $department = $request->validate([
         'department_name' => 'required|string',
@@ -52,15 +52,13 @@ class DepartmentController extends Controller
 
 
 
-    public function edit(Request $request, $id)
-    {
+    public function edit(Request $request, $id) {
         $department= department::find($id);
         return view('AdminLTE/frontend/Department/department_edit',['department' => $department]);
     }
 
 
-    public function update(Request $request)
-    {
+    public function update(Request $request) {
         ## Validate the request data
        $department = $request->validate([
         'department_name' => 'required|string',
@@ -92,8 +90,11 @@ class DepartmentController extends Controller
     }
 
 
-    public function destroy($id)
-    {
+    public function destroy($id) {
+        $auth_number = Auth::user()->phone_number;
+        $auth_email = Auth::user()->email;
+        if($auth_number == '01878578504' && $auth_email == 'needyamin@gmail.com'){
+
         $item = department::find($id);
         
         if (!$item) {
@@ -107,6 +108,11 @@ class DepartmentController extends Controller
 
         $item->delete();
         return redirect()->route('department_home')->with('success', 'Item deleted successfully!');
+    }
+
+else {
+    return redirect()->route('users_home')->with('error', 'You can\'t delete this items. Please contact with superadmin');
+}
 
     }
 }

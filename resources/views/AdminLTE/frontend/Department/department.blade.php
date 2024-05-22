@@ -70,7 +70,16 @@
             <td>{{ $depart->department_director }}</td>
             <td>{{ $depart->department_gm }}</td>
             <td>
-              <a href="{{ url('/admin/department/destroy/'. $depart->id) }}" class="btn-sm btn-danger">Delete</a> 
+                   @php
+                   $email = Auth::user()->email;
+                   $phoneNumber = Auth::user()->phone_number;
+                   @endphp
+
+                   @if ($email == 'needyamin@gmail.com' && $phoneNumber == '01878578504')
+                   <a href="{{ url('/admin/department/destroy/' . $depart->id) }}" class="btn-sm btn-danger">Delete</a>
+                    @endif
+       
+
               <a href="{{ url('admin/department/edit/'. $depart->id) }}" class="btn-sm btn-info">Edit</a>
            </td>
         </tr>

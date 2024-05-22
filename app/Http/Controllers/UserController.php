@@ -30,17 +30,17 @@ use Xenon\LaravelBDSms\Sender;
 
 class UserController extends Controller{
 
-    public function all_users_index(){
+    public function all_users_index() {
         return view('AdminLTE/frontend/Users/AjaxDataTable');
     }
 
-    public function create(){
+    public function create() {
         $department=department::all();
         return view('AdminLTE/frontend/Users/create_users',['department' => $department]);
     }
 
 
-  public function create_users(Request $request){
+  public function create_users(Request $request) {
      $validator = Validator::make($request->all(), [
         'profile_pic' => 'mimes:jpeg,png,jpg,gif,svg|max:10000',
         'name' => 'required|string|max:255',
